@@ -1,0 +1,88 @@
+<template name="useraccounts">
+    <div class="at-form">
+        <!-- Title -->
+        <div class="at-title">
+            <h3>Create an Account</h3>
+        </div>
+        <!-- Social Buttons for Oauth Sign In / Sign Up-->
+        <div class="at-oauth">
+            <button class="at-social-btn" id="at-facebook" name="facebook">
+                <i class="fa fa-facebook"></i> Sign in with Facebook
+            </button>
+            <button class="at-social-btn" id="at-twitter" name="twitter">
+                <i class="fa fa-twitter"></i> Sign in with Twitter
+            </button>
+        </div>
+        <!-- Services Separator -->
+        <div class="at-sep">
+            <strong>OR</strong>
+        </div>
+        <!-- Global Error -->
+        <div class="at-error">
+            <p>Login forbidden</p>
+        </div>
+        <!-- Global Resutl -->
+        <div class="at-result">
+            <p>Email Sent!</p>
+        </div>
+        <!-- Password Service -->
+        <div class="at-pwd-form">
+            <form role="form" id="at-pwd-form" novalidate="">
+                <!-- Input -->
+                <div class="at-input">
+                    <label for="at-field-username">
+                        Username
+                    </label>
+                    <input type="text" id="at-field-username" name="at-field-username" placeholder="Username" autocapitalize="none" autocorrect="off">
+                </div>
+                <!-- Input with Validation Error -->
+                <div class="at-input has-error">
+                    <label for="at-field-email">
+                        Email
+                    </label>
+                    <input type="email" id="at-field-email" name="at-field-email" placeholder="Email" autocapitalize="none" autocorrect="off">
+                    <span>Invalid email</span>
+                </div>
+                <!-- Input with Successful Validation -->
+                <div class="at-input has-success">
+                    <label for="at-field-password">
+                        Password
+                    </label>
+                    <input type="password" id="at-field-password" name="at-field-password" placeholder="Password" autocapitalize="none" autocorrect="off">
+                </div>
+                <!-- Forgot Password Link -->
+                <div class="at-pwd-link">
+                    <p>
+                        <a href="/forgot-password" id="at-forgotPwd" class="at-link at-pwd">Forgot your password?</a>
+                    </p>
+                </div>
+                <!-- Form Submit Button -->
+                <button type="submit" class="at-btn submit disabled" id="at-btn">
+                    Register
+                </button>
+            </form>
+        </div>
+        <!-- Link to Sign In -->
+        <div class="at-signin-link">
+            <p>
+                If you already have an account
+                <a href="/sign-in" id="at-signIn" class="at-link at-signin">sign in</a>
+            </p>
+        </div>
+        <!-- Link to Sign Up -->
+        <div class="at-signup-link">
+            <p>
+                Don't have an account?
+                <a href="/sign-up" id="at-signUp" class="at-link at-signup">Register</a>
+            </p>
+        </div>
+        <!-- Link to Privacy Policy and Terms of use -->
+        <div class="at-terms-link">
+            <p>
+                By clicking Register, you agree to our
+                <a href="/privacyPolicy">Privacy Policy</a> and
+                <a href="/termsOfUse">Terms of Use</a>
+            </p>
+        </div>
+    </div>
+</template>

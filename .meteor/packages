@@ -7,7 +7,6 @@ meteor-platform
 zimme:iron-router-active
 accounts-password
 less
-useraccounts:bootstrap
 accounts-google
 service-configuration
 twbs:bootstrap
@@ -15,3 +14,4 @@ twbs:bootstrap
 insecure
 fortawesome:fontawesome
 fezvrasta:bootstrap-material-design
+useraccounts:bootstrap
