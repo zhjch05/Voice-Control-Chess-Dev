@@ -12,3 +12,6 @@ accounts-google
 service-configuration
 twbs:bootstrap
 
+insecure
+fortawesome:fontawesome
+fezvrasta:bootstrap-material-design
