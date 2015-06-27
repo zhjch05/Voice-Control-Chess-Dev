@@ -1,4 +1,4 @@
-// Footer
+
 @footer-height: 70px;
 
 html {
@@ -7,7 +7,8 @@ html {
 }
 
 body {
-  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:prepend:"Droid Arabic Kufi","Droid Sans", */;
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:prepend:"Droid Arabic Kufi","Droid Sans", */
+  ;
   margin: 0px;
   /* Margin bottom by footer height */
   margin-bottom: @footer-height;
@@ -29,4 +30,37 @@ body {
     padding-right: 15px;
     padding-left: 15px;
   }
+}
+
+.navbar-xs {
+  min-height: 44px;
+}
+
+.navbar-xs .navbar-brand {
+  padding: 0 12px;
+  font-size: 16px;
+  line-height: 44px;
+  height: 44px;
+}
+
+.navbar-xs .navbar-nav > li > a {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  line-height: 44px;
+}
+
+.navbar-xs .navbar-toggle {
+  margin-top: 3px;
+  margin-bottom: 0px;
+  padding: 8px 9px;
+}
+
+.navbar-xs .navbar-form {
+  margin-top: 2px;
+  margin-bottom: 0px
+}
+
+#logspace {
+  height:400px;
+  overflow:scroll;
 }

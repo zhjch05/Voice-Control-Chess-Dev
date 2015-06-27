@@ -1,4 +1,5 @@
 Template.home.rendered = function() {
+    $.material.init();
     game = new Chess();
     var removeGreySquares = function() {
         $('#board .square-55d63').css('background', '');
@@ -104,6 +105,7 @@ Template.home.rendered = function() {
     //jQuery layout
     $('#leftpanel').height($('#midpanel').height());
     $('#rightpanel').height($('#midpanel').height());
+    $('#logspace').height($('#rightpanel').height()-137);
     
     //start log
     makeTurnLog();
@@ -111,11 +113,10 @@ Template.home.rendered = function() {
 
 //@param: content, put the content into the log space.
 function makeLog(content) {
-    //append content
-    $('#logspace').append('<br/><br/>' + content);
+    $('#scrollspace').append('<br/><p class="text-info">' + content+'</p>');
     //auto scroll
-    $('#scrollpanel').animate({
-        scrollTop: $('#logspace').height()
+    $('#logspace').animate({
+        scrollTop: $('#scrollspace').height()
     }, "slow");
 };
 

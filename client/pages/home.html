@@ -5,11 +5,28 @@
                 <div class="container">
                     <div class="container-fluid">
                         <div class="row">
-                            <button class="btn btn-fab btn-info"><i class="fa fa-info"></i></button>
+                            <a href="#instruction" class="btn btn-fab btn-info" data-toggle="tab"><i class="fa fa-info"></i></a>
+                            &nbsp;
+                            <a href="#statistics" class="btn btn-fab btn-success" data-toggle="tab"><i class="fa fa-bar-chart"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <div id="myTabContent1" class="tab-content">
+                <div class="tab-pane fade active in" id="instruction">
+                    <div class="panel-body">
+                        {{> instructions}}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="statistics">
+                    <div class="panel-body">
+                        <p>fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
+                            booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+                    </div>
+                </div>
+            </div>
+            
         </div>
 
     </div>
@@ -22,28 +39,74 @@
     </div>
     <div class="col-md-4">
         <div class="panel panel-default" id="rightpanel">
-            <div class="panel-body">
-                <div class="container">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <button class="btn btn-fab active"><a href="#home" data-toggle="tab"><i class="fa fa-desktop"></i></a></button>
-                            <button class="btn btn-fab"><a href="#profile" data-toggle="tab"><i class="fa fa-weixin"></i></a></button>
-                        </div>
-                        <div class="row">
-                            <div id="myTabContent" class="tab-content">
-                                <div class="tab-pane fade active in" id="home">
-                                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh
-                                        dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-                                </div>
-                                <div class="tab-pane fade" id="profile">
-                                    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
-                                        Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
-                                </div>
+            <nav class="navbar navbar-xs nvabar-primary">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-list-alt"></i>&nbsp;Console</a></li>
+                        <li><a href="#profile" data-toggle="tab"><i class="fa fa-stack-exchange"></i>&nbsp;Chats</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+                    <div class="panel-body" id="rightpanelbody">
+                        <div id="logspace">
+                            <div id="scrollspace">
+                                <p class="text-danger">Log Starts here:</p>
                             </div>
                         </div>
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-md-8">
+                                        <label class="control-label" for="inputDefault"></label>
+                                        <input type="text" class="form-control floating-label" id="inputCommand" placeholder="Command">
+                                    </div>
+                                    <button type="type" class="btn btn-material-blue-grey"><i class="fa fa-microphone"></i></button>
+                                    <input type="submit" class="btn btn-primary" id="submitbutton" value="Move">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile">
+                    <div class="panel-body">
+                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
+                            booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</template>
+
+
+<template name="instructions">
+    <br/>
+	<div class ="text-muted text-success">
+	<small>To <b>enter</b> a command, simply say </small><b>"Confirm"</b> <small>after the command.<br/>
+	To <b>take back</b> a command, say </small><b>"Cancel"</b><small> before the command goes through.<br/></small>
+	</div>
+	<br/>
+
+	<b class="text-warning">To move a piece use the form:</b><br/>
+	<p class="text-primary">"E2 to E4" or "Pawn to E4" or "E4"<br/>
+	"B1 takes C3" or "Knight takes C3"</p>
+	<br/>
+
+	<b class="text-warning">To get information about the board say:</b><br/>
+	<p class="text-primary">"what piece is on e4" or "tell me what's on a6" or "do I have a piece at g2"</p>
+	<br/>
+
+	<b class="text-warning">To turn off voice functionality say:</b><br/>
+	<p class="text-primary">"Stop dictation" or "end voice"</p>
+	<br/>
+
+	<b class="text-warning">To restart the game say:</b><br/>
+	<p class="text-primary">"restart game" or "reset game</p>
+	<br/>
+
+	<b class="text-warning">To hear the last move say:</b><br/>
+	<p class="text-primary">"repeat" or "repeat the last move"</p>
+	<br/>
 </template>
