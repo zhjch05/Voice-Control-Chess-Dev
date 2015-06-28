@@ -197,4 +197,7 @@ function makeIndicator(move) {
         default:
             return -1;
     }
+     $('#tablerow').animate({
+        scrollTop: $('#leadertable').height()
+    }, "slow");
 }
