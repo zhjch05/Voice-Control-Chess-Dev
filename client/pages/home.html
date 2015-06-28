@@ -1,18 +1,20 @@
 <template name="home">
-    <div class="col-md-3">
+    <div class="col-xs-3">
         <div class="panel panel-default" id="leftpanel">
             <div class="panel-body">
                 <div class="container">
                     <div class="container-fluid">
                         <div class="row">
-                            <a href="#instruction" class="btn btn-fab btn-info" data-toggle="tab"><i class="fa fa-info"></i></a>
-                            &nbsp;
+                            <a href="#instruction" class="btn btn-fab btn-info" data-toggle="tab"><i class="fa fa-info"></i></a> &nbsp;
                             <a href="#statistics" class="btn btn-fab btn-success" data-toggle="tab"><i class="fa fa-bar-chart"></i></a>
+                            <div id="turnindicator">
+                                <p><i class="fa fa-circle-o"></i>&nbsp;White's turn</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div id="myTabContent1" class="tab-content">
                 <div class="tab-pane fade active in" id="instruction">
                     <div class="panel-body">
@@ -21,23 +23,22 @@
                 </div>
                 <div class="tab-pane fade" id="statistics">
                     <div class="panel-body">
-                        <p>fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                            booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+                        {{> leaderboard}}
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
     </div>
-    <div class="col-md-5">
+    <div class="col-xs-5">
         <div class="panel panel-default" id="midpanel">
             <div class="panel-body">
                 <div id="board" style="width: 100%"></div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-xs-4">
         <div class="panel panel-default" id="rightpanel">
             <nav class="navbar navbar-xs nvabar-primary">
                 <div class="collapse navbar-collapse">
@@ -52,18 +53,19 @@
                     <div class="panel-body" id="rightpanelbody">
                         <div id="logspace">
                             <div id="scrollspace">
-                                <p class="text-danger">Log Starts here:</p>
+                                <p class="text-danger">Log system started successfully.</p>
                             </div>
                         </div>
-                        <form class="form-horizontal">
+                        <form id="formcmd" class="form-horizontal">
                             <fieldset>
                                 <div class="form-group">
                                     <div class="col-md-8">
                                         <label class="control-label" for="inputDefault"></label>
-                                        <input type="text" class="form-control floating-label" id="inputCommand" placeholder="Command">
+                                        <input type="text" class="form-control floating-label" name="inputCommand" id="inputCommand" style="size:100%;" placeholder="Command">
                                     </div>
-                                    <button type="type" class="btn btn-material-blue-grey"><i class="fa fa-microphone"></i></button>
-                                    <input type="submit" class="btn btn-primary" id="submitbutton" value="Move">
+                                    <button type="type" class="btn btn-material-blue-grey" id="spbutton"><i class="fa fa-microphone"></i></button>
+                                    <input type="submit" class="btn btn-primary" value="Move" id="movebutton">
+
                                 </div>
                             </fieldset>
                         </form>
@@ -83,30 +85,107 @@
 
 <template name="instructions">
     <br/>
-	<div class ="text-muted text-success">
-	<small>To <b>enter</b> a command, simply say </small><b>"Confirm"</b> <small>after the command.<br/>
+    <div class="text-muted text-success">
+        <small>To <b>enter</b> a command, simply say </small><b>"Confirm"</b> <small>after the command.<br/>
 	To <b>take back</b> a command, say </small><b>"Cancel"</b><small> before the command goes through.<br/></small>
-	</div>
-	<br/>
+    </div>
+    <br/>
 
-	<b class="text-warning">To move a piece use the form:</b><br/>
-	<p class="text-primary">"E2 to E4" or "Pawn to E4" or "E4"<br/>
-	"B1 takes C3" or "Knight takes C3"</p>
-	<br/>
+    <b class="text-warning">To move a piece use the form:</b>
+    <br/>
+    <p class="text-primary">"E2 to E4" or "Pawn to E4" or "E4"
+        <br/> "B1 takes C3" or "Knight takes C3"</p>
+    <br/>
 
-	<b class="text-warning">To get information about the board say:</b><br/>
-	<p class="text-primary">"what piece is on e4" or "tell me what's on a6" or "do I have a piece at g2"</p>
-	<br/>
+    <b class="text-warning">To get information about the board say:</b>
+    <br/>
+    <p class="text-primary">"what piece is on e4" or "tell me what's on a6" or "do I have a piece at g2"</p>
+    <br/>
 
-	<b class="text-warning">To turn off voice functionality say:</b><br/>
-	<p class="text-primary">"Stop dictation" or "end voice"</p>
-	<br/>
+    <b class="text-warning">To turn off voice functionality say:</b>
+    <br/>
+    <p class="text-primary">"Stop dictation" or "end voice"</p>
+    <br/>
 
-	<b class="text-warning">To restart the game say:</b><br/>
-	<p class="text-primary">"restart game" or "reset game</p>
-	<br/>
+    <b class="text-warning">To restart the game say:</b>
+    <br/>
+    <p class="text-primary">"restart game" or "reset game</p>
+    <br/>
 
-	<b class="text-warning">To hear the last move say:</b><br/>
-	<p class="text-primary">"repeat" or "repeat the last move"</p>
-	<br/>
+    <b class="text-warning">To hear the last move say:</b>
+    <br/>
+    <p class="text-primary">"repeat" or "repeat the last move"</p>
+    <br/>
+</template>
+
+<template name="leaderboard">
+    <div class="row">
+        <div class="col-xs-1">
+
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\wP.png" width="100%">
+            <p class="text-primary upflag" id="wp">0</p>
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\wN.png" width="100%">
+            <p class="text-primary upflag" id="wn">0</p>
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\wB.png" width="100%">
+            <p class="text-primary upflag" id="wb">0</p>
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\wR.png" width="100%">
+            <p class="text-primary upflag" id="wr">0</p>
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\wQ.png" width="100%">
+            <p class="text-primary upflagq" id="wq">0</p>
+        </div>
+        <div class="col-xs-1">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1">
+
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\bP.png" width="100%">
+            <p class="text-primary upflag" id="bp">0</p>
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\bN.png" width="100%">
+            <p class="text-primary upflag" id="bn">0</p>
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\bB.png" width="100%">
+            <p class="text-primary upflag" id="bb">0</p>
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\bR.png" width="100%">
+            <p class="text-primary upflag" id="br">0</p>
+        </div>
+        <div class="col-xs-2">
+            <img src="img\chesspieces\wikipedia\bQ.png" width="100%">
+            <p class="text-primary upflagq" id="bq">0</p>
+        </div>
+        <div class="col-xs-1">
+
+        </div>
+    </div>
+    <div class="row" id="tablerow">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>White</th>
+                    <th>Black</th>
+                </tr>
+            </thead>
+            <tbody id="sanbody">
+            </tbody>
+        </table>
+    </div>
 </template>

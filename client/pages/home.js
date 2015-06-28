@@ -1,6 +1,15 @@
+Template.home.events({
+    'submit #formcmd': function(event) {
+        event.preventDefault();
+        var cmd = event.target.inputCommand.value;
+        nlp(cmd);
+    }
+});
+
 Template.home.rendered = function() {
     $.material.init();
     game = new Chess();
+    steps = 0;
     var removeGreySquares = function() {
         $('#board .square-55d63').css('background', '');
     };
@@ -23,15 +32,28 @@ Template.home.rendered = function() {
     };
     var onDrop = function(source, target) {
         removeGreySquares();
+        var sourcepiece = game.get(source);
+        var targetpiece = game.get(target);
+
+
         var move = game.move({
             from: source,
             to: target,
             promotion: 'q' // NOTE: always promote to a queen for example simplicity
         });
+
         // illegal move
         if (move === null) return 'snapback';
+        if (targetpiece != null) {
+            updatestatistics(targetpiece);
+        }
+        else {
+            updatestatisticsPawn(source, target, sourcepiece, targetpiece);
+        }
         updateStatus();
-        makeLog('Moved with mouse: from ' + source + ' to ' + target);
+        console.log(move);
+        makeIndicator(move);
+
         makeTurnLog();
     };
     var onSnapEnd = function() {
@@ -67,6 +89,9 @@ Template.home.rendered = function() {
         }
     };
     onMouseoverSquare = function(square, piece) {
+        if (game.game_over() === true) {
+            return;
+        }
         // get list of possible moves for this square
         var moves = game.moves({
             square: square,
@@ -105,15 +130,15 @@ Template.home.rendered = function() {
     //jQuery layout
     $('#leftpanel').height($('#midpanel').height());
     $('#rightpanel').height($('#midpanel').height());
-    $('#logspace').height($('#rightpanel').height()-137);
-    
+    $('#logspace').height($('#rightpanel').height() - 137);
+
     //start log
     makeTurnLog();
 }
 
 //@param: content, put the content into the log space.
 function makeLog(content) {
-    $('#scrollspace').append('<br/><p class="text-info">' + content+'</p>');
+    $('#scrollspace').append('<br/><p class="text-info">' + content + '</p>');
     //auto scroll
     $('#logspace').animate({
         scrollTop: $('#scrollspace').height()
@@ -122,56 +147,54 @@ function makeLog(content) {
 
 function makeTurnLog() {
     if (game.game_over() === true) {
-        makeLog('Game is over.');
+        $('#turnindicator').html("<p>Game is over</p>");
     }
     else if (game.turn() === 'w') {
-        makeLog('It is now white\'s turn');
+        $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
     }
     else if (game.turn() === 'b') {
-        makeLog('It is now black\'s turn');
+        $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
     }
 }
 
-function analyzer(MYcmd) {
-    var cmd = preProcess(MYcmd);
-    if (cmd.indexOf('cancel') > -1) {
-        return;
-    }
-    else if (cmd.indexOf('confirm') > -1) {
-        action(cmd);
-    }
-    else {
-        autoSense(cmd);
+function updatestatistics(piece) {
+    if (piece.color != null) {
+        var piecejquery = '#' + piece.color + piece.type;
+        $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
     }
 }
 
-function preProcess(content) {
-    content = content.trim();
-    content = content.toLowerCase();
-    content = content.replace(/\s+/g, ' ');
-    return content;
-}
-
-function action(MYcmd) {
-    if (MYcmd.search(/to|take/) > -1) {
-        performMove(MYcmd);
+function updatestatisticsPawn(source, target, sourcepiece, targetpiece) {
+    var vertiCoorSrc, vertiCoorTar;
+    var piecejquery;
+    if (sourcepiece.type === 'p') {
+        vertiCoorSrc = source.match(/[a-h]/);
+        vertiCoorTar = target.match(/[a-h]/);
+        if (vertiCoorSrc[0] != vertiCoorTar[0]) {
+            if (targetpiece === null) {
+                if (sourcepiece.color === 'w') {
+                    piecejquery = '#' + 'b' + 'p';
+                }
+                else if (sourcepiece.color === 'b') {
+                    piecejquery = '#' + 'w' + 'p';
+                }
+                $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+            }
+        }
     }
 }
 
-function performMove(MYcmd) {
-    var results = MYcmd.match(/[a-h]\d/ig);
-    if (results.length > 2) {
-        makeLog('There seems more pieces than two you typed.');
+function makeIndicator(move) {
+    steps += 1;
+    switch (steps % 2) {
+        case 1:
+            var title = parseInt(steps / 2) + 1;
+            $('#sanbody').append('<tr><td>' + title + '</td><td>' + move.san + '</td>');
+            break;
+        case 0:
+            $('tr:last').append('<td>' + move.san + '</td>');
+            break;
+        default:
+            return -1;
     }
-    else if (results.length === 1) {
-        makeLog('There seems only one piece you typed.');
-    }
-    else if (results.length === 2) {
-        var isLegal = testLegal(results[0], results[1]);
-    }
-    return false;
-}
-
-function testLegal(piecefrom, pieceto) {
-
 }

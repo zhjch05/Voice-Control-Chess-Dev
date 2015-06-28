@@ -1,4 +1,4 @@
-// downloaded from https://github.com/jhlywa/chess.js/blob/master/chess.js
+//downloaded from https://github.com/jhlywa/chess.js/blob/master/chess.js
 // on 27 July 2013
 // commit: eed8f8a3b96d99fcd570b7ced105e8415409a800
 
@@ -1531,7 +1531,7 @@ window['Chess'] = window['Chess'] || function(fen) {
     turn: function() {
       return turn;
     },
-
+    
     move: function(move) {
       /* The move function can be called with in the following parameters:
        *
@@ -1575,9 +1575,9 @@ window['Chess'] = window['Chess'] || function(fen) {
        * move is made
        */
       var pretty_move = make_pretty(move_obj);
-
+      
       make_move(move_obj);
-
+      
       return pretty_move;
     },
 
