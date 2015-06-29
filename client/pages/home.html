@@ -64,10 +64,10 @@
                                         <input type="text" class="form-control floating-label" name="inputCommand" id="inputCommand" style="size:100%;" placeholder="Command">
                                     </div>
                                     <div class=col-xs-2>
-                                    <button type="type" class="btn btn-material-blue-grey" style="width:100%;" id="spbutton"><i class="fa fa-microphone"></i></button>
+                                        <button type="input" class="btn btn-material-blue-grey" style="width:100%;" id="spbutton"><i class="fa fa-microphone"></i></button>
                                     </div>
                                     <div class="col-xs-3">
-                                    <input type="submit" class="btn btn-primary" style="width:100%;" value="Move" id="movebutton">
+                                        <input type="submit" class="btn btn-primary" style="width:100%;" value="Move" id="movebutton">
                                     </div>
                                 </div>
                             </fieldset>
@@ -87,38 +87,40 @@
 
 
 <template name="instructions">
-    <br/>
-    <div class="text-muted text-success">
-        <small>To <b>enter</b> a command, simply say </small><b>"Confirm"</b> <small>after the command.<br/>
+    <div class="col-xs-12" id="inst">
+        <br/>
+        <div class="text-muted text-success">
+            <small>To <b>enter</b> a command, simply say </small><b>"Confirm"</b> <small>after the command.<br/>
 	To <b>take back</b> a command, say </small><b>"Cancel"</b><small> before the command goes through.<br/></small>
+        </div>
+        <br/>
+
+        <b class="text-warning">To move a piece use the form:</b>
+        <br/>
+        <p class="text-primary">"E2 to E4" or "Pawn to E4" or "E4"
+            <br/> "B1 takes C3" or "Knight takes C3"</p>
+        <br/>
+
+        <b class="text-warning">To get information about the board say:</b>
+        <br/>
+        <p class="text-primary">"what piece is on e4" or "tell me what's on a6" or "do I have a piece at g2"</p>
+        <br/>
+
+        <b class="text-warning">To turn off voice functionality say:</b>
+        <br/>
+        <p class="text-primary">"Stop dictation" or "end voice"</p>
+        <br/>
+
+        <b class="text-warning">To restart the game say:</b>
+        <br/>
+        <p class="text-primary">"restart game" or "reset" game</p>
+        <br/>
+
+        <b class="text-warning">To hear the last move say:</b>
+        <br/>
+        <p class="text-primary">"repeat" or "repeat the last move"</p>
+        <br/>
     </div>
-    <br/>
-
-    <b class="text-warning">To move a piece use the form:</b>
-    <br/>
-    <p class="text-primary">"E2 to E4" or "Pawn to E4" or "E4"
-        <br/> "B1 takes C3" or "Knight takes C3"</p>
-    <br/>
-
-    <b class="text-warning">To get information about the board say:</b>
-    <br/>
-    <p class="text-primary">"what piece is on e4" or "tell me what's on a6" or "do I have a piece at g2"</p>
-    <br/>
-
-    <b class="text-warning">To turn off voice functionality say:</b>
-    <br/>
-    <p class="text-primary">"Stop dictation" or "end voice"</p>
-    <br/>
-
-    <b class="text-warning">To restart the game say:</b>
-    <br/>
-    <p class="text-primary">"restart game" or "reset game</p>
-    <br/>
-
-    <b class="text-warning">To hear the last move say:</b>
-    <br/>
-    <p class="text-primary">"repeat" or "repeat the last move"</p>
-    <br/>
 </template>
 
 <template name="leaderboard">

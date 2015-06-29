@@ -2,7 +2,9 @@ Template.home.events({
     'submit #formcmd': function(event) {
         event.preventDefault();
         var cmd = event.target.inputCommand.value;
-        NLP.input(cmd);
+        makeLog(cmd,'usr');
+        makeLog(NLP.input(cmd),'sys');
+        $('#inputCommand').val('');
     }
 });
 
@@ -70,6 +72,8 @@ Template.home.rendered = function() {
 
         // checkmate?
         if (game.in_checkmate() === true) {
+            var msg = new SpeechSynthesisUtterance('Checkmate');
+            window.speechSynthesis.speak(msg);
             status = 'Game over, ' + moveColor + ' is in checkmate.';
         }
 
@@ -84,6 +88,8 @@ Template.home.rendered = function() {
 
             // check?
             if (game.in_check() === true) {
+                var msg = new SpeechSynthesisUtterance('Check');
+                window.speechSynthesis.speak(msg);
                 status += ', ' + moveColor + ' is in check';
             }
         }
@@ -131,33 +137,35 @@ Template.home.rendered = function() {
     $('#leftpanel').height($('#midpanel').height());
     $('#rightpanel').height($('#midpanel').height());
     $('#logspace').height($('#rightpanel').height() - 137);
+    $('#inst').height($('#leftpanel').height()-105);
+    
 
     //start log
     makeTurnLog();
 
     NLP = new NLP();
-    makeLog(NLP.init(),'sys');
+    makeLog(NLP.init(), 'sys');
 }
 
 //@param: content, put the content into the log space.
 function makeLog(content, user) {
     if (user === 'usr') {
-        $('#scrollspace').append('<br/><p class="text-info">User: ' + content + '</p>');
+        $('#scrollspace').append('<p class="text-info">User: ' + content + '</p>');
         //auto scroll
         $('#logspace').animate({
             scrollTop: $('#scrollspace').height()
         }, "slow");
     }
     else if (user === 'sys') {
-        $('#scrollspace').append('<br/><p class="text-danger">System: ' + content + '</p>');
+        $('#scrollspace').append('<p class="text-danger">System: ' + content + '</p>');
         //auto scroll
         $('#logspace').animate({
             scrollTop: $('#scrollspace').height()
         }, "slow");
-        
+
         /*https://tts.neospeech.com/rest_1_1.php?method=ConvertSimple&email=zjc1996@brandeis.edu&accountId=cd95c0b038&loginKey=zhjchloginkey&loginPassword=0b5301479837b0b840a0&voice=TTS_PAUL_DB&outputFormat=FORMAT_WAV&sampleRate=16&text=The+quick+brown+fox+jumps+over+the+lazy+dog*/
-        
-        
+
+
     }
 };
 
