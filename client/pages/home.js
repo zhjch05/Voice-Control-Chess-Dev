@@ -2,7 +2,7 @@ Template.home.events({
     'submit #formcmd': function(event) {
         event.preventDefault();
         var cmd = event.target.inputCommand.value;
-        nlp(cmd);
+        NLP.input(cmd);
     }
 });
 
@@ -30,7 +30,7 @@ Template.home.rendered = function() {
             return false;
         }
     };
-    var onDrop = function(source, target) {
+    onDrop = function(source, target) {
         removeGreySquares();
         var sourcepiece = game.get(source);
         var targetpiece = game.get(target);
@@ -134,15 +134,31 @@ Template.home.rendered = function() {
 
     //start log
     makeTurnLog();
+
+    NLP = new NLP();
+    makeLog(NLP.init(),'sys');
 }
 
 //@param: content, put the content into the log space.
-function makeLog(content) {
-    $('#scrollspace').append('<br/><p class="text-info">' + content + '</p>');
-    //auto scroll
-    $('#logspace').animate({
-        scrollTop: $('#scrollspace').height()
-    }, "slow");
+function makeLog(content, user) {
+    if (user === 'usr') {
+        $('#scrollspace').append('<br/><p class="text-info">User: ' + content + '</p>');
+        //auto scroll
+        $('#logspace').animate({
+            scrollTop: $('#scrollspace').height()
+        }, "slow");
+    }
+    else if (user === 'sys') {
+        $('#scrollspace').append('<br/><p class="text-danger">System: ' + content + '</p>');
+        //auto scroll
+        $('#logspace').animate({
+            scrollTop: $('#scrollspace').height()
+        }, "slow");
+        
+        /*https://tts.neospeech.com/rest_1_1.php?method=ConvertSimple&email=zjc1996@brandeis.edu&accountId=cd95c0b038&loginKey=zhjchloginkey&loginPassword=0b5301479837b0b840a0&voice=TTS_PAUL_DB&outputFormat=FORMAT_WAV&sampleRate=16&text=The+quick+brown+fox+jumps+over+the+lazy+dog*/
+        
+        
+    }
 };
 
 function makeTurnLog() {
@@ -197,7 +213,7 @@ function makeIndicator(move) {
         default:
             return -1;
     }
-     $('#tablerow').animate({
+    $('#tablerow').animate({
         scrollTop: $('#leadertable').height()
     }, "slow");
 }
