@@ -194,7 +194,7 @@ function updatestatisticsPawn(source, target, sourcepiece, targetpiece) {
     if (sourcepiece.type === 'p') {
         vertiCoorSrc = source.match(/[a-h]/);
         vertiCoorTar = target.match(/[a-h]/);
-        if (vertiCoorSrc[0] != vertiCoorTar[0]) {
+        if (vertiCoorSrc[0] !== vertiCoorTar[0]) {
             if (targetpiece === null) {
                 if (sourcepiece.color === 'w') {
                     piecejquery = '#' + 'b' + 'p';

@@ -15,3 +15,7 @@ insecure
 fortawesome:fontawesome
 fezvrasta:bootstrap-material-design
 useraccounts:bootstrap
+meteoric:ionic
+fourseven:scss@2.0.0
+meteoric:ionic-sass
+meteoric:ionicons-sass
