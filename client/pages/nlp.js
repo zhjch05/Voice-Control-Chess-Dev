@@ -20,7 +20,7 @@ NLP = function() {
                 return false;
             },
             commandinquiry: function() {
-                return //
+                return;
             }
         }
     }
