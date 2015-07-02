@@ -138,13 +138,11 @@ Template.home.rendered = function() {
     $('#rightpanel').height($('#midpanel').height());
     $('#logspace').height($('#rightpanel').height() - 137);
     $('#inst').height($('#leftpanel').height()-105);
-    
+
 
     //start log
     makeTurnLog();
-
-    NLP = new NLP();
-    makeLog(NLP.init(), 'sys');
+    makeLog(NLP().init(), 'sys');
 }
 
 //@param: content, put the content into the log space.

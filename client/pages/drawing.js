@@ -6,6 +6,10 @@ Template.drawpanel.rendered = function() {
      ismousedown = false;
      mycanvas.onmousedown = function(e) {
           ismousedown = true;
+          context.beginPath();
+          context.arc(e.pageX-mycanvas.offsetLeft, e.pageY-mycanvas.offsetTop, 10, 0, 2 * Math.PI);
+          context.fillStyle = defaultcolor;
+          context.fill();
      }
      mycanvas.onmousemove = function(e) {
           if (ismousedown === true) {
