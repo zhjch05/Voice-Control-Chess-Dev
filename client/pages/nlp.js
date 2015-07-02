@@ -3,7 +3,6 @@ NLP = function() {
         var dialogs = [];
         return {
             init: function() {
-                dialogs[0].syss["content"] = "Hello from the NLP system. Input your command please. The instructions are on the left.";
                 return 0;
             },
             lastIndex: function() {
