@@ -5,7 +5,10 @@ Template.home.events({
         makeLog(cmd,'usr');
         makeLog(NLP.input(cmd),'sys');
         $('#inputCommand').val('');
-    }
+    },
+    'click #changebutton': function(event) {
+        changeButton();
+    },
 });
 
 Template.home.rendered = function() {
@@ -118,7 +121,7 @@ Template.home.rendered = function() {
     var onMouseoutSquare = function(square, piece) {
         removeGreySquares();
     };
-    var cfg = {
+    cfg = {
         draggable: true,
         position: 'start',
         onDragStart: onDragStart,
@@ -126,7 +129,8 @@ Template.home.rendered = function() {
         onSnapEnd: onSnapEnd,
         onMouseoutSquare: onMouseoutSquare,
         onMouseoverSquare: onMouseoverSquare,
-        showCoordinate: true
+        showCoordinate: true,
+        themeStyle: "b"
     };
     //rendering board with cfg
     myboard = new ChessBoard('board', cfg);
@@ -145,7 +149,24 @@ Template.home.rendered = function() {
 
     NLP = new NLP();
     makeLog(NLP.init(), 'sys');
-}
+    
+    cfg.themeStyle = $('#selectTheme option:selected').val();
+    $('#selectTheme').change(function () {
+        cfg.themeStyle = $('#selectTheme option:selected').val();
+        console.log(cfg);
+        myboard = new ChessBoard('board', cfg);
+        updateStatus();
+        });
+    }
+    changeButton = function()
+    {
+        cfg.themeStyle ="a";
+        console.log(cfg);
+        myboard = new ChessBoard('board', cfg);
+    
+        updateStatus();
+        
+    }
 
 //@param: content, put the content into the log space.
 function makeLog(content, user) {

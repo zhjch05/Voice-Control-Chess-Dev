@@ -4,9 +4,16 @@
             <div class="panel-body">
                 <div class="container">
                     <div class="container-fluid">
+                        <p>Theme picker: <select id="selectTheme">
+                                <option id="theme1" value="a" selected="a">Theme 1</option>
+                                <option id="theme2" value="b">Theme 2</option>
+                                </select>
+                        </p>
+                        <button class="btn btn-default" id="changebutton" type="button">change</button>
                         <div class="row">
                             <a href="#instruction" class="btn btn-fab btn-info" data-toggle="tab"><i class="fa fa-info"></i></a> &nbsp;
                             <a href="#statistics" class="btn btn-fab btn-success" data-toggle="tab"><i class="fa fa-bar-chart"></i></a>
+
                             <div id="turnindicator">
                                 <p><i class="fa fa-circle-o"></i>&nbsp;White's turn</p>
                             </div>
