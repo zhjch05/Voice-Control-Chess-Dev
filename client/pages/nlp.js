@@ -1,67 +1,59 @@
 NLP = function() {
     var ENV = function() {
+        var getPieces = function(content) {
+            return content.match(/([a-h][1-8])|knight|bishop|queen|king|pawn|rook/g);
+        };
+        var getPreps = function(content) {
+            return content.match(/to|take|on|at|in/g);
+        };
+        var getDets = function(content) {
+            return content.match(/what|which|how|when|where/g);
+        }
+        var Sentence = function(content, owner) {
+            this.content = content;
+            this.owner = owner;
+            return {
+                content: this.content,
+                owner: this.owner
+            }
+        }
         var dialogs = [];
+        var currentDialog = function() {
+            return dialogs.length - 1;
+        }
+        var currentSentence = function(curDialog) {
+            return dialogs[curDialog].length - 1;
+        }
+        var getCurrent = function() {
+            return dialogs[currentDialog()][currentSentence(currentDialog())];
+        }
         return {
             init: function() {
-                return 0;
-            },
-            lastIndex: function() {
-                return dialogs.length - 1;
-            },
-            newIndex: function() {
-                return dialogs.length;
+                var sentences = [];
+                var sentence = new Sentence('Hello from the NLP system. Input your command please. The instructions are on the left.', 'sys');
+                sentences.push(sentence);
+                dialogs.push(sentences);
+                return getCurrent();
             }
         }
-    }
-    var maindecision = function(content) {
-        return {
-            commandcontrol: function() {
-                if (content.search(/restart|pause|reset|undo/) > -1) return true;
-                return false;
-            },
-            commandinquiry: function() {
-                return;
-            }
-        }
-    }
-    var analyzecontrol = function() {
-
-    }
+    };
     var beautify = function(content) {
-        content = content
-                .trim()
-                .toLowerCase()
-                .replace(/\s+/, ' ');
+        content = content.trim()
+            .toLowerCase()
+            .replace(/\s+/, ' ');
         return content;
-    }
+    };
     var move = function(source, target) {
         onDrop(source, target);
         myboard.position(game.fen());
-    }
-    var mainTree = function(content) {
-        if (maindecision(content).commandcontrol() === true) {
-            analyzecontrol(content);
-        }
-        else if (content.search(dictionary().commandinquiry()) > -1) {
-
-        }
-        else if (content.search(dictionary().commandmove()) > -1) {
-
-        }
-        else if (content.search(dictionary().commandother()) > -1) {
-
-        }
-        else return -1;
-    }
+    };
     return {
         init: function() {
             env = new ENV();
-            env.init();
-            return 'Hello from the NLP system. Input your command please. The instructions are on the left.';
+            return env.init();
         },
         input: function(content) {
             content = beautify(content);
-
         }
     }
 }
