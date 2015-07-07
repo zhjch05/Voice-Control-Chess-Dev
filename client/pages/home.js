@@ -3,7 +3,7 @@ Template.home.events({
         event.preventDefault();
         var cmd = event.target.inputCommand.value;
         makeLog(cmd,'usr');
-        makeLog(NLP.input(cmd),'sys');
+        makeLog(nlp.input(cmd),'sys');
         $('#inputCommand').val('');
     }
 });
