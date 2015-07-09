@@ -23,6 +23,7 @@ NLP = function() {
     var move = function(source, target) {
         onDrop(source, target);
         myboard.position(game.fen());
+        moveSound.play();
     }
     return {
         init: function() {

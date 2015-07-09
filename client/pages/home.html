@@ -5,8 +5,8 @@
                 <div class="container">
                     <div class="container-fluid">
                         <div class="row">
-                            <a href="#instruction" class="btn btn-fab btn-info" data-toggle="tab"><i class="fa fa-info"></i></a> &nbsp;
                             <a href="#statistics" class="btn btn-fab btn-success" data-toggle="tab"><i class="fa fa-bar-chart"></i></a>
+                            <a href="#instruction" class="btn btn-fab btn-info" data-toggle="tab"><i class="fa fa-info"></i></a> &nbsp;
                             <div id="turnindicator">
                                 <p><i class="fa fa-circle-o"></i>&nbsp;White's turn</p>
                             </div>
@@ -16,12 +16,12 @@
             </div>
 
             <div id="myTabContent1" class="tab-content">
-                <div class="tab-pane fade active in" id="instruction">
+                <div class="tab-pane fade" id="instruction">
                     <div class="panel-body">
                         {{> instructions}}
                     </div>
                 </div>
-                <div class="tab-pane fade" id="statistics">
+                <div class="tab-pane fade  active in" id="statistics">
                     <div class="panel-body">
                         {{> leaderboard}}
                     </div>
@@ -89,7 +89,8 @@
 <template name="instructions">
     <div class="col-xs-12" id="inst">
         <br/>
-        <div class="text-muted text-success">
+        <h3> Voice Command Instructions</h3>
+        <div class="text-info">
             <small>To <b>enter</b> a command, simply say </small><b>"Confirm"</b> <small>after the command.<br/>
 	To <b>take back</b> a command, say </small><b>"Cancel"</b><small> before the command goes through.<br/></small>
         </div>

@@ -1,3 +1,5 @@
+moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
+
 Template.home.events({
     'submit #formcmd': function(event) {
         event.preventDefault();
@@ -36,7 +38,7 @@ Template.home.rendered = function() {
         removeGreySquares();
         var sourcepiece = game.get(source);
         var targetpiece = game.get(target);
-
+        moveSound.play();
 
         var move = game.move({
             from: source,
