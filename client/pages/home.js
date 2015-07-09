@@ -62,7 +62,7 @@ Template.home.rendered = function() {
         myboard.position(game.fen());
     };
     updateStatus = function() {
-        console.log("updateStatus");
+        //console.log("updateStatus");
         var status = '';
 
         var moveColor = 'White';

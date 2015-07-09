@@ -1,4 +1,30 @@
+function testLegal(source, target) {
+    var move = game.move({
+        from: source,
+        to: target,
+        promotion: 'q' // NOTE: always promote to a queen for example simplicity
+    });
+    if (move === null) return false;
+    else {
+        game.undo();
+        return true;
+    }
+    return undefined;
+}
+
 NLP = function() {
+    var dict = {};
+    dict['knight'] = 'n';
+    dict['king'] = 'k';
+    dict['rook'] = 'r';
+    dict['pawn'] = 'p';
+    dict['queen'] = 'q';
+    var dictR = {};
+    dictR['n'] = 'knight';
+    dictR['k'] = 'king';
+    dictR['r'] = 'rook';
+    dictR['p'] = 'pawn';
+    dictR['q'] = 'queen';
     var Sentence = function(content, owner, pieces, preps, dets, controlkey) {
         this.content = content;
         this.owner = owner;
@@ -6,15 +32,15 @@ NLP = function() {
         this.preps = preps;
         this.dets = dets;
         this.controlkey = controlkey;
-        console.log({
-            content: this.content,
-            owner: this.owner,
-            pieces: this.pieces,
-            preps: this.preps,
-            dets: this.dets,
-            controlkey: this.controlkey,
-            intent: this.intent
-        });
+        // console.log({
+        //     content: this.content,
+        //     owner: this.owner,
+        //     pieces: this.pieces,
+        //     preps: this.preps,
+        //     dets: this.dets,
+        //     controlkey: this.controlkey,
+        //     intent: this.intent
+        // });
         if (owner === 'usr') {
             if (controlkey !== null) {
                 this.intent = 'control';
@@ -64,7 +90,7 @@ NLP = function() {
         return {
             init: function() {
                 var sentences = [];
-                var sentence = new Sentence('Hello from the NLP system. Input your command please. The instructions are on the left.', 'sys', null, null, null, null);
+                var sentence = new Sentence('Hello from the NLP system. Input your command please. The instructions are on the left.', 'sys' /*, null, null, null, null*/ );
                 sentences.push(sentence);
                 dialogs.push(sentences);
                 return getCurSentence();
@@ -79,7 +105,7 @@ NLP = function() {
         var dets = getDets(content);
         var controlkey = getControlKey(content);
         var sentence = new Sentence(content, owner, pieces, preps, dets, controlkey);
-        console.log(JSON.stringify(sentence));
+        // console.log(JSON.stringify(sentence));
         return sentence;
     };
 
@@ -87,7 +113,7 @@ NLP = function() {
     var beautify = function(content) {
         content = content.trim()
             .toLowerCase()
-            .replace(/\s+/g, ' ');
+            .replace(/\s+/g, '');
         return content;
     };
 
@@ -95,11 +121,29 @@ NLP = function() {
     var move = function(source, target) {
         if (source.search(/[a-h][1-8]/) > -1) {
             onDrop(source, target);
+            myboard.position(game.fen());
+            return 'Moved from ' + source + ' to ' + target + '.';
+        } else {
+            var availablePieces = [];
+            _.each(game.SQUARES, function(piece) {
+                var tmp = game.get(piece);
+                if (tmp !== null && tmp !== undefined) {
+                    if (dictR[tmp.type] === source && game.turn() === tmp.color) {
+                        if (testLegal(piece, target) === true) {
+                            availablePieces.push({
+                                loc: piece,
+                                piece: tmp
+                            });
+                        }
+                    }
+                }
+            });
+            if (availablePieces.length === 1) {
+                onDrop(availablePieces[0].loc, target);
+                myboard.position(game.fen());
+                return 'Moved ' + dictR[availablePieces[0].piece.type] + ' at ' + availablePieces[0].loc + ' to ' + target + '.';
+            }
         }
-        else {
-            
-        }
-        myboard.position(game.fen());
     };
 
     //public APIs
@@ -121,29 +165,9 @@ NLP = function() {
 
                         break;
                     case 'move':
-                        // corPieces = [];
-                        // _.each(sentence.pieces, function(piece) {
-                        //     if (piece.search(/[a-h][1-8]/) > -1) {
-                        //         corPieces.push(piece);
-                        //     }
-                        // });
-                        // switch (corPieces.length) {
-                        //     case 0:
-                        //         return -1;
-                        //         break;
-                        //     case 1:
-                        //
-                        //         break;
-                        //     case 1:
-                        //
-                        //         break;
-                        //     default:
-                        //         return -1;
-                        // }
                         var pieces = sentence.pieces;
                         if (pieces.length === 2) {
-                            move(pieces[0], pieces[1]);
-                            return 'Moved from ' + pieces[0] + ' to ' + pieces[1] + '.';
+                            return move(pieces[0], pieces[1]);
                         }
                         break;
                     case 'other':
