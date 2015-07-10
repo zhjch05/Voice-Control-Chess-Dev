@@ -13,6 +13,7 @@ function testLegal(source, target) {
 }
 
 NLP = function() {
+    var env, currentState;
     var dict = {};
     dict['knight'] = 'n';
     dict['king'] = 'k';
@@ -53,7 +54,10 @@ NLP = function() {
             intent: this.intent
         }
     }
-
+    var sysLog = function(outstr){
+        env.push(new Sentence(outstr, 'sys'),'reply');
+        return outstr;
+    }
     //parsing functions
     var getPieces = function(content) {
         return content.match(/([a-h][1-8])|knight|bishop|queen|king|pawn|rook/g);
@@ -70,7 +74,7 @@ NLP = function() {
 
     //the environment object, main data structure
     var ENV = function() {
-        var dialogs = [];
+        dialogs = [];
         var getCurDialog = function() {
             return dialogs[dialogs.length - 1];
         };
@@ -78,12 +82,24 @@ NLP = function() {
             curdialog = getCurDialog();
             return curdialog[curdialog.length - 1];
         };
+        var push = function(sentence, state) {
+            if (state === 'new') {
+                //create new dialog
+                var newSentences = [];
+                newSentences.push(sentence);
+                dialogs.push(newSentences);
+            } else {
+                //push to current dialog
+                var lastDialog = dialogs.pop();
+                lastDialog.push(sentence);
+                dialogs.push(lastDialog);
+            }
+        }
         return {
             init: function() {
                 var sentences = [];
-                var sentence = new Sentence('Hello from the NLP system. Input your command please. The instructions are on the left.', 'sys' /*, null, null, null, null*/ );
-                sentences.push(sentence);
-                dialogs.push(sentences);
+                var sentence = new Sentence('Hello from the NLP system. Input your command please. The instructions are on the left.', 'sys');
+                push(sentence,currentState);
                 return getCurSentence();
             },
             getCurDialog: function() {
@@ -91,6 +107,9 @@ NLP = function() {
             },
             getCurSentence: function() {
                 return getCurSentence();
+            },
+            push: function(sentence,state){
+                return push(sentence,state);
             }
         }
     };
@@ -102,6 +121,8 @@ NLP = function() {
         var dets = getDets(content);
         var controlkey = getControlKey(content);
         var sentence = new Sentence(content, owner, pieces, preps, dets, controlkey);
+        env.push(sentence,currentState);
+        console.log(dialogs);
         return sentence;
     };
 
@@ -115,10 +136,20 @@ NLP = function() {
 
     //chess/chessboard control
     var move = function(source, target) {
+        var generateOptions = function(pieces) {
+            var output = '';
+            _.each(pieces, function(piece) {
+                output += piece.loc + ' / ';
+            });
+            output.replace(/\/\s+$/g, '')
+                .replace(/\s+$/g, '');
+            output += '?';
+            return output;
+        }
         if (source.search(/[a-h][1-8]/) > -1) {
             onDrop(source, target);
             myboard.position(game.fen());
-            return 'Moved from ' + source + ' to ' + target + '.';
+            return sysLog('Moved from ' + source + ' to ' + target + '.');
         } else {
             var availablePieces = [];
             _.each(game.SQUARES, function(piece) {
@@ -137,31 +168,46 @@ NLP = function() {
             if (availablePieces.length === 1) {
                 onDrop(availablePieces[0].loc, target);
                 myboard.position(game.fen());
-                return 'Moved ' + dictR[availablePieces[0].piece.type] + ' at ' + availablePieces[0].loc + ' to ' + target + '.';
+                return sysLog('Moved ' + dictR[availablePieces[0].piece.type] + ' at ' + availablePieces[0].loc + ' to ' + target + '.');
+            } else if (availablePieces.length > 1) {
+                currentState = 'moreValidMoves';
+                return sysLog('More than one valid move, ' + dictR[availablePieces[0].piece.type] + ' at ' + generateOptions(availablePieces));
             }
         }
     };
 
     var dispatcher = function(sentence, state, env) {
-        switch (sentence.intent) {
-            case 'control':
+        switch (state.content) {
+            case 'new':
+                switch (sentence.intent) {
+                    case 'control':
 
-                break;
-            case 'inquiry':
+                        break;
+                    case 'inquiry':
 
-                break;
-            case 'move':
-                var pieces = sentence.pieces;
-                if (pieces.length === 2) {
-                    return move(pieces[0], pieces[1]);
+                        break;
+                    case 'move':
+                        var pieces = sentence.pieces;
+                        if (pieces.length === 2) {
+                            return move(pieces[0], pieces[1]);
+                        }
+                        break;
+                    case 'other':
+
+                        break;
+                    default:
+                        console.log('bad switch intent');
+                        return;
                 }
                 break;
-            case 'other':
+            case 'moreValidMoves':
+                var onlypiece = sentence.pieces[0];
+                if (onlypiece !== null && onlypiece !== undefined) {
 
+                }
                 break;
             default:
-                console.log('bad switch intent');
-                return;
+                return undefined;
         }
     }
 
@@ -169,6 +215,7 @@ NLP = function() {
     return {
         init: function() {
             env = new ENV();
+            currentState = 'new';
             return env.init();
         },
         input: function(content) {
@@ -176,8 +223,17 @@ NLP = function() {
             //content = errorCheck(content);
             var sentence = parseToSentence(content);
             if (sentence.intent !== null || sentence.intent !== undefined) {
-                return dispatcher(sentence, 'new', env);
+                return dispatcher(sentence, {
+                    content: currentState
+                }, env);
             }
+        },
+        resetState: function() {
+            if (currentState !== 'new') {
+                currentState = 'new';
+                return sysLog('New dialog begins.');
+            }
+            return undefined;
         }
     }
 }

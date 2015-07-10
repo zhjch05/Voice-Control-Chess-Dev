@@ -34,10 +34,12 @@ Template.home.rendered = function() {
     };
     onDrop = function(source, target) {
         removeGreySquares();
+        var nlpset = nlp.resetState();
+        if(nlpset !== undefined){
+            makeLog(nlpset,'sys');
+        }
         var sourcepiece = game.get(source);
         var targetpiece = game.get(target);
-
-
         var move = game.move({
             from: source,
             to: target,
