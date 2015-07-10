@@ -11,7 +11,21 @@ Template.home.events({
 
     'click #spbutton': function(event){
         startDictation(event);
+    },
+
+    'click #surrenderbtn': function(event){
+        game.game_over = true;
+        var msg = new SpeechSynthesisUtterance('Player surrendered');
+        window.speechSynthesis.speak(msg);
+    },
+
+    'click #restartbtn': function(event){
+        game = new Chess();
+        myboard.position(game.fen());
+        var msg = new SpeechSynthesisUtterance('Restarted the game');
+        window.speechSynthesis.speak(msg);
     }
+    
 
 });
 
