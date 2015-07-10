@@ -54,11 +54,11 @@ NLP = function() {
             intent: this.intent
         }
     }
-    var sysLog = function(outstr){
-        env.push(new Sentence(outstr, 'sys'),'reply');
-        return outstr;
-    }
-    //parsing functions
+    var sysLog = function(outstr) {
+            env.push(new Sentence(outstr, 'sys'), 'reply');
+            return outstr;
+        }
+        //parsing functions
     var getPieces = function(content) {
         return content.match(/([a-h][1-8])|knight|bishop|queen|king|pawn|rook/g);
     };
@@ -69,7 +69,7 @@ NLP = function() {
         return content.match(/what|who|which|how|when|where|can|could|may/g);
     };
     var getControlKey = function(content) {
-        return content.match(/reset|restart|undo|surrender/g);
+        return content.match(/reset|restart|undo|surrender|repeat/g);
     }
 
     //the environment object, main data structure
@@ -81,6 +81,26 @@ NLP = function() {
         var getCurSentence = function() {
             curdialog = getCurDialog();
             return curdialog[curdialog.length - 1];
+        };
+        var getLastSysSentence = function() {
+            for (var k = dialogs.length - 1; k >= 0; k--) {
+                var lastDialog = dialogs[k];
+                for (var i = lastDialog.length - 1; i >= 0; i--) {
+                    if (lastDialog[i].owner === 'sys') {
+                        return lastDialog[i];
+                    }
+                }
+            }
+        };
+        var getLastUsrSentence = function() {
+            for (var k = dialogs.length - 1; k >= 0; k--) {
+                var lastDialog = dialogs[k];
+                for (var i = lastDialog.length - 1; i >= 0; i--) {
+                    if (lastDialog[i].owner === 'usr') {
+                        return lastDialog[i];
+                    }
+                }
+            }
         };
         var push = function(sentence, state) {
             if (state === 'new') {
@@ -99,7 +119,7 @@ NLP = function() {
             init: function() {
                 var sentences = [];
                 var sentence = new Sentence('Hello from the NLP system. Input your command please. The instructions are on the left.', 'sys');
-                push(sentence,currentState);
+                push(sentence, currentState);
                 return getCurSentence();
             },
             getCurDialog: function() {
@@ -108,8 +128,14 @@ NLP = function() {
             getCurSentence: function() {
                 return getCurSentence();
             },
-            push: function(sentence,state){
-                return push(sentence,state);
+            push: function(sentence, state) {
+                return push(sentence, state);
+            },
+            getLastSysSentence: function() {
+                return getLastSysSentence();
+            },
+            getLastUsrSentence: function() {
+                return getLastUsrSentence();
             }
         }
     };
@@ -121,8 +147,9 @@ NLP = function() {
         var dets = getDets(content);
         var controlkey = getControlKey(content);
         var sentence = new Sentence(content, owner, pieces, preps, dets, controlkey);
-        env.push(sentence,currentState);
+        env.push(sentence, currentState);
         console.log(dialogs);
+        console.log(env.getLastUsrSentence());
         return sentence;
     };
 
@@ -181,7 +208,9 @@ NLP = function() {
             case 'new':
                 switch (sentence.intent) {
                     case 'control':
-
+                        if($.inArray('repeat',sentence.controlkey)>-1){
+                            return env.getLastSysSentence().content;
+                        }
                         break;
                     case 'inquiry':
 
