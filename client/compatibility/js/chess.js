@@ -649,6 +649,7 @@ window['Chess'] = window['Chess'] || function(fen) {
         output += '#';
       } else {
         output += '+';
+        
       }
     }
     undo_move();
