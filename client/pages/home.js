@@ -24,10 +24,86 @@ Template.home.events({
         myboard.position(game.fen());
         var msg = new SpeechSynthesisUtterance('Restarted the game');
         window.speechSynthesis.speak(msg);
-    }
+    },
+    'click #count': function(event) {
+        timeCountW();
+        timeCountB();
+    },
     
 
 });
+Template.leaderboard.helpers({
+    minWhite:function(){ return Session.get('minWhite');},
+    secondWhite:function(){ return Session.get('decimalSecondWhite');},
+    anotherWhite:function(){ return Session.get('unitSecondWhite');},
+    minBlack:function(){ return Session.get('minBlack');},
+    secondBlack:function(){ return Session.get('decimalSecondBlack');},
+    anotherBlack:function(){ return Session.get('unitSecondBlack');}
+})
+Session.setDefault('minWhite', 5);
+Session.setDefault('decimalSecondWhite', 0);
+Session.setDefault('unitSecondWhite', 0);
+Session.setDefault('minBlack', 5);
+Session.setDefault('decimalSecondBlack', 0);
+Session.setDefault('unitSecondBlack', 0);
+var minWhite =5;
+var decimalSecondWhite =0;
+var unitSecondWhite =0;
+var minBlack =5;
+var decimalSecondBlack =0;
+var unitSecondBlack =0;
+var unitCache=9;
+var decimalCache=5;
+function timeCountW()
+ {   
+    if(game.turn() === 'w')
+        if (minWhite==0 && decimalSecondWhite==0 && unitSecondWhite==0){
+                alert("good game");
+        }else{
+                if (unitSecondWhite == 0){
+                            unitSecondWhite = unitCache;
+                            Session.set('unitSecondWhite',unitSecondWhite);
+                        if(decimalSecondWhite == 0){
+                            decimalSecondWhite= decimalCache;
+                            Session.set('decimalSecondWhite',decimalSecondWhite);
+                            minWhite = minWhite-1;
+                            Session.set('minWhite',minWhite);
+                        }else{
+                            decimalSecondWhite=decimalSecondWhite-1;
+                            Session.set('decimalSecondWhite',decimalSecondWhite);
+                        }
+                }else{
+                        unitSecondWhite= unitSecondWhite-1;
+                        Session.set('unitSecondWhite',unitSecondWhite);
+                }
+        }
+        setTimeout(function(){timeCountW()},1000) ;
+}
+function timeCountB()
+ {   
+    if(game.turn() === 'b')
+        if (minBlack==0 && decimalSecondBlack==0 && unitSecondBlack==0){
+                alert("good game");
+        }else{
+                if (unitSecondBlack == 0){
+                            unitSecondBlack = unitCache;
+                            Session.set('unitSecondBlack',unitSecondBlack);
+                        if(decimalSecondBlack == 0){
+                            decimalSecondBlack= decimalCache;
+                            Session.set('decimalSecondBlack',decimalSecondBlack);
+                            minBlack = minBlack-1;
+                            Session.set('minBlack',minBlack);
+                        }else{
+                            decimalSecondBlack=decimalSecondBlack-1;
+                            Session.set('decimalSecondBlack',decimalSecondBlack);
+                        }
+                }else{
+                        unitSecondBlack= unitSecondBlack-1;
+                        Session.set('unitSecondBlack',unitSecondBlack);
+                }
+        }
+        setTimeout(function(){timeCountB()},1000) ;
+}
 
 Template.home.rendered = function() {
     
