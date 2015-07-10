@@ -1,0 +1,14 @@
+#leftpanel{
+  background-color: #B5EBEE;
+
+}
+
+#rightpanel{
+  background-color: #B5EBEE;
+
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+	background-color: #D8F781;
+}

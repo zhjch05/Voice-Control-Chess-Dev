@@ -284,9 +284,11 @@ function makeTurnLog() {
         $('#turnindicator').html("<p>Game is over</p>");
     }
     else if (game.turn() === 'w') {
+        changeBackground();
         $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
     }
     else if (game.turn() === 'b') {
+        changeBackground();
         $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
     }
 }
@@ -582,3 +584,15 @@ function makeIndicator(move) {
         }
         final_transcript = "";
     }
+function changeBackground(color){
+   if (game.turn() === 'w'){
+         $('html, body').css({
+   "background-color": "#ffffff"});
+    console.log(document.bgColor);
+   }else if (game.turn() === 'b') {
+             $('html, body').css({
+   "background-color": "#000000"});
+   } 
+
+    
+}
