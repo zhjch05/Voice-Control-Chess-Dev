@@ -2,7 +2,7 @@ function testLegal(source, target) {
     var move = game.move({
         from: source,
         to: target,
-        promotion: 'q' // NOTE: always promote to a queen for example simplicity
+        promotion: 'q'
     });
     if (move === null) return false;
     else {
@@ -32,15 +32,6 @@ NLP = function() {
         this.preps = preps;
         this.dets = dets;
         this.controlkey = controlkey;
-        // console.log({
-        //     content: this.content,
-        //     owner: this.owner,
-        //     pieces: this.pieces,
-        //     preps: this.preps,
-        //     dets: this.dets,
-        //     controlkey: this.controlkey,
-        //     intent: this.intent
-        // });
         if (owner === 'usr') {
             if (controlkey !== null) {
                 this.intent = 'control';
@@ -87,9 +78,6 @@ NLP = function() {
             curdialog = getCurDialog();
             return curdialog[curdialog.length - 1];
         };
-        var startNewDialog = function(){
-            dialogs.push([]);
-        };
         return {
             init: function() {
                 var sentences = [];
@@ -98,14 +86,11 @@ NLP = function() {
                 dialogs.push(sentences);
                 return getCurSentence();
             },
-            getCurDialog: function(){
+            getCurDialog: function() {
                 return getCurDialog();
             },
-            getCurSentence: function(){
+            getCurSentence: function() {
                 return getCurSentence();
-            },
-            startNewDialog: function(){
-                return startNewDialog();
             }
         }
     };
@@ -117,7 +102,6 @@ NLP = function() {
         var dets = getDets(content);
         var controlkey = getControlKey(content);
         var sentence = new Sentence(content, owner, pieces, preps, dets, controlkey);
-        // console.log(JSON.stringify(sentence));
         return sentence;
     };
 
@@ -158,6 +142,29 @@ NLP = function() {
         }
     };
 
+    var dispatcher = function(sentence, state, env) {
+        switch (sentence.intent) {
+            case 'control':
+
+                break;
+            case 'inquiry':
+
+                break;
+            case 'move':
+                var pieces = sentence.pieces;
+                if (pieces.length === 2) {
+                    return move(pieces[0], pieces[1]);
+                }
+                break;
+            case 'other':
+
+                break;
+            default:
+                console.log('bad switch intent');
+                return;
+        }
+    }
+
     //public APIs
     return {
         init: function() {
@@ -169,49 +176,8 @@ NLP = function() {
             //content = errorCheck(content);
             var sentence = parseToSentence(content);
             if (sentence.intent !== null || sentence.intent !== undefined) {
-                switch (sentence.intent) {
-                    case 'control':
-
-                        break;
-                    case 'inquiry':
-
-                        break;
-                    case 'move':
-                        var pieces = sentence.pieces;
-                        if (pieces.length === 2) {
-                            return move(pieces[0], pieces[1]);
-                        }
-                        break;
-                    case 'other':
-
-                        break;
-                    default:
-                        console.log('bad switch intent');
-                        return;
-                }
+                return dispatcher(sentence, 'new', env);
             }
         }
     }
 }
-
-
-/*
-if (content.match(/restart|reset/) !== null) {
-                game.reset();
-                myboard.position(game.fen());
-                return 'Reset done.';
-            }
-            else if (content.match(/undo/) !== null) {
-                game.undo();
-                myboard.position(game.fen());
-                return 'Undo done.';
-            }
-            else if (content.match(/to|take/) != null) {
-                var pieces = content.match(/[a-h]\d/g);
-                console.log(pieces);
-                if (pieces.length === 2) {
-                    move(pieces[0], pieces[1]);
-                    return 'Moved from ' + pieces[0] + ' to ' + pieces[1] + '.';
-                }
-            }
-*/
