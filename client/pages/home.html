@@ -59,12 +59,19 @@
                         <form id="formcmd" class="form-horizontal">
                             <fieldset>
                                 <div class="form-group">
+                                    
+                                    <!-- Speech Recognition Results -->
+                                    <div id="results" class="bg-info"> 
+                                        <span id="final_span" class="final"></span>
+                                        <span id="interim_span" class="interim"></span>
+                                    </div>
+
                                     <div class="col-xs-7">
                                         <label class="control-label" for="inputDefault"></label>
                                         <input type="text" class="form-control floating-label" name="inputCommand" id="inputCommand" style="size:100%;" placeholder="Command">
                                     </div>
                                     <div class=col-xs-2>
-                                        <button type="input" class="btn btn-material-blue-grey" style="width:100%;" id="spbutton"><i class="fa fa-microphone"></i></button>
+                                        <button type="button" class="btn btn-material-blue-grey" style="width:100%;" id="spbutton"><i class="fa fa-microphone"></i></button>
                                     </div>
                                     <div class="col-xs-3">
                                         <input type="submit" class="btn btn-primary" style="width:100%;" value="Move" id="movebutton">
