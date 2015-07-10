@@ -82,11 +82,14 @@ NLP = function() {
         var dialogs = [];
         var getCurDialog = function() {
             return dialogs[dialogs.length - 1];
-        }
+        };
         var getCurSentence = function() {
             curdialog = getCurDialog();
             return curdialog[curdialog.length - 1];
-        }
+        };
+        var startNewDialog = function(){
+            dialogs.push([]);
+        };
         return {
             init: function() {
                 var sentences = [];
@@ -94,6 +97,15 @@ NLP = function() {
                 sentences.push(sentence);
                 dialogs.push(sentences);
                 return getCurSentence();
+            },
+            getCurDialog: function(){
+                return getCurDialog();
+            },
+            getCurSentence: function(){
+                return getCurSentence();
+            },
+            startNewDialog: function(){
+                return startNewDialog();
             }
         }
     };
