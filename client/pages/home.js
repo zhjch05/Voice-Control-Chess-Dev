@@ -236,10 +236,12 @@ Template.home.rendered = function() {
         onSnapEnd: onSnapEnd,
         onMouseoutSquare: onMouseoutSquare,
         onMouseoverSquare: onMouseoverSquare,
-        showCoordinate: true
+        showCoordinate: true,
+        themeStyle: "b"
     };
     //rendering board with cfg
     myboard = new ChessBoard('board', cfg);
+    
 
     updateStatus();
 
@@ -255,6 +257,16 @@ Template.home.rendered = function() {
 
     NLP = new NLP();
     makeLog(NLP.init(), 'sys');
+    cfg.themeStyle = $('#selectTheme option:selected').val();
+    $('#selectTheme').change(function () {
+        cfg.themeStyle = $('#selectTheme option:selected').val();
+        console.log(cfg);
+        myboard = new ChessBoard('board', cfg);
+        updateStatus();
+        game = new Chess();
+        myboard.position(game.fen());
+        
+        });
 }
 
 //@param: content, put the content into the log space.
