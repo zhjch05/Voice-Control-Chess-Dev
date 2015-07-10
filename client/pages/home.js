@@ -331,7 +331,7 @@ function makeIndicator(move) {
     }
 
     performMove = function(MYcmd){
-        
+    makeLog(final_transcript, "usr");
       $('#icommand').val('');
         //parse goes there
         var cmd = MYcmd;
@@ -471,7 +471,7 @@ function makeIndicator(move) {
         }
         else //correct turn
         {
-
+            moveSound.play();
             var move = game.move({
             from: piecefrom,
             to: pieceto,
