@@ -20,7 +20,9 @@ NLP = function() {
     dict['rook'] = 'r';
     dict['pawn'] = 'p';
     dict['queen'] = 'q';
+    dict['bishop'] = 'b';
     var dictR = {};
+    dictR['b'] = 'bishop';
     dictR['n'] = 'knight';
     dictR['k'] = 'king';
     dictR['r'] = 'rook';
@@ -55,10 +57,10 @@ NLP = function() {
         }
     }
     var sysLog = function(outstr) {
-            env.push(new Sentence(outstr, 'sys'), 'reply');
-            return outstr;
-        }
-        //parsing functions
+        env.push(new Sentence(outstr, 'sys'), 'reply');
+        return outstr;
+    };
+    //parsing functions
     var getPieces = function(content) {
         return content.match(/([a-h][1-8])|knight|bishop|queen|king|pawn|rook/g);
     };
@@ -92,12 +94,26 @@ NLP = function() {
                 }
             }
         };
-        var getLastUsrSentence = function() {
-            for (var k = dialogs.length - 1; k >= 0; k--) {
-                var lastDialog = dialogs[k];
-                for (var i = lastDialog.length - 1; i >= 0; i--) {
-                    if (lastDialog[i].owner === 'usr') {
-                        return lastDialog[i];
+        var getLastUsrSentence = function(n) {
+            if (n === undefined) {
+                for (var k = dialogs.length - 1; k >= 0; k--) {
+                    var lastDialog = dialogs[k];
+                    for (var i = lastDialog.length - 1; i >= 0; i--) {
+                        if (lastDialog[i].owner === 'usr') {
+                            return lastDialog[i];
+                        }
+                    }
+                }
+            } else {
+                for (var k = dialogs.length - 1; k >= 0; k--) {
+                    var lastDialog = dialogs[k];
+                    for (var i = lastDialog.length - 1; i >= 0; i--) {
+                        if (lastDialog[i].owner === 'usr') {
+                            n--;
+                            if (n === 0) {
+                                return lastDialog[i];
+                            }
+                        }
                     }
                 }
             }
@@ -134,8 +150,8 @@ NLP = function() {
             getLastSysSentence: function() {
                 return getLastSysSentence();
             },
-            getLastUsrSentence: function() {
-                return getLastUsrSentence();
+            getLastUsrSentence: function(n) {
+                return getLastUsrSentence(n);
             }
         }
     };
@@ -148,8 +164,6 @@ NLP = function() {
         var controlkey = getControlKey(content);
         var sentence = new Sentence(content, owner, pieces, preps, dets, controlkey);
         env.push(sentence, currentState);
-        console.log(dialogs);
-        console.log(env.getLastUsrSentence());
         return sentence;
     };
 
@@ -168,8 +182,8 @@ NLP = function() {
             _.each(pieces, function(piece) {
                 output += piece.loc + ' / ';
             });
-            output.replace(/\/\s+$/g, '')
-                .replace(/\s+$/g, '');
+            output = output.replace(/\/\s+$/g, '');
+            output = output.replace(/\s+$/g, '');
             output += '?';
             return output;
         }
@@ -208,7 +222,7 @@ NLP = function() {
             case 'new':
                 switch (sentence.intent) {
                     case 'control':
-                        if($.inArray('repeat',sentence.controlkey)>-1){
+                        if ($.inArray('repeat', sentence.controlkey) > -1) {
                             return env.getLastSysSentence().content;
                         }
                         break;
@@ -232,8 +246,10 @@ NLP = function() {
             case 'moreValidMoves':
                 var onlypiece = sentence.pieces[0];
                 if (onlypiece !== null && onlypiece !== undefined) {
-
-                }
+                    var target = env.getLastUsrSentence(2).pieces[1];
+                    currentState = 'new';
+                    return move(onlypiece, target);
+                };
                 break;
             default:
                 return undefined;
