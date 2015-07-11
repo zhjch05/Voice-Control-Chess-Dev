@@ -167,6 +167,19 @@ NLP = function() {
         return sentence;
     };
 
+    var getInfo = function(sentence) {
+        var pieceLoc = sentence.pieces[0];
+        var piece = game.get(pieceLoc);
+        var output='';
+        if (piece !== undefined && piece !== null) {
+            output = 'There is a ' + dictR[piece.type] + ' on '+pieceLoc+'.';
+        }
+        else{
+            output = 'There is no piece on '+ pieceLoc+'.';
+        }
+        return output;
+    }
+
     //format the input
     var beautify = function(content) {
         content = content.trim()
@@ -227,7 +240,9 @@ NLP = function() {
                         }
                         break;
                     case 'inquiry':
-
+                        if (sentence.dets !== undefined && sentence.dets !== null) {
+                            return getInfo(sentence);
+                        }
                         break;
                     case 'move':
                         var pieces = sentence.pieces;
