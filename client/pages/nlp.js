@@ -252,6 +252,12 @@ NLP = function() {
                             sidebar.undo();
                             undoSan();
                             return sysLog('Undo done.');
+                        } else if ($.inArray('reset', sentence.controlkey) > -1 || $.inArray('restart', sentence.controlkey) > -1) {
+                            game.reset();
+                            myboard.position(game.fen());
+                            sidebar = new Sidebar();
+                            $('#sanbody').empty();
+                            return sysLog('Restarted the game.');
                         }
                         break;
                     case 'inquiry':

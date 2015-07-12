@@ -18,6 +18,7 @@ Sidebar = function() {
         });
         console.log("Updating done.");
     }
+    update();
     return {
         add: function(key) {
             collection[key].push(collection[key][collection[key].length - 1] + 1);
