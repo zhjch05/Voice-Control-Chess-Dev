@@ -241,7 +241,7 @@ NLP = function() {
                         break;
                     case 'inquiry':
                         if (sentence.dets !== undefined && sentence.dets !== null) {
-                            return getInfo(sentence);
+                            return sysLog(getInfo(sentence));
                         }
                         break;
                     case 'move':
