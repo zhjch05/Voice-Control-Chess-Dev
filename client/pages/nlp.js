@@ -237,6 +237,11 @@ NLP = function() {
                     case 'control':
                         if ($.inArray('repeat', sentence.controlkey) > -1) {
                             return env.getLastSysSentence().content;
+                        } else if ($.inArray('undo', sentence.controlkey) > -1) {
+                            game.undo();
+                            myboard.position(game.fen());
+                            sidebar.undo();
+                            return sysLog('Undo done.');
                         }
                         break;
                     case 'inquiry':

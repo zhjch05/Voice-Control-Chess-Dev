@@ -12,6 +12,7 @@ Template.home.rendered = function() {
     $.material.init();
     game = new Chess();
     steps = 0;
+    sidebar = new Sidebar();
     var removeGreySquares = function() {
         $('#board .square-55d63').css('background', '');
     };
@@ -187,7 +188,8 @@ function makeTurnLog() {
 function updatestatistics(piece) {
     if (piece.color != null) {
         var piecejquery = '#' + piece.color + piece.type;
-        $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+        // $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+        sidebar.add(piecejquery);
     }
 }
 
@@ -205,7 +207,8 @@ function updatestatisticsPawn(source, target, sourcepiece, targetpiece) {
                 else if (sourcepiece.color === 'b') {
                     piecejquery = '#' + 'w' + 'p';
                 }
-                $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+                // $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+                sidebar.add(piecejquery);
             }
         }
     }
