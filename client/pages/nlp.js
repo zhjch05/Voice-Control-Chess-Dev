@@ -239,53 +239,67 @@ NLP = function() {
         }
     };
 
+    var decision = function(sentence){
+        switch (sentence.intent) {
+            case 'control':
+                if ($.inArray('repeat', sentence.controlkey) > -1) {
+                    return env.getLastSysSentence().content;
+                } else if ($.inArray('undo', sentence.controlkey) > -1) {
+                    steps -=1;
+                    game.undo();
+                    myboard.position(game.fen());
+                    sidebar.undo();
+                    currentState = 'new';
+                    undoSan();
+                    return sysLog('Undo done.');
+                } else if ($.inArray('reset', sentence.controlkey) > -1 || $.inArray('restart', sentence.controlkey) > -1) {
+                    steps =0;
+                    game.reset();
+                    myboard.position(game.fen());
+                    sidebar = new Sidebar();
+                    $('#sanbody').empty();
+                    $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
+                    currentState = 'new';
+                    return sysLog('Restarted the game.');
+                }
+                break;
+            case 'inquiry':
+                if (sentence.dets !== undefined && sentence.dets !== null) {
+                    return sysLog(getInfo(sentence));
+                }
+                break;
+            case 'move':
+                var pieces = sentence.pieces;
+                if (pieces.length === 2) {
+                    return move(pieces[0], pieces[1]);
+                }
+                break;
+            case 'other':
+
+                break;
+            default:
+                console.log('bad switch intent');
+                return;
+        }
+    }
     var dispatcher = function(sentence, state, env) {
         switch (state.content) {
             case 'new':
-                switch (sentence.intent) {
-                    case 'control':
-                        if ($.inArray('repeat', sentence.controlkey) > -1) {
-                            return env.getLastSysSentence().content;
-                        } else if ($.inArray('undo', sentence.controlkey) > -1) {
-                            game.undo();
-                            myboard.position(game.fen());
-                            sidebar.undo();
-                            undoSan();
-                            return sysLog('Undo done.');
-                        } else if ($.inArray('reset', sentence.controlkey) > -1 || $.inArray('restart', sentence.controlkey) > -1) {
-                            game.reset();
-                            myboard.position(game.fen());
-                            sidebar = new Sidebar();
-                            $('#sanbody').empty();
-                            return sysLog('Restarted the game.');
-                        }
-                        break;
-                    case 'inquiry':
-                        if (sentence.dets !== undefined && sentence.dets !== null) {
-                            return sysLog(getInfo(sentence));
-                        }
-                        break;
-                    case 'move':
-                        var pieces = sentence.pieces;
-                        if (pieces.length === 2) {
-                            return move(pieces[0], pieces[1]);
-                        }
-                        break;
-                    case 'other':
-
-                        break;
-                    default:
-                        console.log('bad switch intent');
-                        return;
-                }
+                return decision(sentence);
                 break;
             case 'moreValidMoves':
-                var onlypiece = sentence.pieces[0];
-                if (onlypiece !== null && onlypiece !== undefined) {
-                    var target = env.getLastUsrSentence(2).pieces[1];
+                if(sentence.pieces !== null && sentence.pieces !== undefined){
+                    var onlypiece = sentence.pieces[0];
+                    if (onlypiece !== null && onlypiece !== undefined) {
+                        var target = env.getLastUsrSentence(2).pieces[1];
+                        currentState = 'new';
+                        return move(onlypiece, target);
+                    };
+                }
+                else {
                     currentState = 'new';
-                    return move(onlypiece, target);
-                };
+                    return decision(sentence);
+                }
                 break;
             default:
                 return undefined;
