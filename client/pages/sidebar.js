@@ -1,5 +1,5 @@
 Sidebar = function() {
-    var collection = {};
+    collection = {};
     collection['#bp'] = [0];
     collection['#bb'] = [0];
     collection['#bk'] = [0];
@@ -12,24 +12,25 @@ Sidebar = function() {
     collection['#wn'] = [0];
     collection['#wq'] = [0];
     collection['#wr'] = [0];
-    var sidebarDep = new Deps.Dependency;
-    Deps.autorun(function() {
-        console.log("Updating");
-    });
+    var update = function(){
+        _.each(Object.keys(collection), function(key) {
+            $(key).html(collection[key][collection[key].length -1]);
+        });
+        console.log("Updating done.");
+    }
     return {
         add: function(key) {
             collection[key].push(collection[key][collection[key].length - 1] + 1);
-            sidebarDep.changed();
+            update();
         },
         getCollection: function() {
-            sidebarDep.depend();
             return collection;
         },
         undo: function() {
-            _.each(collection.keys(), function(key) {
+            _.each(Object.keys(collection), function(key) {
                 collection[key].pop();
             });
-            sidebarDep.changed();
+            update();
         }
     }
 }

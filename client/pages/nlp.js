@@ -156,6 +156,16 @@ NLP = function() {
         }
     };
 
+    var undoSan = function() {
+        if (steps % 2 === 0) {
+            $('td:last').remove();
+        } else {
+            $('td:last').remove();
+            $('td:last').remove();
+            $('tr:last').remove();
+        }
+    }
+
     var parseToSentence = function(content) {
         var owner = 'usr';
         var pieces = getPieces(content);
@@ -170,12 +180,11 @@ NLP = function() {
     var getInfo = function(sentence) {
         var pieceLoc = sentence.pieces[0];
         var piece = game.get(pieceLoc);
-        var output='';
+        var output = '';
         if (piece !== undefined && piece !== null) {
-            output = 'There is a ' + dictR[piece.type] + ' on '+pieceLoc+'.';
-        }
-        else{
-            output = 'There is no piece on '+ pieceLoc+'.';
+            output = 'There is a ' + dictR[piece.type] + ' on ' + pieceLoc + '.';
+        } else {
+            output = 'There is no piece on ' + pieceLoc + '.';
         }
         return output;
     }
@@ -241,6 +250,7 @@ NLP = function() {
                             game.undo();
                             myboard.position(game.fen());
                             sidebar.undo();
+                            undoSan();
                             return sysLog('Undo done.');
                         }
                         break;
