@@ -28,6 +28,9 @@ NLP = function() {
     dictR['r'] = 'rook';
     dictR['p'] = 'pawn';
     dictR['q'] = 'queen';
+    var dictC = {};
+    dictC['b'] = 'black';
+    dictC['w'] = 'white';
     var Sentence = function(content, owner, pieces, preps, dets, controlkey) {
         this.content = content;
         this.owner = owner;
@@ -183,7 +186,7 @@ NLP = function() {
         var piece = game.get(pieceLoc);
         var output = '';
         if (piece !== undefined && piece !== null) {
-            output = 'There is a ' + dictR[piece.type] + ' on ' + pieceLoc + '.';
+            output = 'There is a ' + dictC[piece.color] + ' ' + dictR[piece.type] + ' on ' + pieceLoc + '.';
         } else {
             output = 'There is no piece on ' + pieceLoc + '.';
         }
@@ -240,13 +243,13 @@ NLP = function() {
         }
     };
 
-    var decision = function(sentence){
+    var decision = function(sentence) {
         switch (sentence.intent) {
             case 'control':
                 if ($.inArray('repeat', sentence.controlkey) > -1) {
                     return env.getLastSysSentence().content;
                 } else if ($.inArray('undo', sentence.controlkey) > -1) {
-                    steps -=1;
+                    steps -= 1;
                     game.undo();
                     myboard.position(game.fen());
                     sidebar.undo();
@@ -254,7 +257,7 @@ NLP = function() {
                     undoSan();
                     return sysLog('Undo done.');
                 } else if ($.inArray('reset', sentence.controlkey) > -1 || $.inArray('restart', sentence.controlkey) > -1) {
-                    steps =0;
+                    steps = 0;
                     game.reset();
                     myboard.position(game.fen());
                     sidebar = new Sidebar();
@@ -290,15 +293,14 @@ NLP = function() {
                 return decision(sentence);
                 break;
             case 'moreValidMoves':
-                if(sentence.pieces !== null && sentence.pieces !== undefined){
+                if (sentence.pieces !== null && sentence.pieces !== undefined) {
                     var onlypiece = sentence.pieces[0];
                     if (onlypiece !== null && onlypiece !== undefined) {
                         var target = env.getLastUsrSentence(2).pieces[1];
                         currentState = 'new';
                         return move(onlypiece, target);
                     };
-                }
-                else {
+                } else {
                     currentState = 'new';
                     return decision(sentence);
                 }
