@@ -1,7 +1,9 @@
 moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
 winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
 
-Template.home.events({
+cfg.pieceTheme = 'img/chesspieces/wikipedia/empty.png';
+
+Template.memory.events({
     'submit #formcmd': function(event) {
         event.preventDefault();
         var cmd = event.target.inputCommand.value;
@@ -31,7 +33,7 @@ Template.home.events({
 
 });
 
-Template.home.rendered = function() {
+Template.memory.rendered = function() {
     
     //create dict
     alpha = ['a','b','c','d','e','f','g','h']
