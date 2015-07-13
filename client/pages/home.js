@@ -317,7 +317,12 @@ function makeIndicator(move) {
               event.results[i][0].transcript.trim() +".\n";
               console.log('final events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
               var mycmd = final_transcript;
-              performMove(mycmd);
+              makeLog(mycmd,'usr');
+              makeLog(nlp.input(mycmd), 'sys');
+              final_transcript = '';
+              var msg = new SpeechSynthesisUtterance(mycmd);
+              window.speechSynthesis.speak(msg);
+
             } else {
               interim_transcript += 
      
