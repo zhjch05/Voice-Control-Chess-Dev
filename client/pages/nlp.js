@@ -177,6 +177,7 @@ NLP = function() {
         var dets = getDets(content);
         var controlkey = getControlKey(content);
         var sentence = new Sentence(content, owner, pieces, preps, dets, controlkey);
+        console.log(sentence);
         env.push(sentence, currentState);
         return sentence;
     };
@@ -269,9 +270,7 @@ NLP = function() {
                 }
                 break;
             case 'inquiry':
-                if (sentence.dets !== undefined && sentence.dets !== null) {
-                    return sysLog(getInfo(sentence));
-                }
+                return sysLog(getInfo(sentence));
                 break;
             case 'move':
                 var pieces = sentence.pieces;
