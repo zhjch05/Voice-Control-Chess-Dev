@@ -491,4 +491,5 @@ function makeIndicator(move) {
                 
         }
         final_transcript = "";
+        
     }
