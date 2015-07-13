@@ -13,6 +13,17 @@ Template.home.rendered = function() {
     game = new Chess();
     steps = 0;
     sidebar = new Sidebar();
+    makeTurnLog = function() {
+        if (game.game_over() === true) {
+            $('#turnindicator').html("<p>Game is over</p>");
+        }
+        else if (game.turn() === 'w') {
+            $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
+        }
+        else if (game.turn() === 'b') {
+            $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
+        }
+    }
     var removeGreySquares = function() {
         $('#board .square-55d63').css('background', '');
     };
@@ -172,18 +183,6 @@ function makeLog(content, user) {
 
     }
 };
-
-function makeTurnLog() {
-    if (game.game_over() === true) {
-        $('#turnindicator').html("<p>Game is over</p>");
-    }
-    else if (game.turn() === 'w') {
-        $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
-    }
-    else if (game.turn() === 'b') {
-        $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
-    }
-}
 
 function updatestatistics(piece) {
     if (piece.color != null) {

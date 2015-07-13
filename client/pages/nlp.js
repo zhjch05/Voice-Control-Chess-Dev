@@ -164,6 +164,7 @@ NLP = function() {
             $('td:last').remove();
             $('tr:last').remove();
         }
+        makeTurnLog();
     }
 
     var parseToSentence = function(content) {
@@ -260,6 +261,7 @@ NLP = function() {
                     $('#sanbody').empty();
                     $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
                     currentState = 'new';
+                    makeTurnLog();
                     return sysLog('Restarted the game.');
                 }
                 break;
