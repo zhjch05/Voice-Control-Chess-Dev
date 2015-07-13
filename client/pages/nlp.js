@@ -259,7 +259,7 @@ NLP = function() {
                     return sysLog('Undo done.');
                 } else if ($.inArray('reset', sentence.controlkey) > -1 || $.inArray('restart', sentence.controlkey) > -1) {
                     steps = 0;
-                    game.reset();
+                    game = new Chess();
                     myboard.position(game.fen());
                     sidebar = new Sidebar();
                     $('#sanbody').empty();
