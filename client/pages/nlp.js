@@ -20,12 +20,17 @@ NLP = function() {
     dict['rook'] = 'r';
     dict['pawn'] = 'p';
     dict['queen'] = 'q';
+    dict['bishop'] = 'b';
     var dictR = {};
+    dictR['b'] = 'bishop';
     dictR['n'] = 'knight';
     dictR['k'] = 'king';
     dictR['r'] = 'rook';
     dictR['p'] = 'pawn';
     dictR['q'] = 'queen';
+    var dictC = {};
+    dictC['b'] = 'black';
+    dictC['w'] = 'white';
     var Sentence = function(content, owner, pieces, preps, dets, controlkey) {
         this.content = content;
         this.owner = owner;
@@ -54,10 +59,10 @@ NLP = function() {
             intent: this.intent
         }
     }
-    var sysLog = function(outstr){
-        env.push(new Sentence(outstr, 'sys'),'reply');
+    var sysLog = function(outstr) {
+        env.push(new Sentence(outstr, 'sys'), 'reply');
         return outstr;
-    }
+    };
     //parsing functions
     var getPieces = function(content) {
         return content.match(/([a-h][1-8])|knight|bishop|queen|king|pawn|rook/g);
@@ -69,7 +74,7 @@ NLP = function() {
         return content.match(/what|who|which|how|when|where|can|could|may/g);
     };
     var getControlKey = function(content) {
-        return content.match(/reset|restart|undo|surrender/g);
+        return content.match(/reset|restart|undo|surrender|repeat/g);
     }
 
     //the environment object, main data structure
@@ -81,6 +86,40 @@ NLP = function() {
         var getCurSentence = function() {
             curdialog = getCurDialog();
             return curdialog[curdialog.length - 1];
+        };
+        var getLastSysSentence = function() {
+            for (var k = dialogs.length - 1; k >= 0; k--) {
+                var lastDialog = dialogs[k];
+                for (var i = lastDialog.length - 1; i >= 0; i--) {
+                    if (lastDialog[i].owner === 'sys') {
+                        return lastDialog[i];
+                    }
+                }
+            }
+        };
+        var getLastUsrSentence = function(n) {
+            if (n === undefined) {
+                for (var k = dialogs.length - 1; k >= 0; k--) {
+                    var lastDialog = dialogs[k];
+                    for (var i = lastDialog.length - 1; i >= 0; i--) {
+                        if (lastDialog[i].owner === 'usr') {
+                            return lastDialog[i];
+                        }
+                    }
+                }
+            } else {
+                for (var k = dialogs.length - 1; k >= 0; k--) {
+                    var lastDialog = dialogs[k];
+                    for (var i = lastDialog.length - 1; i >= 0; i--) {
+                        if (lastDialog[i].owner === 'usr') {
+                            n--;
+                            if (n === 0) {
+                                return lastDialog[i];
+                            }
+                        }
+                    }
+                }
+            }
         };
         var push = function(sentence, state) {
             if (state === 'new') {
@@ -99,7 +138,7 @@ NLP = function() {
             init: function() {
                 var sentences = [];
                 var sentence = new Sentence('Hello from the NLP system. Input your command please. The instructions are on the left.', 'sys');
-                push(sentence,currentState);
+                push(sentence, currentState);
                 return getCurSentence();
             },
             getCurDialog: function() {
@@ -108,11 +147,28 @@ NLP = function() {
             getCurSentence: function() {
                 return getCurSentence();
             },
-            push: function(sentence,state){
-                return push(sentence,state);
+            push: function(sentence, state) {
+                return push(sentence, state);
+            },
+            getLastSysSentence: function() {
+                return getLastSysSentence();
+            },
+            getLastUsrSentence: function(n) {
+                return getLastUsrSentence(n);
             }
         }
     };
+
+    var undoSan = function() {
+        if (steps % 2 === 1) {
+            $('td:last').remove();
+        } else {
+            $('td:last').remove();
+            $('td:last').remove();
+            $('tr:last').remove();
+        }
+        makeTurnLog();
+    }
 
     var parseToSentence = function(content) {
         var owner = 'usr';
@@ -121,10 +177,22 @@ NLP = function() {
         var dets = getDets(content);
         var controlkey = getControlKey(content);
         var sentence = new Sentence(content, owner, pieces, preps, dets, controlkey);
-        env.push(sentence,currentState);
-        console.log(dialogs);
+        console.log(sentence);
+        env.push(sentence, currentState);
         return sentence;
     };
+
+    var getInfo = function(sentence) {
+        var pieceLoc = sentence.pieces[0];
+        var piece = game.get(pieceLoc);
+        var output = '';
+        if (piece !== undefined && piece !== null) {
+            output = 'There is a ' + dictC[piece.color] + ' ' + dictR[piece.type] + ' on ' + pieceLoc + '.';
+        } else {
+            output = 'There is no piece on ' + pieceLoc + '.';
+        }
+        return output;
+    }
 
     //format the input
     var beautify = function(content) {
@@ -141,8 +209,8 @@ NLP = function() {
             _.each(pieces, function(piece) {
                 output += piece.loc + ' / ';
             });
-            output.replace(/\/\s+$/g, '')
-                .replace(/\s+$/g, '');
+            output = output.replace(/\/\s+$/g, '');
+            output = output.replace(/\s+$/g, '');
             output += '?';
             return output;
         }
@@ -176,34 +244,64 @@ NLP = function() {
         }
     };
 
+    var decision = function(sentence) {
+        switch (sentence.intent) {
+            case 'control':
+                if ($.inArray('repeat', sentence.controlkey) > -1) {
+                    return env.getLastSysSentence().content;
+                } else if ($.inArray('undo', sentence.controlkey) > -1) {
+                    steps -= 1;
+                    game.undo();
+                    myboard.position(game.fen());
+                    sidebar.undo();
+                    currentState = 'new';
+                    undoSan();
+                    return sysLog('Undo done.');
+                } else if ($.inArray('reset', sentence.controlkey) > -1 || $.inArray('restart', sentence.controlkey) > -1) {
+                    steps = 0;
+                    game.reset();
+                    myboard.position(game.fen());
+                    sidebar = new Sidebar();
+                    $('#sanbody').empty();
+                    $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
+                    currentState = 'new';
+                    makeTurnLog();
+                    return sysLog('Restarted the game.');
+                }
+                break;
+            case 'inquiry':
+                return sysLog(getInfo(sentence));
+                break;
+            case 'move':
+                var pieces = sentence.pieces;
+                if (pieces.length === 2) {
+                    return move(pieces[0], pieces[1]);
+                }
+                break;
+            case 'other':
+
+                break;
+            default:
+                console.log('bad switch intent');
+                return;
+        }
+    }
     var dispatcher = function(sentence, state, env) {
         switch (state.content) {
             case 'new':
-                switch (sentence.intent) {
-                    case 'control':
-
-                        break;
-                    case 'inquiry':
-
-                        break;
-                    case 'move':
-                        var pieces = sentence.pieces;
-                        if (pieces.length === 2) {
-                            return move(pieces[0], pieces[1]);
-                        }
-                        break;
-                    case 'other':
-
-                        break;
-                    default:
-                        console.log('bad switch intent');
-                        return;
-                }
+                return decision(sentence);
                 break;
             case 'moreValidMoves':
-                var onlypiece = sentence.pieces[0];
-                if (onlypiece !== null && onlypiece !== undefined) {
-
+                if (sentence.pieces !== null && sentence.pieces !== undefined) {
+                    var onlypiece = sentence.pieces[0];
+                    if (onlypiece !== null && onlypiece !== undefined) {
+                        var target = env.getLastUsrSentence(2).pieces[1];
+                        currentState = 'new';
+                        return move(onlypiece, target);
+                    };
+                } else {
+                    currentState = 'new';
+                    return decision(sentence);
                 }
                 break;
             default:
