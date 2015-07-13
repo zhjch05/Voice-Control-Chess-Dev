@@ -1,12 +1,13 @@
 moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
 winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
 
-Template.home.events({
+
+Template.memory.events({
     'submit #formcmd': function(event) {
         event.preventDefault();
         var cmd = event.target.inputCommand.value;
         makeLog(cmd,'usr');
-        makeLog(nlp.input(cmd),'sys');
+        makeLog(NLP.input(cmd),'sys');
         $('#inputCommand').val('');
     },
 
@@ -16,21 +17,22 @@ Template.home.events({
 
     'click #surrenderbtn': function(event){
         game.game_over = true;
-        winSound.play();
         var msg = new SpeechSynthesisUtterance('Player surrendered');
+        winSound.play();
         window.speechSynthesis.speak(msg);
     },
 
     'click #restartbtn': function(event){
+        game = new Chess();
+        myboard.position(game.fen());
         var msg = new SpeechSynthesisUtterance('Restarted the game');
         window.speechSynthesis.speak(msg);
-        nlp.input("restart");
     }
     
 
 });
 
-Template.home.rendered = function() {
+Template.memory.rendered = function() {
     
     //create dict
     alpha = ['a','b','c','d','e','f','g','h']
@@ -47,18 +49,6 @@ Template.home.rendered = function() {
     $.material.init();
     game = new Chess();
     steps = 0;
-    sidebar = new Sidebar();
-    makeTurnLog = function() {
-        if (game.game_over() === true) {
-            $('#turnindicator').html("<p>Game is over</p>");
-        }
-        else if (game.turn() === 'w') {
-            $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
-        }
-        else if (game.turn() === 'b') {
-            $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
-        }
-    }
     var removeGreySquares = function() {
         $('#board .square-55d63').css('background', '');
     };
@@ -81,10 +71,6 @@ Template.home.rendered = function() {
     };
     onDrop = function(source, target) {
         removeGreySquares();
-        var nlpset = nlp.resetState();
-        if(nlpset !== undefined){
-            makeLog(nlpset,'sys');
-        }
         var sourcepiece = game.get(source);
         var targetpiece = game.get(target);
         moveSound.play();
@@ -113,7 +99,7 @@ Template.home.rendered = function() {
         myboard.position(game.fen());
     };
     updateStatus = function() {
-        //console.log("updateStatus");
+        console.log("updateStatus");
         var status = '';
 
         var moveColor = 'White';
@@ -192,14 +178,13 @@ Template.home.rendered = function() {
     $('#rightpanel').height($('#midpanel').height());
     $('#logspace').height($('#rightpanel').height() - 137);
     $('#inst').height($('#leftpanel').height()-105);
-
+    
 
     //start log
     makeTurnLog();
 
-    nlp = new NLP();
-    initReturn= nlp.init();
-    makeLog(initReturn.content, initReturn.owner);
+    NLP = new NLP();
+    makeLog(NLP.init(), 'sys');
 }
 
 //@param: content, put the content into the log space.
@@ -224,11 +209,22 @@ function makeLog(content, user) {
     }
 };
 
+function makeTurnLog() {
+    if (game.game_over() === true) {
+        $('#turnindicator').html("<p>Game is over</p>");
+    }
+    else if (game.turn() === 'w') {
+        $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
+    }
+    else if (game.turn() === 'b') {
+        $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
+    }
+}
+
 function updatestatistics(piece) {
     if (piece.color != null) {
         var piecejquery = '#' + piece.color + piece.type;
-        // $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
-        sidebar.add(piecejquery);
+        $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
     }
 }
 
@@ -246,8 +242,7 @@ function updatestatisticsPawn(source, target, sourcepiece, targetpiece) {
                 else if (sourcepiece.color === 'b') {
                     piecejquery = '#' + 'w' + 'p';
                 }
-                // $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
-                sidebar.add(piecejquery);
+                $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
             }
         }
     }
@@ -516,6 +511,4 @@ function makeIndicator(move) {
                 
         }
         final_transcript = "";
-        
     }
-
