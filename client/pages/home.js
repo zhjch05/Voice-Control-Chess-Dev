@@ -320,6 +320,7 @@ function makeIndicator(move) {
               var mycmd = final_transcript;
               makeLog(mycmd,'usr');
               makeLog(nlp.input(mycmd), 'sys');
+              $('#inputCommand').val('');
               final_transcript = '';
               var msg = new SpeechSynthesisUtterance(mycmd);
               window.speechSynthesis.speak(msg);
