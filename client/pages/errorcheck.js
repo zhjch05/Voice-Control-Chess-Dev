@@ -10,97 +10,29 @@ function errorCheck(content) {
             content = content.replaceAt(3, 'E');
         }
     }
-    // Remove Hyphens
-    while (content.includes("-")) {
-        content = content.replace("-", "");
-    }
 
-    // Replace 2 with to
-    if (content.charAt(2) == "2") {
-        content = content.replaceAt(2, " to");
-    }
-
-    // Replace 6 with takes
-    if (content.charAt(2) == "6") {
-        content = content.replaceAt(2, " takes");
-    }
-
-    // Replace starting 8 with A
-    if (content.charAt(0) == "8") {
-        content = content.replaceAt(0, "A");
-    }
-
-    // Replace Bee with B
-    while (content.includes("bee")) {
-        content = content.replace("bee", "B");
-    }
-
-    // Replace be with B
-    while (content.includes("be")) {
-        content = content.replace("be", "B");
-    }
-
-    // Replace see with C
-    while (content.includes("see")) {
-        content = content.replace("see", "C");
-    }
-
-    // Replace the word "anyone" with "E1"
-    while (content.includes("anyone")) {
-        content = content.replace("anyone", "E1");
-    }
-
-    // Replace one with 1
-    while (content.includes("one")) {
-        content = content.replace("one", "1");
-    }
-
-    // Replace Tree with 3
-    while (content.includes("tree")) {
-        content = content.replace("tree", "3");
-    }
-
-    // Replace a "33" start with "E3"
-    if (content.substring(0, 2) == "33") {
-        content = content.replace("33", "E3");
-    }
-
-    // Replace the word "East" with "E"
-    while (content.includes("east")) {
-        content = content.replace("east", "E");
-    }
-
-    // Replace every "P" with a "B"
-    while (content.includes("p")) {
-        content = content.replace("p", "B");
-    }
-
-    // Replace an ending "A" with an "8"
-    if (content.charAt(content.length - 1) == "a") {
-        content = content.replaceAt((content.length - 1), "8");
-    } /* * */
-    //C 82 ba
-    //content.replace(/\b(?<=[a-h])a\b/g,'8');
-
-    // Replace the word "beat" with "B"
-    content = content.replace(/beat/g, 'B');
-
-    // Replace the word "bah" with "B8"
-    content = content.replace(/bah/g, 'B8');
-
-    // Replace every "V" with a "B"
-    content = content.replace(/v/g, 'B');
-
-    //Replace the word "for" with the number "4"
-    content = content.replace(/for/g, '4');
-
-    // Replace the word "before" with "B4"
-
-    content = content.replace(/before/g, 'B4');
-
-    // Remove "th" that may appear after any number
-    content = content.replace(/th/g, '');
-
-    content = content.replace(/2nh3/g, 'to H3');
+    // 1. Must transform strings of the form E22 E4 to: E2 to E4.
+    content = content.replace(/(?=[1-8])2\b/g,' to');
+    // 2. Replace initial 8 with an A, such as "882 B 8" to A82 B 8
+    // 3. Replace the word "be" with B, such as "d8 to be 8" to "d8 to B 8"
+    // 4. Replace "see" with "C" and "one" with "1", for example "D2 to see one" becomes "D2 to C 1"
+    // 5. Replace "Bee" with "B" and "Tree" with "3". "822 Bee Tree" to "822 B 3"
+    // 6. Replace a "33" start with "E3", such as "332 D4" to "E32 D4".
+    // 7. Remove Hyphens, for example "F-22 F-35" to "F22 F35", "d-22 H6" to "d22 H6"
+    // 8. Transform length 5 numbers into commands replacing 8s with As if they are at index 0 or 3. Such as,  82283 to "A22A3", then
+    // add spaces to get "A2 2 A3"
+    // 9. Replace the word "anyone" with "E1", for example "anyone to see one" goes to "E1 to see one"
+    // 10. Replace the word "East" with "E", for example "882 East 7" becomes "882 E 7"
+    // 11. Replace every "P" with a "B" where the "P" is in a position, such as "D7 moves to P6" becomes "D7 moves to B6".
+    // 12. Replace an ending "A" with an "8". "c82 PA" -> "c82 P8".
+    // 13. Replace the word "beat" with "B", "beat 7288" -> "B 7288"
+    // 14. Replace the word "bah" with "B8".  "bah to a 7" -> "B8 to a 7".
+    // 15. Replace every "V" with a "B". "V6 takes D5" -> "B6 takes D5".
+    // 16. Add "to" when there's only 2 words in the sentence, i.e. "E4 D5" -> "E4 to D5".
+    // 17. Replace an extra "6" with the word "takes", i.e. "D16 D4" -> "D1 takes D4".
+    // 18. Replace the word "for" with the number "4", i.e. "C5 takes D for" -> "C5 takes D 4"
+    // 19. Replace the word "before" with "B4", i.e. "83 takes before" -> "83 takes B4".
+    // 20. Remove "th" and "nd" that may appear after any number, for example "A82 B 8th" to "A82 B 8"
+    // 21. H2 2nh3. -> H2 to H3
     return content;
 }

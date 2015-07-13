@@ -160,7 +160,7 @@ NLP = function() {
     };
 
     var undoSan = function() {
-        if (steps % 2 === 0) {
+        if (steps % 2 === 1) {
             $('td:last').remove();
         } else {
             $('td:last').remove();
