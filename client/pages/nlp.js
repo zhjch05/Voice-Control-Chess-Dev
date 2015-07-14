@@ -281,6 +281,8 @@ NLP = function() {
                     return move(pieces[0], pieces[1]);
                 } else if(pieces.length === 1){
                     return move('pawn',pieces[0]);
+                } else if (pieces.length > 2){
+                    return move(pieces[pieces.length - 2],pieces[pieces.length - 1]);
                 }
                 break;
             case 'other':
