@@ -12,8 +12,9 @@ function errorCheck(content) {
     }
 
     // 1. Must transform strings of the form E22 E4 to: E2 to E4.
-    content = content.replace(/(?=[1-8])2\b/g,' to');
+    content = content.replace(/(?<=[1-8])2\b/g,' to');
     // 2. Replace initial 8 with an A, such as "882 B 8" to A82 B 8
+
     // 3. Replace the word "be" with B, such as "d8 to be 8" to "d8 to B 8"
     // 4. Replace "see" with "C" and "one" with "1", for example "D2 to see one" becomes "D2 to C 1"
     // 5. Replace "Bee" with "B" and "Tree" with "3". "822 Bee Tree" to "822 B 3"
