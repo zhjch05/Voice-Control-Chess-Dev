@@ -252,6 +252,13 @@ NLP = function() {
                 } else if ($.inArray('undo', sentence.controlkey) > -1) {
                     steps -= 1;
                     game.undo();
+                    
+                    // Delete last entry from save record
+                    if(gameRecordIndex>0){
+                        gameRecord.splice(gameRecordIndex-1,gameRecordIndex-1);
+                        gameRecordIndex--;
+                    }
+    
                     myboard.position(game.fen());
                     sidebar.undo();
                     currentState = 'new';
@@ -262,6 +269,8 @@ NLP = function() {
                     game = new Chess();
                     myboard.position(game.fen());
                     sidebar = new Sidebar();
+                    gameRecord = [];
+                    gameRecordIndex = 0;
                     $('#sanbody').empty();
                     $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
                     currentState = 'new';

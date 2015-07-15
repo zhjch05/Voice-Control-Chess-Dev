@@ -1,7 +1,8 @@
 moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
 winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
 muted = false;
-
+gameRecord = [];
+gameRecordIndex = 0;
 
 Template.home.events({
     'submit #formcmd': function(event) {
@@ -21,11 +22,11 @@ Template.home.events({
         console.log('pressed mutebtn');
         if(muted==false){
             muted=true;
-            elem.innerHTML = "<i class=\"glyphicon glyphicon-volume-off\" ></i>";
+            elem.innerHTML = "<i class=\"glyphicon glyphicon-volume-off i-w\" ></i>";
         }
         else{
             muted = false;
-            elem.innerHTML = "<i class=\"glyphicon glyphicon-volume-up\"></i>";
+            elem.innerHTML = "<i class=\"glyphicon glyphicon-volume-up i-w\"></i>";
         }
     },
 
@@ -307,9 +308,13 @@ function makeIndicator(move) {
         case 1:
             var title = parseInt(steps / 2) + 1;
             $('#sanbody').append('<tr><td>' + title + '</td><td>' + move.san + '</td>');
+            gameRecord[gameRecordIndex] = move.san;
+            gameRecordIndex++;
             break;
         case 0:
             $('tr:last').append('<td>' + move.san + '</td>');
+            gameRecord[gameRecordIndex] = move.san;
+            gameRecordIndex++;
             break;
         default:
             return -1;
