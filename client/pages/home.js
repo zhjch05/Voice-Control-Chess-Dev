@@ -1,8 +1,8 @@
 moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
 winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
 muted = false;
-gameRecord = [];
-gameRecordIndex = 0;
+
+
 
 Template.home.events({
     'submit #formcmd': function(event) {
@@ -15,6 +15,16 @@ Template.home.events({
 
     'click #spbutton': function(event){
         startDictation(event);
+    },
+
+    'click #savebtn': function(event){
+        console.log('pressed savebtn');
+        Profiles.insert({id: Meteor.userId(), save: gameRecord, timestamp: new Date()});
+        makeLog('Game record saved.', 'sys');
+        if(!muted){
+            var msg = new SpeechSynthesisUtterance('Game record saved');
+            window.speechSynthesis.speak(msg);
+        }   
     },
 
     'click #mutebtn': function(event){
@@ -73,7 +83,9 @@ Template.home.events({
 });
 
 Template.home.rendered = function() {
-    
+    gameRecord = [];
+    gameRecordIndex = 0;
+
     //create dict
     alpha = ['a','b','c','d','e','f','g','h']
     num = ['1', '2' , '3' , '4', '5' , '6' , '7' , '8'];

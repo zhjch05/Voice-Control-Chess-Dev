@@ -1,0 +1,17 @@
+<template name = "saves">
+	{{#if currentUser}}	
+		<h1>Saved Games</h1>
+		{{#each saveFunction}}
+			{{> savesDisplay}}
+		{{/each}}
+
+	{{else}}
+		<br/><center><h1>You must be signed in to view your saved games</h1></center>
+		<center>{{> atNavButton}}</center>
+	{{/if}}
+</template>
+
+<template name= "savesDisplay">
+	<h4>{{timestamp}}</h4>
+	{{save}}
+</template>

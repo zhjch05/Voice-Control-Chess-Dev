@@ -254,8 +254,11 @@ NLP = function() {
                     game.undo();
                     
                     // Delete last entry from save record
-                    if(gameRecordIndex>0){
+                    if(gameRecordIndex>1){
                         gameRecord.splice(gameRecordIndex-1,gameRecordIndex-1);
+                        gameRecordIndex--;
+                    }else if(gameRecordIndex === 1){
+                        gameRecord=[];
                         gameRecordIndex--;
                     }
     
