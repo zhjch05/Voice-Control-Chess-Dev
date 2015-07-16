@@ -202,6 +202,7 @@ NLP = function() {
         content = content.trim()
             .toLowerCase()
             .replace(/\s+/g, '');
+        console.log(errorCheck(content));ß
         return content;
     };
 
