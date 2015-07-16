@@ -51,7 +51,7 @@ testData = function(){
     return "done";
 }
 errorCheck = function(content) {
-    content = content.replace(/\b(\d)\d(?=\d\d))/g,"$1to");
+    content = content.replace(/\b(\d)\d(\d\d)/g,"$1to$2");
     content = content.replace(/\b2(\w\d)/g,"to $1");
     content = content.replace(/(\w\d)2\b/g,"$1 to");
     content = content.trim()
