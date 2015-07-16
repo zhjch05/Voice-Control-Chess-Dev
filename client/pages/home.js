@@ -1,11 +1,15 @@
 moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
-
+winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
+muted = false;
+gameRecord = [];
+gameRecordIndex = 0;
+started=true;
 Template.home.events({
     'submit #formcmd': function(event) {
         event.preventDefault();
         var cmd = event.target.inputCommand.value;
         makeLog(cmd,'usr');
-        makeLog(NLP.input(cmd),'sys');
+        makeLog(nlp.input(cmd),'sys');
         $('#inputCommand').val('');
     },
 
@@ -13,26 +17,80 @@ Template.home.events({
         startDictation(event);
     },
 
-    'click #surrenderbtn': function(event){
-        game.game_over = true;
-        var msg = new SpeechSynthesisUtterance('Player surrendered');
-        window.speechSynthesis.speak(msg);
+    'click #mutebtn': function(event){
+        var elem = document.getElementById("mutebtn");
+        console.log('pressed mutebtn');
+        if(muted==false){
+            muted=true;
+            elem.innerHTML = "<i class=\"glyphicon glyphicon-volume-off i-w\" ></i>";
+        }
+        else{
+            muted = false;
+            elem.innerHTML = "<i class=\"glyphicon glyphicon-volume-up i-w\"></i>";
+        }
+    },
+
+    'click #undobtn': function(event){
+        nlp.input('undo') 
+        if(steps==0){
+        stop=false;
+        }
     },
 
     'click #restartbtn': function(event){
-        game = new Chess();
-        myboard.position(game.fen());
-        var msg = new SpeechSynthesisUtterance('Restarted the game');
-        window.speechSynthesis.speak(msg);
-    },
-    'click #count': function(event) {
-        timeCountW();
-        timeCountB();
+            game.game_over = true;
+            Session.set('minWhite', 5);
+            Session.set('decimalSecondWhite', 0);
+            Session.set('unitSecondWhite', 0);
+            Session.set('minBlack', 5);
+            Session.set('decimalSecondBlack', 0);
+            Session.set('unitSecondBlack', 0);
+            minWhite =5;
+            decimalSecondWhite =0;
+            unitSecondWhite =0;
+            minBlack =5;
+            decimalSecondBlack =0;
+            unitSecondBlack =0;
+            unitCache=9;
+            decimalCache=5;
+        console.log('pressed restartbtn');
+        nlp.input("restart");
+        makeLog('Restarted the game.', 'sys');
+        if(!muted){
+            var msg = new SpeechSynthesisUtterance('Restarted the game');
+            window.speechSynthesis.speak(msg);
+        }   
     },
 
+
+    'click #flipbtn': function(event){
+        myboard.flip();   
+    },
+
+    'click #surrenderbtn': function(event){
+        console.log('pressed surrenderbtn');
+        game.game_over = true;
+           
+        if(game.turn()== 'w'){
+            var msg = new SpeechSynthesisUtterance('White surrenders');
+            makeLog('White surrendered. Black wins', 'sys');
+            if(!muted){
+                winSound.play();
+                window.speechSynthesis.speak(msg);
+            }
+        }
+        else{
+            var msg = new SpeechSynthesisUtterance('Black surrenders');
+            makeLog('Black surrendered. White wins', 'sys');
+            if(!muted){
+                winSound.play();
+                window.speechSynthesis.speak(msg);
+            }               
+        }           
+    }  
 
 });
-Template.leaderboard.helpers({
+Template.home.helpers({
     minWhite:function(){ return Session.get('minWhite');},
     secondWhite:function(){ return Session.get('decimalSecondWhite');},
     anotherWhite:function(){ return Session.get('unitSecondWhite');},
@@ -55,7 +113,8 @@ var unitSecondBlack =0;
 var unitCache=9;
 var decimalCache=5;
 function timeCountW()
- {
+ {  
+     if(game.game_over() === false){
     if(game.turn() === 'w')
         if (minWhite==0 && decimalSecondWhite==0 && unitSecondWhite==0){
                 alert("good game");
@@ -78,10 +137,12 @@ function timeCountW()
                 }
         }
         setTimeout(function(){timeCountW()},1000) ;
+     }
 }
 function timeCountB()
  {
-    if(game.turn() === 'b')
+    if(game.game_over() === false){
+    if(game.turn() === 'b'&& started===true)
         if (minBlack==0 && decimalSecondBlack==0 && unitSecondBlack==0){
                 alert("good game");
         }else{
@@ -103,6 +164,7 @@ function timeCountB()
                 }
         }
         setTimeout(function(){timeCountB()},1000) ;
+    }
 }
 
 Template.home.rendered = function() {
@@ -122,6 +184,25 @@ Template.home.rendered = function() {
     $.material.init();
     game = new Chess();
     steps = 0;
+    sidebar = new Sidebar();
+    gameStarted= function(){
+        if(steps== 0&&started===true){
+            timeCountW();
+            timeCountB(); 
+        }
+
+    }
+    makeTurnLog = function() {
+        if (game.game_over() === true) {
+            $('#turnindicator').html("<p>Game is over</p>");
+        }
+        else if (game.turn() === 'w') {
+            $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
+        }
+        else if (game.turn() === 'b') {
+            $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
+        }
+    }
     var removeGreySquares = function() {
         $('#board .square-55d63').css('background', '');
     };
@@ -144,9 +225,15 @@ Template.home.rendered = function() {
     };
     onDrop = function(source, target) {
         removeGreySquares();
+        var nlpset = nlp.resetState();
+        if(nlpset !== undefined){
+            makeLog(nlpset,'sys');
+        }
         var sourcepiece = game.get(source);
         var targetpiece = game.get(target);
-        moveSound.play();
+        if(!muted){
+            moveSound.play();
+        }
 
         var move = game.move({
             from: source,
@@ -172,7 +259,7 @@ Template.home.rendered = function() {
         myboard.position(game.fen());
     };
     updateStatus = function() {
-        console.log("updateStatus");
+        //console.log("updateStatus");
         var status = '';
 
         var moveColor = 'White';
@@ -182,9 +269,15 @@ Template.home.rendered = function() {
 
         // checkmate?
         if (game.in_checkmate() === true) {
-            var msg = new SpeechSynthesisUtterance('Checkmate');
-            window.speechSynthesis.speak(msg);
+            winSound.play();
+            if(!muted){
+                var msg = new SpeechSynthesisUtterance('Checkmate');
+                window.speechSynthesis.speak(msg);
+            }
+            
             status = 'Game over, ' + moveColor + ' is in checkmate.';
+            
+            
         }
 
         // draw?
@@ -198,8 +291,10 @@ Template.home.rendered = function() {
 
             // check?
             if (game.in_check() === true) {
-                var msg = new SpeechSynthesisUtterance('Check');
-                window.speechSynthesis.speak(msg);
+                if(!muted){
+                    var msg = new SpeechSynthesisUtterance('Check');
+                    window.speechSynthesis.speak(msg);
+                }
                 status += ', ' + moveColor + ' is in check';
             }
         }
@@ -250,15 +345,16 @@ Template.home.rendered = function() {
     $('#rightpanel').height($('#midpanel').height());
     $('#logspace').height($('#rightpanel').height() - 137);
     $('#inst').height($('#leftpanel').height()-105);
-    $('#tablerow').height($('#leftpanel').height()-125);
 
 
     //start log
     makeTurnLog();
+   
 
-    NLP = new NLP();
-    makeLog(NLP.init(), 'sys');
-    cfg.themeStyle = $('#selectTheme option:selected').val();
+    nlp = new NLP();
+    initReturn= nlp.init();
+    makeLog(initReturn.content, initReturn.owner);
+        cfg.themeStyle = $('#selectTheme option:selected').val();
     $('#selectTheme').change(function () {
         cfg.themeStyle = $('#selectTheme option:selected').val();
         console.log(cfg);
@@ -292,24 +388,11 @@ function makeLog(content, user) {
     }
 };
 
-function makeTurnLog() {
-    if (game.game_over() === true) {
-        $('#turnindicator').html("<p>Game is over</p>");
-    }
-    else if (game.turn() === 'w') {
-        changeBackground();
-        $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
-    }
-    else if (game.turn() === 'b') {
-        changeBackground();
-        $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
-    }
-}
-
 function updatestatistics(piece) {
     if (piece.color != null) {
         var piecejquery = '#' + piece.color + piece.type;
-        $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+        // $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+        sidebar.add(piecejquery);
     }
 }
 
@@ -327,21 +410,29 @@ function updatestatisticsPawn(source, target, sourcepiece, targetpiece) {
                 else if (sourcepiece.color === 'b') {
                     piecejquery = '#' + 'w' + 'p';
                 }
-                $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+                // $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
+                sidebar.add(piecejquery);
             }
         }
     }
 }
 
 function makeIndicator(move) {
+    
+    gameStarted();
+    
     steps += 1;
     switch (steps % 2) {
         case 1:
             var title = parseInt(steps / 2) + 1;
             $('#sanbody').append('<tr><td>' + title + '</td><td>' + move.san + '</td>');
+            gameRecord[gameRecordIndex] = move.san;
+            gameRecordIndex++;
             break;
         case 0:
             $('tr:last').append('<td>' + move.san + '</td>');
+            gameRecord[gameRecordIndex] = move.san;
+            gameRecordIndex++;
             break;
         default:
             return -1;
@@ -397,7 +488,15 @@ function makeIndicator(move) {
               event.results[i][0].transcript.trim() +".\n";
               console.log('final events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
               var mycmd = final_transcript;
-              performMove(mycmd);
+              makeLog(mycmd,'usr');
+              makeLog(nlp.input(mycmd), 'sys');
+              $('#inputCommand').val('');
+              final_transcript = '';
+              if(!muted){
+                  var msg = new SpeechSynthesisUtterance(mycmd);
+                  window.speechSynthesis.speak(msg);
+              }
+
             } else {
               interim_transcript +=
 
@@ -433,169 +532,6 @@ function makeIndicator(move) {
       recognition.start();
       final_span.innerHTML = '';
       interim_span.innerHTML = '';
-    }
-
-    performMove = function(MYcmd){
-    makeLog(final_transcript, "usr");
-      $('#icommand').val('');
-        //parse goes there
-        var cmd = MYcmd;
-        //split/trim
-        cmd = cmd.trim();
-        cmd = cmd.toLowerCase();
-        cmd = cmd.replace(/\s+/g, '');
-        if(cmd.indexOf("to")>-1)
-
-        {
-            var string1 = cmd.substring(0,cmd.indexOf("to"));
-            var string2 = cmd.substring(cmd.indexOf("to")+2);
-            for(var i=0;i<result.length;i++)
-            {
-                if(string1.indexOf(result[i])>-1)
-                {
-                    dict+=result[i];
-                    dict+="-";
-                    piecefrom=result[i];
-                    break;
-                }
-            }
-            if(dict.indexOf("-")<=-1)
-            {
-                alert("Failed");
-                console.log("Failure. dict="+dict);
-            }
-            var indicator=false;
-            for(var i=0;i<result.length;i++)
-            {
-                if(string2.indexOf(result[i])>-1)
-                {
-                    dict+=result[i];
-                    indicator = true;
-                    pieceto=result[i];
-                    break;
-                }
-            }
-            if(indicator === false)
-            {
-                alert("Failed");
-                console.log("Failure. dict="+dict);
-            }
-        }
-        else if(cmd.indexOf("takes")>-1)
-        {
-            var string1 = cmd.substring(0,cmd.indexOf("takes"));
-            var string2 = cmd.substring(cmd.indexOf("takes")+2);
-            for(var i=0;i<result.length;i++)
-            {
-                if(string1.indexOf(result[i])>-1)
-                {
-                    dict+=result[i];
-                    dict+="-";
-                    piecefrom=result[i];
-                    break;
-                }
-            }
-            if(dict.indexOf("-")<=-1)
-            {
-                alert("Failed");
-                console.log("Failure. dict="+dict);
-            }
-            var indicator=false;
-            for(var i=0;i<result.length;i++)
-            {
-                if(string2.indexOf(result[i])>-1)
-                {
-                    dict+=result[i];
-                    indicator = true;
-                    pieceto=result[i];
-                    break;
-                }
-            }
-            if(indicator === false)
-            {
-                alert("Failed");
-                console.log("Failure. dict="+dict);
-            }
-        }
-        else if(cmd.indexOf("take")>-1)
-        {
-            var string1 = cmd.substring(0,cmd.indexOf("take"));
-            var string2 = cmd.substring(cmd.indexOf("take")+4);
-            for(var i=0;i<result.length;i++)
-            {
-                if(string1.indexOf(result[i])>-1)
-                {
-                    dict+=result[i];
-                    dict+="-";
-                    piecefrom=result[i];
-                    break;
-                }
-            }
-            if(dict.indexOf("-")<=-1)
-            {
-                alert("Failed");
-                console.log("Failure. dict="+dict);
-            }
-            var indicator=false;
-            for(var i=0;i<result.length;i++)
-            {
-                if(string2.indexOf(result[i])>-1)
-                {
-                    dict+=result[i];
-                    indicator = true;
-                    pieceto=result[i];
-                    break;
-                }
-            }
-            if(indicator === false)
-            {
-                alert("Failed");
-                console.log("Failure. dict="+dict);
-            }
-        }
-        console.log("Dict is now ->  :"+dict);
-        //test if legal
-        var piece1=game.get(piecefrom);
-        if(piece1 === null)
-        {
-            var msg = new SpeechSynthesisUtterance('No piece there');
-            window.speechSynthesis.speak(msg);
-            final_transcript = "";
-            return;
-        }
-        if(game.game_over() === true)
-        {
-            alert("Illegal move -- game is already over");
-            final_transcript = "";
-            return;
-        }
-        else if(piece1.color != game.turn())
-        {
-            var msg = new SpeechSynthesisUtterance('It is not your turn');
-            window.speechSynthesis.speak(msg);
-        }
-        else //correct turn
-        {
-            moveSound.play();
-            var move = game.move({
-            from: piecefrom,
-            to: pieceto,
-            promotion: 'q' // NOTE: always promote to a queen for example simplicity
-            });
-            if (move === null)
-            {
-                alert("Illegal move -- no pass");
-                return;
-            }
-
-            myboard.position(game.fen());
-            updateStatus();
-            var msg = new SpeechSynthesisUtterance(cmd);
-
-            window.speechSynthesis.speak(msg);
-
-        }
-        final_transcript = "";
     }
 function changeBackground(color){
    if (game.turn() === 'w'){

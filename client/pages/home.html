@@ -1,4 +1,37 @@
 <template name="home">
+    
+    <div class="col-xs-3" ><div id="timer"><h2 id="aaaaa">white:{{minWhite}}: {{secondWhite}}{{anotherWhite}}</h2></div></div>
+    <div class="col-xs-5 buttonBoard">                   
+                <ul class="nav navbar-nav bu">       
+                        <li>
+                            <button type="button" class="btn btn-md" style="width:100%;" id="mutebtn"><i class="glyphicon glyphicon-volume-up i-w"></i>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button type="button" class="btn btn-md" style="width:100%;" id="undobtn"><i class="glyphicon glyphicon-triangle-left i-w"></i>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button type="button" class="btn btn-md" style="width:100%;" id="restartbtn"><i class="glyphicon glyphicon-stop i-w"></i>
+                            </button>
+                        </li>
+
+                         <li>
+                            <button type="button" class="btn btn-md" style="width:100%;" id="flipbtn"><i class="glyphicon glyphicon-refresh i-w"></i>
+                            </button>
+                        </li>
+                        
+                        <li>
+                            <button type="button" class="btn btn-md" style="width:100%;" id="surrenderbtn"><i class="glyphicon glyphicon-flag i-w"></i>
+                            </button>
+                        </li>
+                         
+                        
+                    </ul>
+    </div>
+        <div class="col-xs-3"><h2 id="bbb">Black:{{minBlack}}: {{secondBlack}}{{anotherBlack}}</h2></div>
     <div class="col-xs-3">
         <div class="panel panel-default" id="leftpanel">
             <div class="panel-body">
@@ -45,21 +78,18 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-3">
         <div class="panel panel-default" id="rightpanel">
             <nav class="navbar navbar-xs nvabar-primary">
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
+                        
+
                         <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-list-alt"></i>&nbsp;Console</a></li>
                         <li><a href="#profile" data-toggle="tab"><i class="fa fa-stack-exchange"></i>&nbsp;Chats</a></li>
-                         <li>
-                            <button type="button" class="btn btn-info btn-xs" style="width:100%;" id="restartbtn">Restart
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-warning btn-xs" style="width:100%;" id="surrenderbtn">Surrender
-                            </button>
-                        </li>
+                         
+
+                        
                     </ul>
                 </div>
             </nav>
@@ -147,9 +177,6 @@
 </template>
 
 <template name="leaderboard">
-    <button id="count">count</button>
-    <h2 id="aaaaa">white:{{minWhite}}: {{secondWhite}}{{anotherWhite}}</h2>
-    <h2 id="aaaaa">Black:{{minBlack}}: {{secondBlack}}{{anotherBlack}}</h2>
     <div class="row">
         <div class="col-xs-1">
 

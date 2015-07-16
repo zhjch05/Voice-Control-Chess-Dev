@@ -417,7 +417,7 @@ function expandConfig() {
   if (cfg.showNotation !== false) {
     cfg.showNotation = true;
   }
-  
+
   // new feature by Team MemoryChess, all coordinates notations, default false
   if (cfg.showCoordinate !== true){
     cfg.showCoordinate = false;
@@ -631,11 +631,10 @@ function buildBoard(orientation) {
 //           html += '<div class="' + CSS.notation + ' ' + CSS.alpha + '">' +
 //             alpha[j] + '</div>';
 //         }
-        
+
         if(cfg.showCoordinate === true)
         {
           html += '<div class="' + CSS.notation + ' ' + 'coordinate-xx111' + '">' + alpha[j] + row + '</div>';
-          console.log(alpha[j]+row);
         }
 
         // numeric notation
@@ -644,10 +643,10 @@ function buildBoard(orientation) {
 //             row + '</div>';
 //         }
       }
-      
+
       //coordinate notation
       if (cfg.showCoordinate === true) {
-        
+
       }
 
       html += '</div>'; // end .square
@@ -702,7 +701,7 @@ function buildPiece(piece, hidden, id) {
 }
 
 function buildSparePieces(color) {
-  var pieces = ['wK', 'wQ', 'wR', 'wB', 'wN', 'wP'];
+  pieces = ['wK', 'wQ', 'wR', 'wB', 'wN', 'wP'];
   if (color === 'black') {
     pieces = ['bK', 'bQ', 'bR', 'bB', 'bN', 'bP'];
   }
