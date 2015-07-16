@@ -1,6 +1,3 @@
-String.prototype.replaceAt = function(index, character) {
-    return this.substr(0, index) + character + this.substr(index + character.length);
-}
 testData = function(){
     test=[
         "e22 e4",
@@ -50,10 +47,18 @@ testData = function(){
     });
     return "done";
 }
-errorCheck = function(content) {
-    content = content.replace(/\b(\d)\d(\d\d)/g,"$1to$2");
-    content = content.replace(/\b2(\w\d)/g,"to $1");
-    content = content.replace(/(\w\d)2\b/g,"$1 to");
+errorCheck = function(content) {;
+    content = content.trim();
+    Bic = [
+        //Remove Hyphens, for example "F-22 F-35" to "F22 F35", "d-22 H6" to "d22 H6"
+        [/-|_/g,""],
+        [/\b(\d)\d(\d\d)/g,"$1to$2"],
+        [/\b2(\w\d)/g,"to $1"],
+        [/(\w\d)2\b/g,"$1 to"]
+    ];
+    _.each(Bic,function(item){
+        content = content.replace(item[0],item[1]);
+    });
     content = content.trim()
         .toLowerCase()
         .replace(/\s+/g, '');
@@ -65,8 +70,6 @@ errorCheck = function(content) {
         [/voodoo/g,"undo"],
         //Replace the word "anyone" with "E1", for example "anyone to see one" goes to "E1 to see one"
         [/anyone/g,"e1"],
-        //Remove Hyphens, for example "F-22 F-35" to "F22 F35", "d-22 H6" to "d22 H6"
-        [/-/g,""],
         //Replace 'see' with 'C' and 'two' with '2'	-> Qc2 Queen to see two.
         [/two/g,"2"],
         //Replace 'eat' with 'E' and 'too' with '2'	-> Ne2 night to eat too.
