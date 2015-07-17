@@ -199,11 +199,7 @@ NLP = function() {
 
     //format the input
     var beautify = function(content) {
-        content = content.trim()
-            .toLowerCase()
-            .replace(/\s+/g, '');
-        console.log(errorCheck(content));ß
-        return content;
+        return errorCorrect(content);
     };
 
     //chess/chessboard control
