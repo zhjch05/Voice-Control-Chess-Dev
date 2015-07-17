@@ -24,11 +24,13 @@ errorCorrect = function(str) {
             //Replace the word 'pics' with 'takes'	-> hg6	porn pics G6 (pawn takes g6)
             [/\bpics/g, "takes"],
             //Replace 'Louie' with 'to E'			-> Ke2 King Louie 2.
-            [/\blouie/g, "toe"],
+            [/\blouie/g, "to e"],
             //Replace the word 'porn' with the word 'pawn',
             [/\bporn/g, "pawn"],
+            //teen
+            [/\bteen/g, "e "],
             //also replace 'pussy' with 'to c' 	-> c4	porn pussy 4.
-            [/\bpussy/g, "toc"],
+            [/\bpussy/g, "to c"],
             //Replace the word 'Pontiac' with 'Pawn to' 	-> g6 	Pontiac G6.
             [/\bpontiac/g, "pawn to"],
             //Replace the word 'sex' with the number '6' 	-> g6	porn tube teen sex.
@@ -37,15 +39,15 @@ errorCorrect = function(str) {
             //Replace 'III' with 'E3'			-> Be3 	Bishop to III.
             [/iii/g, "e3"],
             //Replace the word "East" with "E", for example "882 East 7" becomes "882 E 7"
-            [/\beast/g,"e"],
+            [/\beast/g, "e"],
             //Replace 'flight' and 'bright' with 'knight'	-> Nd7	Flight 237.
             [/\bflight|\bbright/g, "knight"],
             //Replace the word 'TuTiTu' with 'to D2'	-> Qd2 	Queen TuTiTu.
-            [/\btutitu/g, "tod2"],
+            [/\btutitu/g, "to d2"],
             //Replace 'see' with 'C' and 'two' with '2'	-> Qc2 Queen to see two.
             [/\btwo/g, "2"],
             //beat
-            [/\bbeat/g,"b"],
+            [/\bbeat/g, "b"],
             //Replace 'eat' with 'E' and 'too' with '2'	-> Ne2 night to eat too.
             [/\beat/g, "e"],
             [/\btoo/g, "2"],
@@ -68,7 +70,7 @@ errorCorrect = function(str) {
             [/\bfor|\bfour/g, "4"],
 
             //Replace the word "bah" with "B8".  "bah to a 7" -> "B8 to a 7".
-            [/bah/g,"b8"],
+            [/bah/g, "b8"],
         ];
         _.each(DwordProc, function(item) {
             str = str.replace(item[0], item[1]);
@@ -79,10 +81,10 @@ errorCorrect = function(str) {
         var DfragWordProc = [
             //Remove "th" and "nd" that may appear after any number, for example "A82 B 8th" to "A82 B 8"
             //H2 2nh3. -> H2 to H3
-            [/(\d)th/g,"$1"],
-            [/(\d)n/g,"$1"],
+            [/(\d)th/g, "$1"],
+            [/(\d)n/g, "$1"],
             //Replace a "33" start with "E3", such as "332 D4" to "E32 D4".
-            [/33/g,"e3"]
+            [/33/g, "e3"]
         ];
         _.each(DfragWordProc, function(item) {
             str = str.replace(item[0], item[1]);
@@ -90,32 +92,67 @@ errorCorrect = function(str) {
         return str;
     };
     var comb = function(str) {
-
-    };
-    var _1gram = function(str) {
-
+        str = str.replace(/\b([a-z])\s+([1-8])/g, "$1$2 ");
+        return str;
     };
     var _2gram = function(str) {
-
+        var D_2gram = [
+            [/\b8(\w)\b/g, "a$1"],
+            [/\b(\w)a\b/g, "$18"],
+            [/\bp([1-8])\b/g, "b$1"],
+            [/\bv([1-8])\b/g, "b$1"],
+            [/\b([a-h])c\b/g, "$13"],
+            [/\b3([1-8])\b/g,"e$1"]//37
+        ];
+        _.each(D_2gram, function(item) {
+            str = str.replace(item[0], item[1]);
+        });
+        return str;
     };
     var _3gram = function(str) {
-
-    };
-    var _4gram = function(str) {
-
-    }
-    var _5gram = function(str) {
-        var D_5gram = [
-            [//g]
+        var D_3gram = [
+            [/\b([a-h1-8][a-h1-8])2\b/g, "$1 to"],
+            [/\b2([a-h1-8][a-h1-8])\b/g, "to $1"],
+            [/\b([a-h1-8][a-h1-8])6\b/g, "$1 takes"],
+            [/\b(pawn|knight|king|queen|rook|bishop)2/g, "$1 to"],
+            [/\b(pawn|knight|king|queen|rook|bishop)6/g, "$1 takes"],
+            [/\b([a-h1-8][a-h1-8])\w\b/g, "$1"]
         ];
+        _.each(D_3gram, function(item) {
+            str = str.replace(item[0], item[1]);
+        });
+        return str;
     };
-    var ngram = function(str) {
-
+    // var _4gram = function(str) {
+    //
+    // }
+    var _5gram = function(str) {
+        str = str.replace(/\b(\d{3})(\d{2})/g, "$1 $2");
+        return str;
     };
+    var add2 = function(str) {
+        if (str.search(/to|take/) === -1) {
+            str = str.replace(/([a-h][1-8])\s+([a-h][1-8])/, "$1 to $2");
+        }
+        return str;
+    }
+    var beautify = function(str) {
+        str = str.trim();
+        str = str.replace(/\s+/g, " ");
+        return str;
+    }
     str = str.trim().toLowerCase();
     str = wordProc(basicProc(str));
     //str = str.trim().replace(/\s+/g,"");
     str = fragWordProc(str);
+    str = comb(str);
+    str = str.trim();
+
+    str = _5gram(str);
+    str = _3gram(str);
+    str = _2gram(str);
+    str = add2(str);
+    str = beautify(str);
     return str;
 }
 
@@ -163,7 +200,7 @@ CorrectionTest = function() {
         "fondue",
         "voodoo"
     ];
-    _.each(testdata,function(data){
-        console.log(data+"  ///  "+errorCorrect(data));
+    _.each(testdata, function(data) {
+        console.log(data + "  ///  " + errorCorrect(data));
     });
 }
