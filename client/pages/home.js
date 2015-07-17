@@ -45,6 +45,7 @@ Template.home.events({
     },
 
     'click #restartbtn': function(event){
+<<<<<<< HEAD
         console.log('pressed restartbtn');
         nlp.input("restart");
         makeLog('Restarted the game.', 'sys');
@@ -79,12 +80,99 @@ Template.home.events({
             }               
         }           
     }  
+=======
+        game = new Chess();
+        myboard.position(game.fen());
+        var msg = new SpeechSynthesisUtterance('Restarted the game');
+        window.speechSynthesis.speak(msg);
+    },
+    'click #count': function(event) {
+        timeCountW();
+        timeCountB();
+    },
+
+>>>>>>> b5ea9fd1b9b0b252975cc004bb44e6c09571a5ca
 
 });
+Template.leaderboard.helpers({
+    minWhite:function(){ return Session.get('minWhite');},
+    secondWhite:function(){ return Session.get('decimalSecondWhite');},
+    anotherWhite:function(){ return Session.get('unitSecondWhite');},
+    minBlack:function(){ return Session.get('minBlack');},
+    secondBlack:function(){ return Session.get('decimalSecondBlack');},
+    anotherBlack:function(){ return Session.get('unitSecondBlack');}
+})
+Session.setDefault('minWhite', 5);
+Session.setDefault('decimalSecondWhite', 0);
+Session.setDefault('unitSecondWhite', 0);
+Session.setDefault('minBlack', 5);
+Session.setDefault('decimalSecondBlack', 0);
+Session.setDefault('unitSecondBlack', 0);
+var minWhite =5;
+var decimalSecondWhite =0;
+var unitSecondWhite =0;
+var minBlack =5;
+var decimalSecondBlack =0;
+var unitSecondBlack =0;
+var unitCache=9;
+var decimalCache=5;
+function timeCountW()
+ {
+    if(game.turn() === 'w')
+        if (minWhite==0 && decimalSecondWhite==0 && unitSecondWhite==0){
+                alert("good game");
+        }else{
+                if (unitSecondWhite == 0){
+                            unitSecondWhite = unitCache;
+                            Session.set('unitSecondWhite',unitSecondWhite);
+                        if(decimalSecondWhite == 0){
+                            decimalSecondWhite= decimalCache;
+                            Session.set('decimalSecondWhite',decimalSecondWhite);
+                            minWhite = minWhite-1;
+                            Session.set('minWhite',minWhite);
+                        }else{
+                            decimalSecondWhite=decimalSecondWhite-1;
+                            Session.set('decimalSecondWhite',decimalSecondWhite);
+                        }
+                }else{
+                        unitSecondWhite= unitSecondWhite-1;
+                        Session.set('unitSecondWhite',unitSecondWhite);
+                }
+        }
+        setTimeout(function(){timeCountW()},1000) ;
+}
+function timeCountB()
+ {
+    if(game.turn() === 'b')
+        if (minBlack==0 && decimalSecondBlack==0 && unitSecondBlack==0){
+                alert("good game");
+        }else{
+                if (unitSecondBlack == 0){
+                            unitSecondBlack = unitCache;
+                            Session.set('unitSecondBlack',unitSecondBlack);
+                        if(decimalSecondBlack == 0){
+                            decimalSecondBlack= decimalCache;
+                            Session.set('decimalSecondBlack',decimalSecondBlack);
+                            minBlack = minBlack-1;
+                            Session.set('minBlack',minBlack);
+                        }else{
+                            decimalSecondBlack=decimalSecondBlack-1;
+                            Session.set('decimalSecondBlack',decimalSecondBlack);
+                        }
+                }else{
+                        unitSecondBlack= unitSecondBlack-1;
+                        Session.set('unitSecondBlack',unitSecondBlack);
+                }
+        }
+        setTimeout(function(){timeCountB()},1000) ;
+}
 
 Template.home.rendered = function() {
+<<<<<<< HEAD
     gameRecord = [];
     gameRecordIndex = 0;
+=======
+>>>>>>> b5ea9fd1b9b0b252975cc004bb44e6c09571a5ca
 
     //create dict
     alpha = ['a','b','c','d','e','f','g','h']
@@ -241,10 +329,12 @@ Template.home.rendered = function() {
         onSnapEnd: onSnapEnd,
         onMouseoutSquare: onMouseoutSquare,
         onMouseoverSquare: onMouseoverSquare,
-        showCoordinate: true
+        showCoordinate: true,
+        themeStyle: "b"
     };
     //rendering board with cfg
     myboard = new ChessBoard('board', cfg);
+
 
     updateStatus();
 
@@ -253,14 +343,33 @@ Template.home.rendered = function() {
     $('#rightpanel').height($('#midpanel').height());
     $('#logspace').height($('#rightpanel').height() - 137);
     $('#inst').height($('#leftpanel').height()-105);
+<<<<<<< HEAD
+=======
+    $('#tablerow').height($('#leftpanel').height()-125);
+>>>>>>> b5ea9fd1b9b0b252975cc004bb44e6c09571a5ca
 
 
     //start log
     makeTurnLog();
 
+<<<<<<< HEAD
     nlp = new NLP();
     initReturn= nlp.init();
     makeLog(initReturn.content, initReturn.owner);
+=======
+    NLP = new NLP();
+    makeLog(NLP.init(), 'sys');
+    cfg.themeStyle = $('#selectTheme option:selected').val();
+    $('#selectTheme').change(function () {
+        cfg.themeStyle = $('#selectTheme option:selected').val();
+        console.log(cfg);
+        myboard = new ChessBoard('board', cfg);
+        updateStatus();
+        game = new Chess();
+        myboard.position(game.fen());
+
+        });
+>>>>>>> b5ea9fd1b9b0b252975cc004bb44e6c09571a5ca
 }
 
 //@param: content, put the content into the log space.
@@ -285,6 +394,23 @@ function makeLog(content, user) {
     }
 };
 
+<<<<<<< HEAD
+=======
+function makeTurnLog() {
+    if (game.game_over() === true) {
+        $('#turnindicator').html("<p>Game is over</p>");
+    }
+    else if (game.turn() === 'w') {
+        changeBackground();
+        $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
+    }
+    else if (game.turn() === 'b') {
+        changeBackground();
+        $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
+    }
+}
+
+>>>>>>> b5ea9fd1b9b0b252975cc004bb44e6c09571a5ca
 function updatestatistics(piece) {
     if (piece.color != null) {
         var piecejquery = '#' + piece.color + piece.type;
@@ -351,19 +477,19 @@ function makeIndicator(move) {
         var recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = true;
- 
+
         recognition.onstart = function() {
           recognizing = true;
         };
- 
+
         recognition.onerror = function(event) {
           console.log(event.error);
         };
- 
+
         recognition.onend = function() {
           recognizing = false;
         };
- 
+
         recognition.onresult = function(event) {
             myevent = event;
           var interim_transcript = '';
@@ -377,7 +503,7 @@ function makeIndicator(move) {
 
             if (event.results[i].isFinal) {
 
-              final_transcript += 
+              final_transcript +=
 
               event.results[i][0].transcript.trim() +".\n";
               console.log('final events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
@@ -392,8 +518,8 @@ function makeIndicator(move) {
               }
 
             } else {
-              interim_transcript += 
-     
+              interim_transcript +=
+
               event.results[i][0].transcript;
               console.log('interim events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
 
@@ -402,20 +528,20 @@ function makeIndicator(move) {
           //final_transcript = capitalize(final_transcript);
           final_span.innerHTML = linebreak(final_transcript);
           interim_span.innerHTML = linebreak(interim_transcript);
-          
+
         };
     }
-    
+
     var two_line = /\n\n/g;
     var one_line = /\n/g;
     function linebreak(s) {
       return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
     }
- 
+
     function capitalize(s) {
       return s.replace(s.substr(0,1), function(m) { return m.toUpperCase(); });
     }
- 
+
     startDictation = function(event) {
       if (recognizing) {
         recognition.stop();
@@ -428,4 +554,181 @@ function makeIndicator(move) {
       interim_span.innerHTML = '';
     }
 
+<<<<<<< HEAD
 
+=======
+    performMove = function(MYcmd){
+    makeLog(final_transcript, "usr");
+      $('#icommand').val('');
+        //parse goes there
+        var cmd = MYcmd;
+        //split/trim
+        cmd = cmd.trim();
+        cmd = cmd.toLowerCase();
+        cmd = cmd.replace(/\s+/g, '');
+        if(cmd.indexOf("to")>-1)
+
+        {
+            var string1 = cmd.substring(0,cmd.indexOf("to"));
+            var string2 = cmd.substring(cmd.indexOf("to")+2);
+            for(var i=0;i<result.length;i++)
+            {
+                if(string1.indexOf(result[i])>-1)
+                {
+                    dict+=result[i];
+                    dict+="-";
+                    piecefrom=result[i];
+                    break;
+                }
+            }
+            if(dict.indexOf("-")<=-1)
+            {
+                alert("Failed");
+                console.log("Failure. dict="+dict);
+            }
+            var indicator=false;
+            for(var i=0;i<result.length;i++)
+            {
+                if(string2.indexOf(result[i])>-1)
+                {
+                    dict+=result[i];
+                    indicator = true;
+                    pieceto=result[i];
+                    break;
+                }
+            }
+            if(indicator === false)
+            {
+                alert("Failed");
+                console.log("Failure. dict="+dict);
+            }
+        }
+        else if(cmd.indexOf("takes")>-1)
+        {
+            var string1 = cmd.substring(0,cmd.indexOf("takes"));
+            var string2 = cmd.substring(cmd.indexOf("takes")+2);
+            for(var i=0;i<result.length;i++)
+            {
+                if(string1.indexOf(result[i])>-1)
+                {
+                    dict+=result[i];
+                    dict+="-";
+                    piecefrom=result[i];
+                    break;
+                }
+            }
+            if(dict.indexOf("-")<=-1)
+            {
+                alert("Failed");
+                console.log("Failure. dict="+dict);
+            }
+            var indicator=false;
+            for(var i=0;i<result.length;i++)
+            {
+                if(string2.indexOf(result[i])>-1)
+                {
+                    dict+=result[i];
+                    indicator = true;
+                    pieceto=result[i];
+                    break;
+                }
+            }
+            if(indicator === false)
+            {
+                alert("Failed");
+                console.log("Failure. dict="+dict);
+            }
+        }
+        else if(cmd.indexOf("take")>-1)
+        {
+            var string1 = cmd.substring(0,cmd.indexOf("take"));
+            var string2 = cmd.substring(cmd.indexOf("take")+4);
+            for(var i=0;i<result.length;i++)
+            {
+                if(string1.indexOf(result[i])>-1)
+                {
+                    dict+=result[i];
+                    dict+="-";
+                    piecefrom=result[i];
+                    break;
+                }
+            }
+            if(dict.indexOf("-")<=-1)
+            {
+                alert("Failed");
+                console.log("Failure. dict="+dict);
+            }
+            var indicator=false;
+            for(var i=0;i<result.length;i++)
+            {
+                if(string2.indexOf(result[i])>-1)
+                {
+                    dict+=result[i];
+                    indicator = true;
+                    pieceto=result[i];
+                    break;
+                }
+            }
+            if(indicator === false)
+            {
+                alert("Failed");
+                console.log("Failure. dict="+dict);
+            }
+        }
+        console.log("Dict is now ->  :"+dict);
+        //test if legal
+        var piece1=game.get(piecefrom);
+        if(piece1 === null)
+        {
+            var msg = new SpeechSynthesisUtterance('No piece there');
+            window.speechSynthesis.speak(msg);
+            final_transcript = "";
+            return;
+        }
+        if(game.game_over() === true)
+        {
+            alert("Illegal move -- game is already over");
+            final_transcript = "";
+            return;
+        }
+        else if(piece1.color != game.turn())
+        {
+            var msg = new SpeechSynthesisUtterance('It is not your turn');
+            window.speechSynthesis.speak(msg);
+        }
+        else //correct turn
+        {
+            moveSound.play();
+            var move = game.move({
+            from: piecefrom,
+            to: pieceto,
+            promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            });
+            if (move === null)
+            {
+                alert("Illegal move -- no pass");
+                return;
+            }
+
+            myboard.position(game.fen());
+            updateStatus();
+            var msg = new SpeechSynthesisUtterance(cmd);
+
+            window.speechSynthesis.speak(msg);
+
+        }
+        final_transcript = "";
+    }
+function changeBackground(color){
+   if (game.turn() === 'w'){
+         $('html, body').css({
+   "background-color": "#ffffff"});
+    console.log(document.bgColor);
+   }else if (game.turn() === 'b') {
+             $('html, body').css({
+   "background-color": "#000000"});
+   }
+
+
+}
+>>>>>>> b5ea9fd1b9b0b252975cc004bb44e6c09571a5ca
