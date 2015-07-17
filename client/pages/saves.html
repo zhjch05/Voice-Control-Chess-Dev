@@ -1,17 +1,22 @@
 <template name = "saves">
-	{{#if currentUser}}	
-		<h1>Saved Games</h1>
-		{{#each saveFunction}}
-			{{> savesDisplay}}
-		{{/each}}
-
-	{{else}}
-		<br/><center><h1>You must be signed in to view your saved games</h1></center>
-		<center>{{> atNavButton}}</center>
-	{{/if}}
+	<div class="col-sm-offset-1 col-sm-9">
+		<div class = "panel panel-default">
+		{{#if currentUser}}	
+			<center><h1>Saved Games</h1></center><br/>
+			{{#each saveFunction}}
+				{{> savesDisplay}}
+				<br/>
+			{{/each}}
+			<br/>
+		{{else}}
+			<br/><center><h1>You must be signed in to view your saved games</h1></center>
+			<center>{{> atNavButton}}</center>
+		{{/if}}
+		</div>
+	</div>
 </template>
 
 <template name= "savesDisplay">
-	<h4>{{timestamp}}</h4>
+	<h4>{{timestamp}} <span class="glyphicon glyphicon-remove delete-save-icon" aria-hidden="true"></span></h4>
 	{{save}}
 </template>
