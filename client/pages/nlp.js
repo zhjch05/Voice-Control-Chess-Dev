@@ -47,7 +47,7 @@ NLP = function() {
                 this.intent = 'move';
             } else if ($.inArray('at', preps) > -1 || $.inArray('on', preps) > -1 || $.inArray('in', preps) > -1) {
                 this.intent = 'inquiry';
-            } else if (pieces!==null&&pieces!==undefined){
+            } else if (pieces !== null && pieces !== undefined) {
                 this.intent = 'move';
             } else this.intent = 'other';
         }
@@ -164,11 +164,11 @@ NLP = function() {
 
     var undoSan = function() {
         if (steps % 2 === 1) {
-            $('td:last').remove();
+            $('#sanbody td:last').remove();
         } else {
-            $('td:last').remove();
-            $('td:last').remove();
-            $('tr:last').remove();
+            $('#sanbody td:last').remove();
+            $('#sanbody td:last').remove();
+            $('#sanbody tr:last').remove();
         }
         makeTurnLog();
     }
@@ -250,7 +250,9 @@ NLP = function() {
                 if ($.inArray('repeat', sentence.controlkey) > -1) {
                     return env.getLastSysSentence().content;
                 } else if ($.inArray('undo', sentence.controlkey) > -1) {
-                    steps -= 1;
+                    if (steps > 0) {
+                        steps -= 1;
+                    }
                     game.undo();
                     myboard.position(game.fen());
                     sidebar.undo();
@@ -276,8 +278,8 @@ NLP = function() {
                 var pieces = sentence.pieces;
                 if (pieces.length === 2) {
                     return move(pieces[0], pieces[1]);
-                } else if(pieces.length === 1){
-                    return move('pawn',pieces[0]);
+                } else if (pieces.length === 1) {
+                    return move('pawn', pieces[0]);
                 }
                 break;
             case 'other':

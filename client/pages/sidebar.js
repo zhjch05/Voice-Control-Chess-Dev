@@ -12,9 +12,9 @@ Sidebar = function() {
     collection['#wn'] = [0];
     collection['#wq'] = [0];
     collection['#wr'] = [0];
-    var update = function(){
+    var update = function() {
         _.each(Object.keys(collection), function(key) {
-            $(key).html(collection[key][collection[key].length -1]);
+            $(key).html(collection[key][collection[key].length - 1]);
         });
         console.log("Updating done.");
     }
@@ -29,7 +29,9 @@ Sidebar = function() {
         },
         undo: function() {
             _.each(Object.keys(collection), function(key) {
-                collection[key].pop();
+                if (collection[key].length > 1) {
+                    collection[key].pop();
+                }
             });
             update();
         }
