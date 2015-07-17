@@ -1,0 +1,82 @@
+<template name="profileEdit2">
+	<form id="profileEdit">
+
+		first name:<input type="text" name="name" id="name" value="{{firstName}}"><br/>
+		last name:<input type="text" name="name" id="name" value="{{lastName}}"><br/>
+		photo URL:<input type="text" name="photo" id="photo" value="{{photo}}"><br/>
+		bio:<br/><textarea name="bio" id="bio">{{bio}}</textarea><br/>
+		<input type="submit" id="submitEdit"><br/>
+		<input type="submit" value="cancel" id="cancelEdit"><br/>
+	</form>
+</template>
+
+<template name="profileEdit">
+<div class="container">
+    <h1>Edit Profile</h1>
+  	<hr>
+	<div class="row">
+      <!-- left column -->
+      <div class="col-md-3">
+        <div>
+          <img src="{{photo}}" class="avatar img-circle" id="profilePhoto" alt="avatar">
+          The profile photo comes from gravatar.com
+		  using your email address<br/><code>{{myEmail}}</code><hr/>
+		  Add an image to your profile by creating a gravatar for {{myEmail}} image at 
+		   <a href="http://www.gravatar.com" target="_blank">www.gravatar.com</a>
+        </div>
+      </div>
+      
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+		  
+        <div class="alert alert-info alert-dismissable">
+          <a class="panel-close close" data-dismiss="alert">×</a> 
+          <i class="fa fa-coffee"></i>
+		  Enter your information and hit "submit" to store your new profile information.
+		  
+        </div>
+        <h3>Personal info</h3>
+        
+        <form class="form-horizontal" role="form" id="profile-edit-form">
+			
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" name="firstName" id="firstName" value="{{profile.firstName}}">
+            </div>
+          </div>
+		  
+		  
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" name="lastName" id="lastName" value="{{profile.lastName}}">
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label class="col-lg-3 control-label">UserName:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" name="userName" id="userName" value="{{profile.userName}}">
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label class="col-lg-3 control-label" for="bio" >Bio:</label>
+            <div class="col-lg-8">
+				<textarea name="bio" class="form-control" rows="5" id="bio">{{profile.bio}}</textarea>
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <div class="col-lg-8">
+				<input class="form-control" type="submit" id="profileEditSubmit" />
+            </div>
+          </div>
+		 
+        </form>
+      </div>
+  </div>
+</div>
+<hr>
+</template>

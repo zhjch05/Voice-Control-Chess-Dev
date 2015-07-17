@@ -1,0 +1,36 @@
+<template name = "profile">
+	
+	<div class="col-xs-offset-1 col-xs-10">
+		<div class = "panel panel-default">
+			{{#if currentUser}}	
+			
+				<center><h1>{{profile.username}}</h1></center><br/>
+				<ul>
+					<li>Name: </li>
+					<li>Email: </li>
+					<li>Bio: </li>
+				</ul>
+
+				<div align = "center">
+					<a href="{{pathFor 'profileEdit'}}"><span class="glyphicon glyphicon-pencil align-right" aria-hidden="true"></span></a>   
+				</div>
+				<!-- Gravatar photo -->
+				<div class="col-md-6">
+						<img src="{{photo}}?s=400" class="align-left">
+				</div>
+				<br/><br/><br/>
+
+
+			{{else}}
+				<br/><center><h1>You must be signed in to view and edit your profile.</h1></center>
+				<center>{{> atNavButton}}</center>
+			{{/if}}
+
+			<div class="col-md-6">
+				<p>{{profile.bio}}</p>
+			</div>
+		</div>
+	</div>
+	
+
+</template>
