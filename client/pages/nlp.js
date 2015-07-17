@@ -164,11 +164,11 @@ NLP = function() {
 
     var undoSan = function() {
         if (steps % 2 === 1) {
-            $('td:last').remove();
+            $('#sanbody td:last').remove();
         } else {
-            $('td:last').remove();
-            $('td:last').remove();
-            $('tr:last').remove();
+            $('#sanbody td:last').remove();
+            $('#sanbody td:last').remove();
+            $('#sanbody tr:last').remove();
         }
         makeTurnLog();
     }
@@ -199,11 +199,7 @@ NLP = function() {
 
     //format the input
     var beautify = function(content) {
-        content = content.trim()
-            .toLowerCase()
-            .replace(/\s+/g, '');
-        console.log(errorCheck(content));ß
-        return content;
+       return errorCorrect(content);
     };
 
     //chess/chessboard control
@@ -254,7 +250,10 @@ NLP = function() {
                 if ($.inArray('repeat', sentence.controlkey) > -1) {
                     return env.getLastSysSentence().content;
                 } else if ($.inArray('undo', sentence.controlkey) > -1) {
-                    steps -= 1;
+                    if(steps > 0){
+                        steps -= 1;
+                    }                 
+                    
                     game.undo();
                     
                     // Delete last entry from save record

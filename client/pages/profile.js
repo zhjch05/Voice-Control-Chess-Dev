@@ -1,8 +1,17 @@
 Template.profile.helpers({
 
-	photo:function(){ // returns the URL of the gravatar photo for this email
-		console.log(this.emails[0].address);
-		return Gravatar.imageUrl(Gravatar.hash(Meteor.users.findOne().emails[0].address,{secure:true}))
-	}
+	myEmail: function(){
+		return this.emails[0].address;
+	},
+
+	photo:function(){ 
+		return Gravatar.imageUrl(Gravatar.hash(this.emails[0].address,{secure:true}));
+	},
+
+	profileFunction: function(){
+        {
+            return Profiles.find();
+        } 
+    }
 
 })

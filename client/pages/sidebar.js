@@ -29,7 +29,9 @@ Sidebar = function() {
         },
         undo: function() {
             _.each(Object.keys(collection), function(key) {
-                collection[key].pop();
+                if(collection[key].length > 1){
+                    collection[key].pop();
+                }
             });
             update();
         }
