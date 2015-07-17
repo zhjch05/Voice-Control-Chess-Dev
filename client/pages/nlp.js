@@ -47,8 +47,11 @@ NLP = function() {
                 this.intent = 'move';
             } else if ($.inArray('at', preps) > -1 || $.inArray('on', preps) > -1 || $.inArray('in', preps) > -1) {
                 this.intent = 'inquiry';
+            } else if (pieces!==null&&pieces!==undefined){
+                this.intent = 'move';
             } else this.intent = 'other';
         }
+        console.log(this);
         return {
             content: this.content,
             owner: this.owner,
@@ -199,6 +202,7 @@ NLP = function() {
         content = content.trim()
             .toLowerCase()
             .replace(/\s+/g, '');
+        console.log(errorCheck(content));ß
         return content;
     };
 
@@ -288,6 +292,8 @@ NLP = function() {
                 var pieces = sentence.pieces;
                 if (pieces.length === 2) {
                     return move(pieces[0], pieces[1]);
+                } else if(pieces.length === 1){
+                    return move('pawn',pieces[0]);
                 }
                 break;
             case 'other':

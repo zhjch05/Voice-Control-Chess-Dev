@@ -1,106 +1,102 @@
-String.prototype.replaceAt = function(index, character) {
-    return this.substr(0, index) + character + this.substr(index + character.length);
-}
-function errorCheck(content) {
-    if (content.length === 5) {
-        if (content.charAt(3) === '8') {
-            content = content.replaceAt(3, 'A');
-        }
-        if (content.charAt(3) === '3') {
-            content = content.replaceAt(3, 'E');
-        }
-    }
-    // Remove Hyphens
-    while (content.includes("-")) {
-        content = content.replace("-", "");
-    }
-
-    // Replace 2 with to
-    if (content.charAt(2) == "2") {
-        content = content.replaceAt(2, " to");
-    }
-
-    // Replace 6 with takes
-    if (content.charAt(2) == "6") {
-        content = content.replaceAt(2, " takes");
-    }
-
-    // Replace starting 8 with A
-    if (content.charAt(0) == "8") {
-        content = content.replaceAt(0, "A");
-    }
-
-    // Replace Bee with B
-    while (content.includes("bee")) {
-        content = content.replace("bee", "B");
-    }
-
-    // Replace be with B
-    while (content.includes("be")) {
-        content = content.replace("be", "B");
-    }
-
-    // Replace see with C
-    while (content.includes("see")) {
-        content = content.replace("see", "C");
-    }
-
-    // Replace the word "anyone" with "E1"
-    while (content.includes("anyone")) {
-        content = content.replace("anyone", "E1");
-    }
-
-    // Replace one with 1
-    while (content.includes("one")) {
-        content = content.replace("one", "1");
-    }
-
-    // Replace Tree with 3
-    while (content.includes("tree")) {
-        content = content.replace("tree", "3");
-    }
-
-    // Replace a "33" start with "E3"
-    if (content.substring(0, 2) == "33") {
-        content = content.replace("33", "E3");
-    }
-
-    // Replace the word "East" with "E"
-    while (content.includes("east")) {
-        content = content.replace("east", "E");
-    }
-
-    // Replace every "P" with a "B"
-    while (content.includes("p")) {
-        content = content.replace("p", "B");
-    }
-
-    // Replace an ending "A" with an "8"
-    if (content.charAt(content.length - 1) == "a") {
-        content = content.replaceAt((content.length - 1), "8");
-    } /* * */
-    //C 82 ba
-    //content.replace(/\b(?<=[a-h])a\b/g,'8');
-
-    // Replace the word "beat" with "B"
-    content = content.replace(/beat/g, 'B');
-
-    // Replace the word "bah" with "B8"
-    content = content.replace(/bah/g, 'B8');
-
-    // Replace every "V" with a "B"
-    content = content.replace(/v/g, 'B');
-
-    //Replace the word "for" with the number "4"
-    content = content.replace(/for/g, '4');
-
-    // Replace the word "before" with "B4"
-
-    content = content.replace(/before/g, 'B4');
-
-    // Remove "th" that may appear after any number
-    content = content.replace(/th/g, '');
-
-    content = content.replace(/2nh3/g, 'to H3');
-    return content;
-}
+// testData = function(){
+//     test=[
+//         "e22 e4",
+//         "882 b 8",
+//         "d8 to be 8",
+//         "d2 to see one",
+//         "822 bee tree",
+//         "332 d4",
+//         "f-22 f-35",
+//         "d22 h6",
+//         "82283",
+//         "anyone to see one",
+//         "882 east 7",
+//         "d7 moves to p6",
+//         "c82 pa",
+//         "beat 7288",
+//         "bah to a 7",
+//         "v6 takes d5",
+//         "e4 d5",
+//         "d16 d4",
+//         "c5 takes d for",
+//         "83 takes before",
+//         "a82 b 8th",
+//         "h2 2nh3",
+//         "92 f6",
+//         "porn pussy 4",
+//         "pontiac g6",
+//         "porn tube teen sex",
+//         "bishop to III",
+//         "flight 237",
+//         "queen tutitu",
+//         "bishop 286",
+//         "queen to see two",
+//         "night to eat too",
+//         "queen to age 4",
+//         "porn pics g6",
+//         "king louie 2",
+//         "book to g1",
+//         "look to g1",
+//         "hook to g1",
+//         "1 fisher to dc",
+//         "fondue",
+//         "voodoo"
+//     ];
+//     _.each(test,function(data){
+//         console.log(data+"  ///  "+errorCheck(data));
+//     });
+//     return "done";
+// }
+// errorCheck = function(content) {;
+//     content = content.trim();
+//     Bic = [
+//         //Remove Hyphens, for example "F-22 F-35" to "F22 F35", "d-22 H6" to "d22 H6"
+//         [/-|_/g,""],
+//         [/\b(\d)\d(\d\d)/g,"$1to$2"],
+//         [/\b2(\w\d)/g,"to $1"],
+//         [/(\w\d)2\b/g,"$1 to"]
+//     ];
+//     _.each(Bic,function(item){
+//         content = content.replace(item[0],item[1]);
+//     });
+//     content = content.trim()
+//         .toLowerCase()
+//         .replace(/\s+/g, '');
+//     Dic = [
+//
+//
+//         //Replace initial 8 with an A, such as "882 B 8" to A82 B 8
+//         [/^8/g, "a"],
+//         //Replace an ending "A" with an "8". "c82 PA" -> "c82 P8".
+//         [/a$/g,"8"],
+//         //Must transform strings of the form E22 E4 to: E2 to E4.
+//         [/(\w[1-8])\d/, "$1to"],
+//
+//
+//         //Transform length 5 numbers into commands replacing 8s with As if they are at index 0 or 3. Such as,  82283 to "A22A3", then
+//         [/8(\d)/g, "a$1"],//again
+//
+//         //Replace every "P" with a "B" where the "P" is in a position, such as "D7 moves to P6" becomes "D7 moves to B6".
+//         [/p([1-8])(?!=.+[a-h]\d)/g,"b$1"],
+//
+//         //Replace every "V" with a "B". "V6 takes D5" -> "B6 takes D5".
+//         [/v(\d)/g,"b$1"],
+//         //Add "to" when there's only 2 words in the sentence, i.e. "E4 D5" -> "E4 to D5".
+//         [/([a-h]\d)([a-h]\d)/,"$1to$2"],
+//         //Replace an extra "6" with the word "takes", i.e. "D16 D4" -> "D1 takes D4".
+//         [/(\w\d)6/g,"$1takes"],
+//
+//
+//
+//
+//         //If the second to last char is 8, replace it
+//         //with an A				-> Bh6 	Bishop 286
+//         [/8(.)$/,"a$1"],
+//         //last
+//         [/([a-h]\d)\d/g,"$1"]
+//     ];
+//     _.each(Dic,function(item){
+//         content = content.replace(item[0],item[1]);
+//     });
+//     return content;
+// }
