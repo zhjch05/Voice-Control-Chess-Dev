@@ -8,16 +8,10 @@ Template.profileEdit.helpers({
 Template.profileEdit.events({
 	"submit #profile-edit-form": function(event){
 		event.preventDefault();
-		var bio = event.target.bio.value;
-		var firstName = event.target.firstName.value;
-		var lastName = event.target.lastName.value;
-		var userName = event.target.userName.value;
-		Meteor.users.update(this._id,
-			{$set:{'profile.bio':bio, 
-					'profile.firstName':firstName, 
-					'profile.lastName':lastName,
-					'profile.userName':userName}});
-		Router.go('/profile/'+this._id);
-		
+		var biovar = event.target.bio.value;
+		console.log(bio);
+		var namevar = event.target.name.value;
+		console.log(name);
+		Profiles.update(Profiles.findOne()._id, { $set: { name: namevar, bio: biovar}});
 	}
 })
