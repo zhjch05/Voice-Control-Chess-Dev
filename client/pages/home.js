@@ -1,5 +1,5 @@
-moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
-winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
+moveSound = new buzz.sound('/sounds/moveSound.wav'); // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
+winSound = new buzz.sound('/sounds/victory.wav'); // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
 muted = false;
 
 
@@ -8,77 +8,79 @@ Template.home.events({
     'submit #formcmd': function(event) {
         event.preventDefault();
         var cmd = event.target.inputCommand.value;
-        makeLog(cmd,'usr');
-        makeLog(nlp.input(cmd),'sys');
+        makeLog(cmd, 'usr');
+        makeLog(nlp.input(cmd), 'sys');
         $('#inputCommand').val('');
     },
 
-    'click #spbutton': function(event){
+    'click #spbutton': function(event) {
         startDictation(event);
     },
 
-    'click #savebtn': function(event){
+    'click #savebtn': function(event) {
         console.log('pressed savebtn');
-        Profiles.insert({id: Meteor.userId(), save: gameRecord, timestamp: new Date()});
+        Profiles.insert({
+            id: Meteor.userId(),
+            save: gameRecord,
+            timestamp: new Date()
+        });
         makeLog('Game record saved.', 'sys');
-        if(!muted){
+        if (!muted) {
             var msg = new SpeechSynthesisUtterance('Game record saved');
             window.speechSynthesis.speak(msg);
-        }   
+        }
     },
 
-    'click #mutebtn': function(event){
+    'click #mutebtn': function(event) {
         var elem = document.getElementById("mutebtn");
         console.log('pressed mutebtn');
-        if(muted==false){
-            muted=true;
+        if (muted == false) {
+            muted = true;
             elem.innerHTML = "<i class=\"glyphicon glyphicon-volume-off i-w\" ></i>";
-        }
-        else{
+        } else {
             muted = false;
             elem.innerHTML = "<i class=\"glyphicon glyphicon-volume-up i-w\"></i>";
         }
     },
 
-    'click #undobtn': function(event){
-        nlp.input('undo')   
+    'click #undobtn': function(event) {
+        nlp.input('undo')
     },
 
-    'click #restartbtn': function(event){
+    'click #restartbtn': function(event) {
         console.log('pressed restartbtn');
         nlp.input("restart");
         makeLog('Restarted the game.', 'sys');
-        if(!muted){
+        if (!muted) {
             var msg = new SpeechSynthesisUtterance('Restarted the game');
             window.speechSynthesis.speak(msg);
-        }   
+        }
     },
 
-    'click #flipbtn': function(event){
-        myboard.flip();   
+    'click #flipbtn': function(event) {
+        myboard.flip();
     },
 
-    'click #surrenderbtn': function(event){
+    'click #surrenderbtn': function(event) {
         console.log('pressed surrenderbtn');
         game.game_over = true;
-           
-        if(game.turn()== 'w'){
+
+        if (game.turn() == 'w') {
             var msg = new SpeechSynthesisUtterance('White surrenders');
             makeLog('White surrendered. Black wins', 'sys');
-            if(!muted){
+            if (!muted) {
+                winSound.play();
+                window.speechSynthesis.speak(msg);
+            }
+        } else {
+            var msg = new SpeechSynthesisUtterance('Black surrenders');
+            makeLog('Black surrendered. White wins', 'sys');
+            if (!muted) {
                 winSound.play();
                 window.speechSynthesis.speak(msg);
             }
         }
-        else{
-            var msg = new SpeechSynthesisUtterance('Black surrenders');
-            makeLog('Black surrendered. White wins', 'sys');
-            if(!muted){
-                winSound.play();
-                window.speechSynthesis.speak(msg);
-            }               
-        }           
-    }  
+    }
 
 });
 
@@ -87,14 +89,12 @@ Template.home.rendered = function() {
     gameRecordIndex = 0;
 
     //create dict
-    alpha = ['a','b','c','d','e','f','g','h']
-    num = ['1', '2' , '3' , '4', '5' , '6' , '7' , '8'];
-    result=[],idx=0,dict="",piecefrom='',pieceto='';
-    for(var i = 0;i<alpha.length;i++)
-    {
-        for(var j = 0;j<num.length;j++)
-        {
-            result[idx++]=alpha[i]+num[j];
+    alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    num = ['1', '2', '3', '4', '5', '6', '7', '8'];
+    result = [], idx = 0, dict = "", piecefrom = '', pieceto = '';
+    for (var i = 0; i < alpha.length; i++) {
+        for (var j = 0; j < num.length; j++) {
+            result[idx++] = alpha[i] + num[j];
         }
     }
 
@@ -105,11 +105,9 @@ Template.home.rendered = function() {
     makeTurnLog = function() {
         if (game.game_over() === true) {
             $('#turnindicator').html("<p>Game is over</p>");
-        }
-        else if (game.turn() === 'w') {
+        } else if (game.turn() === 'w') {
             $('#turnindicator').html('<p><i class="fa fa-circle-o"></i>&nbsp;' + "White's turn</p>");
-        }
-        else if (game.turn() === 'b') {
+        } else if (game.turn() === 'b') {
             $('#turnindicator').html('<p><i class="fa fa-circle"></i>&nbsp;' + "Black's turn</p>");
         }
     }
@@ -136,12 +134,12 @@ Template.home.rendered = function() {
     onDrop = function(source, target) {
         removeGreySquares();
         var nlpset = nlp.resetState();
-        if(nlpset !== undefined){
-            makeLog(nlpset,'sys');
+        if (nlpset !== undefined) {
+            makeLog(nlpset, 'sys');
         }
         var sourcepiece = game.get(source);
         var targetpiece = game.get(target);
-        if(!muted){
+        if (!muted) {
             moveSound.play();
         }
 
@@ -155,18 +153,21 @@ Template.home.rendered = function() {
         if (move === null) return 'snapback';
         if (targetpiece != null) {
             updatestatistics(targetpiece);
-        }
-        else {
+        } else {
             updatestatisticsPawn(source, target, sourcepiece, targetpiece);
         }
         updateStatus();
-        console.log(move);
+        //console.log(move);
+        Meteor.call('updateUserFen', game.fen(), function(error, result) {
+            if (error)
+                return alert(error.reason);
+        });
         makeIndicator(move);
 
         makeTurnLog();
     };
     var onSnapEnd = function() {
-        myboard.position(game.fen());
+        //myboard.position(game.fen());
     };
     updateStatus = function() {
         //console.log("updateStatus");
@@ -180,14 +181,14 @@ Template.home.rendered = function() {
         // checkmate?
         if (game.in_checkmate() === true) {
             winSound.play();
-            if(!muted){
+            if (!muted) {
                 var msg = new SpeechSynthesisUtterance('Checkmate');
                 window.speechSynthesis.speak(msg);
             }
-            
+
             status = 'Game over, ' + moveColor + ' is in checkmate.';
-            
-            
+
+
         }
 
         // draw?
@@ -201,7 +202,7 @@ Template.home.rendered = function() {
 
             // check?
             if (game.in_check() === true) {
-                if(!muted){
+                if (!muted) {
                     var msg = new SpeechSynthesisUtterance('Check');
                     window.speechSynthesis.speak(msg);
                 }
@@ -252,15 +253,22 @@ Template.home.rendered = function() {
     $('#leftpanel').height($('#midpanel').height());
     $('#rightpanel').height($('#midpanel').height());
     $('#logspace').height($('#rightpanel').height() - 137);
-    $('#inst').height($('#leftpanel').height()-105);
+    $('#inst').height($('#leftpanel').height() - 105);
 
 
     //start log
     makeTurnLog();
 
     nlp = new NLP();
-    initReturn= nlp.init();
+    initReturn = nlp.init();
     makeLog(initReturn.content, initReturn.owner);
+    Tracker.autorun(function(){
+        var fenObj = Fen.findOne({userId: Meteor.userId()});
+        if(fenObj){
+            myboard.position(fenObj.fen);
+            game.fen(fenObj.fen);
+        }
+    });
 }
 
 //@param: content, put the content into the log space.
@@ -271,8 +279,7 @@ function makeLog(content, user) {
         $('#logspace').animate({
             scrollTop: $('#scrollspace').height()
         }, "slow");
-    }
-    else if (user === 'sys') {
+    } else if (user === 'sys') {
         $('#scrollspace').append('<p class="text-danger">System: ' + content + '</p>');
         //auto scroll
         $('#logspace').animate({
@@ -303,8 +310,7 @@ function updatestatisticsPawn(source, target, sourcepiece, targetpiece) {
             if (targetpiece === null) {
                 if (sourcepiece.color === 'w') {
                     piecejquery = '#' + 'b' + 'p';
-                }
-                else if (sourcepiece.color === 'b') {
+                } else if (sourcepiece.color === 'b') {
                     piecejquery = '#' + 'w' + 'p';
                 }
                 // $(piecejquery).html(parseInt($(piecejquery).html()) + 1 + '');
@@ -342,90 +348,91 @@ function makeIndicator(move) {
 ///////////////////////////////////////////////////////////////////////////
 // VOICE RECOGNITION
 
-    final_transcript = '';
-    var recognizing = false;
+final_transcript = '';
+var recognizing = false;
 
 
-    if ('webkitSpeechRecognition' in window) {
-        console.log("webkit is available!");
-        var recognition = new webkitSpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
- 
-        recognition.onstart = function() {
-          recognizing = true;
-        };
- 
-        recognition.onerror = function(event) {
-          console.log(event.error);
-        };
- 
-        recognition.onend = function() {
-          recognizing = false;
-        };
- 
-        recognition.onresult = function(event) {
-            myevent = event;
-          var interim_transcript = '';
-          for (var i = event.resultIndex; i < event.results.length; ++i) {
-              console.log("i="+i);
+if ('webkitSpeechRecognition' in window) {
+    console.log("webkit is available!");
+    var recognition = new webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    recognition.onstart = function() {
+        recognizing = true;
+    };
+
+    recognition.onerror = function(event) {
+        console.log(event.error);
+    };
+
+    recognition.onend = function() {
+        recognizing = false;
+    };
+
+    recognition.onresult = function(event) {
+        myevent = event;
+        var interim_transcript = '';
+        for (var i = event.resultIndex; i < event.results.length; ++i) {
+            console.log("i=" + i);
 
             //Stops the dictation if it sees the phrase "stop dictation"
-            if(event.results[i][0].transcript.includes("stop dictation")){
+            if (event.results[i][0].transcript.includes("stop dictation")) {
                 recognition.stop();
             }
 
             if (event.results[i].isFinal) {
 
-              final_transcript += 
+                final_transcript +=
 
-              event.results[i][0].transcript.trim() +".\n";
-              console.log('final events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
-              var mycmd = final_transcript;
-              makeLog(mycmd,'usr');
-              makeLog(nlp.input(mycmd), 'sys');
-              $('#inputCommand').val('');
-              final_transcript = '';
-              if(!muted){
-                  var msg = new SpeechSynthesisUtterance(mycmd);
-                  window.speechSynthesis.speak(msg);
-              }
+                    event.results[i][0].transcript.trim() + ".\n";
+                console.log('final events.results[i][0].transcript = ' + JSON.stringify(event.results[i][0].transcript));
+                var mycmd = final_transcript;
+                makeLog(mycmd, 'usr');
+                makeLog(nlp.input(mycmd), 'sys');
+                $('#inputCommand').val('');
+                final_transcript = '';
+                if (!muted) {
+                    var msg = new SpeechSynthesisUtterance(mycmd);
+                    window.speechSynthesis.speak(msg);
+                }
 
             } else {
-              interim_transcript += 
-     
-              event.results[i][0].transcript;
-              console.log('interim events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
+                interim_transcript +=
+
+                    event.results[i][0].transcript;
+                console.log('interim events.results[i][0].transcript = ' + JSON.stringify(event.results[i][0].transcript));
 
             }
-          }
-          //final_transcript = capitalize(final_transcript);
-          final_span.innerHTML = linebreak(final_transcript);
-          interim_span.innerHTML = linebreak(interim_transcript);
-          
-        };
-    }
-    
-    var two_line = /\n\n/g;
-    var one_line = /\n/g;
-    function linebreak(s) {
-      return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
-    }
- 
-    function capitalize(s) {
-      return s.replace(s.substr(0,1), function(m) { return m.toUpperCase(); });
-    }
- 
-    startDictation = function(event) {
-      if (recognizing) {
+        }
+        //final_transcript = capitalize(final_transcript);
+        final_span.innerHTML = linebreak(final_transcript);
+        interim_span.innerHTML = linebreak(interim_transcript);
+
+    };
+}
+
+var two_line = /\n\n/g;
+var one_line = /\n/g;
+
+function linebreak(s) {
+    return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+}
+
+function capitalize(s) {
+    return s.replace(s.substr(0, 1), function(m) {
+        return m.toUpperCase();
+    });
+}
+
+startDictation = function(event) {
+    if (recognizing) {
         recognition.stop();
         return;
-      }
-      final_transcript = '';
-      recognition.lang = 'en-US';
-      recognition.start();
-      final_span.innerHTML = '';
-      interim_span.innerHTML = '';
     }
-
-
+    final_transcript = '';
+    recognition.lang = 'en-US';
+    recognition.start();
+    final_span.innerHTML = '';
+    interim_span.innerHTML = '';
+}

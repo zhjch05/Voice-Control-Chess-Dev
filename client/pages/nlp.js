@@ -235,7 +235,7 @@ NLP = function() {
             });
             if (availablePieces.length === 1) {
                 onDrop(availablePieces[0].loc, target);
-                myboard.position(game.fen());
+                //myboard.position(game.fen());
                 return sysLog('Moved ' + dictR[availablePieces[0].piece.type] + ' at ' + availablePieces[0].loc + ' to ' + target + '.');
             } else if (availablePieces.length > 1) {
                 currentState = 'moreValidMoves';
@@ -252,10 +252,10 @@ NLP = function() {
                 } else if ($.inArray('undo', sentence.controlkey) > -1) {
                     if(steps > 0){
                         steps -= 1;
-                    }                 
-                    
+                    }
+
                     game.undo();
-                    
+
                     // Delete last entry from save record
                     if(gameRecordIndex>1){
                         gameRecord.splice(gameRecordIndex-1,gameRecordIndex-1);
@@ -264,8 +264,8 @@ NLP = function() {
                         gameRecord=[];
                         gameRecordIndex--;
                     }
-    
-                    myboard.position(game.fen());
+
+                    //myboard.position(game.fen());
                     sidebar.undo();
                     currentState = 'new';
                     undoSan();
@@ -273,7 +273,7 @@ NLP = function() {
                 } else if ($.inArray('reset', sentence.controlkey) > -1 || $.inArray('restart', sentence.controlkey) > -1) {
                     steps = 0;
                     game = new Chess();
-                    myboard.position(game.fen());
+                    //myboard.position(game.fen());
                     sidebar = new Sidebar();
                     gameRecord = [];
                     gameRecordIndex = 0;
