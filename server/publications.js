@@ -7,6 +7,9 @@ Meteor.publish("theProfiles", function() {
 Meteor.publish("matchings", function() {
     return Matchings.find();
 });
+Meteor.publish("games", function() {
+    return Games.find();
+});
 
 Meteor.publish("userData", function() {
     if (this.userId) {

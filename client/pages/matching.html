@@ -25,7 +25,12 @@
                 <div class="container">
                     <h3>Host:</h3>
                     <p>{{host}}</p>
-                    <button class="btn btn-info join-btn">Join</button>
+                    {{#if ismycard}}
+                    <button class="btn btn-info join-btn disabled">Join</button>
+                    <button class="btn btn-warning delbtn">delete</button>
+                    {{else}}
+                    <button class="btn btn-info joinbtn">Join</button>
+                    {{/if}}
                 </div>
             </div>
         </div>
