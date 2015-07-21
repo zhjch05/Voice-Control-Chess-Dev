@@ -2,6 +2,9 @@ moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www
 winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
 muted = false;
 wordIndex = 0;
+thingsToSay = ["Pawn to D4", "D5", "Knight to F3", "Pawn to E6", "Pawn to E3", "C5",  "C4", "Pawn takes D4", 
+    "Knight takes D4", "Bishop to C5", "Bishop to D2", "Knight to F6", "Bishop to D3", "Rook to F8", 
+    "Queen to F3", "Queen to D6", "King to E2", "Knight to C6", "Rook to C6", "Queen takes H2"];
 
 
 Template.home.events({
@@ -78,9 +81,15 @@ Template.home.events({
                 window.speechSynthesis.speak(msg);
             }               
         }           
+    },
+
+    'click #previousbtn': function(event){
+        if(wordIndex>0){
+            wordIndex--;
+            document.getElementById("sayNumber").innerHTML = "Say: " + "\"" + thingsToSay[wordIndex] + "\"" + "   --- (" + (wordIndex+1) + "/20)";
+        } 
     }
-
-
+    
 });
 
 Template.home.rendered = function() {
@@ -89,10 +98,8 @@ Template.home.rendered = function() {
     gameRecord = [];
     gameRecordIndex = 0;
 
-    thingsToSay = ["Pawn to D4", "D5", "Knight to F3", "Pawn to E6", "Pawn to E3", "C5",  "C4", "Pawn takes D4", 
-    "Knight takes D4", "Bishop to C5", "Bishop to D2", "Knight to F6", "Bishop to D3", "Rook to F8", 
-    "Queen to F3", "Queen to D6", "King to E2", "Knight to C6", "Rook to C6", "Queen takes H2"]
-    document.getElementById("sayNumber").innerHTML = thingsToSay[wordIndex] + "   --- (" + (wordIndex+1) + "/20)";
+    
+    document.getElementById("sayNumber").innerHTML = "Say: " + "\"" + thingsToSay[wordIndex] + "\"" + "   --- (" + (wordIndex+1) + "/20)";
 
 
     //create dict
@@ -397,7 +404,7 @@ function makeIndicator(move) {
               }else{
                 wordIndex=0;
               }
-              document.getElementById("sayNumber").innerHTML = thingsToSay[wordIndex] + "   --- (" + (wordIndex+1) + "/20)";
+              document.getElementById("sayNumber").innerHTML = "Say: " + thingsToSay[wordIndex] + "   --- (" + (wordIndex+1) + "/20)";
               makeLog(mycmd,'usr');
 
               makeLog(nlp.input(mycmd), 'sys');
@@ -406,6 +413,7 @@ function makeIndicator(move) {
 
 
               final_transcript = '';
+              interim_transcript = ''
               if(!muted){
                   var msg = new SpeechSynthesisUtterance(mycmd);
                   window.speechSynthesis.speak(msg);

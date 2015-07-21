@@ -91,12 +91,17 @@
                             <div id="scrollspace">
                                 <p class="text-danger">Log system started successfully.</p>
                             </div>
+                            <div class="col-xs-6">
+                                <button type="button" class="bg-info" style="width:100%;" id="previousbtn">
+                                    Previous Word
+                                </button>
+                            </div>
                         </div>
                         <form id="formcmd" class="form-horizontal">
                             <fieldset>
                                 <div class="form-group">
                                      
-                                    <div id="sayNumber">
+                                    <div class="bg-danger" id="sayNumber">
                                     </div>
 
                                     <!-- Speech Recognition Results -->
@@ -137,6 +142,8 @@
 
     <div class="col-xs-12">
         <div class="panel panel-default">
+            
+
             {{#each errorFunction}}
                 {{> errorDisplay}}
                 <br/>
