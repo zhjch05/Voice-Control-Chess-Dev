@@ -1,7 +1,18 @@
 <template name="matching">
     <div class="container">
         <div class="col-xs-12">
-            <h1>Create Desk</h1>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="col-xs-3">
+                            <button class="btn btn-success" id="createbtn">Create</button>
+                        </div>
+                        <div class="col-xs-9">
+                            <h4 id="infotag">Create a desk or join someone</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {{#each desk}} {{> mcard}} {{/each}}
     </div>
@@ -14,7 +25,7 @@
                 <div class="container">
                     <h3>Host:</h3>
                     <p>{{host}}</p>
-                    <button class="btn btn-info">Join</button>
+                    <button class="btn btn-info join-btn">Join</button>
                 </div>
             </div>
         </div>
