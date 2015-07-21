@@ -1,7 +1,7 @@
 moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
 winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
 muted = false;
-
+wordIndex = 0;
 
 
 Template.home.events({
@@ -78,13 +78,22 @@ Template.home.events({
                 window.speechSynthesis.speak(msg);
             }               
         }           
-    }  
+    }
+
 
 });
 
 Template.home.rendered = function() {
+    
+
     gameRecord = [];
     gameRecordIndex = 0;
+
+    thingsToSay = ["Pawn to D4", "D5", "Knight to F3", "Pawn to E6", "Pawn to E3", "C5",  "C4", "Pawn takes D4", 
+    "Knight takes D4", "Bishop to C5", "Bishop to D2", "Knight to F6", "Bishop to D3", "Rook to F8", 
+    "Queen to F3", "Queen to D6", "King to E2", "Knight to C6", "Rook to C6", "Queen takes H2"]
+    document.getElementById("sayNumber").innerHTML = thingsToSay[wordIndex] + "   --- (" + (wordIndex+1) + "/20)";
+
 
     //create dict
     alpha = ['a','b','c','d','e','f','g','h']
@@ -377,14 +386,25 @@ function makeIndicator(move) {
 
             if (event.results[i].isFinal) {
 
-              final_transcript += 
+              final_transcript = 
 
               event.results[i][0].transcript.trim() +".\n";
               console.log('final events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
               var mycmd = final_transcript;
+              Errors.insert({literal: mycmd, intent: thingsToSay[wordIndex]});
+              if(wordIndex<19){
+                wordIndex++
+              }else{
+                wordIndex=0;
+              }
+              document.getElementById("sayNumber").innerHTML = thingsToSay[wordIndex] + "   --- (" + (wordIndex+1) + "/20)";
               makeLog(mycmd,'usr');
+
               makeLog(nlp.input(mycmd), 'sys');
               $('#inputCommand').val('');
+
+
+
               final_transcript = '';
               if(!muted){
                   var msg = new SpeechSynthesisUtterance(mycmd);
@@ -429,3 +449,11 @@ function makeIndicator(move) {
     }
 
 
+Template.home.helpers({
+    
+    errorFunction: function(){
+        {
+            return Errors.find();
+        } 
+    }
+})

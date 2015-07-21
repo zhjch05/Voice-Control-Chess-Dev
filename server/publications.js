@@ -1,6 +1,7 @@
 Meteor.publish("fen",function(){return Fen.find();});
 Meteor.publish("theProfiles",function(){return Profiles.find();});
 Meteor.publish("theSaves",function(){return Saves.find();});
+Meteor.publish("theErrors",function(){return Errors.find();});
 
 Meteor.publish("userData", function () {
   if (this.userId) {

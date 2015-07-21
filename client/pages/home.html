@@ -32,6 +32,7 @@
         </div>
 
     </div>
+
     <div class="col-xs-5">
         <div class="panel panel-default" id="midpanel">
             <div class="panel-body">
@@ -39,6 +40,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-xs-4">
         <div class="panel panel-default" id="rightpanel">
             <nav class="navbar navbar-xs nvabar-primary">
@@ -93,7 +95,10 @@
                         <form id="formcmd" class="form-horizontal">
                             <fieldset>
                                 <div class="form-group">
-                                    
+                                     
+                                    <div id="sayNumber">
+                                    </div>
+
                                     <!-- Speech Recognition Results -->
                                     <div id="results" class="bg-info"> 
                                         <span id="final_span" class="final"></span>
@@ -117,15 +122,32 @@
                 </div>
                 <div class="tab-pane fade" id="profile">
                     <div class="panel-body">
-                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                            booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+                       
+                            
+                            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
+                                booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+            
                     </div>
                 </div>
             </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            {{#each errorFunction}}
+                {{> errorDisplay}}
+                <br/>
+            {{/each}}
         </div>
     </div>
-</template>
 
+</template>
+<template name= "errorDisplay">
+    {{intent}} -- {{literal}}
+</template>
 
 <template name="instructions">
     <div class="col-xs-12" id="inst">
@@ -236,3 +258,4 @@
         </table>
     </div>
 </template>
+
