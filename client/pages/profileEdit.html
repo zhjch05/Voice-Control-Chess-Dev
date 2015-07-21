@@ -3,11 +3,16 @@
     <div class = "panel panel-default">
       <div align = "center">
         <form id="profile-edit-form">
-      		Name:<br/><input type="text" name="name" id="name"><br/>
-      		Bio:<br/><textarea name="bio" id="bio">{{bio}}</textarea><br/>
-      		<input type="submit" id="submitEdit"><br/>
-      		<input type="submit" value="cancel" id="cancelEdit"><br/><br/>
-      	</form>
+      		{{#if currentUser}}
+            Name:<br/><input type="text" name="name" id="name"><br/>
+        		Bio:<br/><textarea name="bio" id="bio">{{bio}}</textarea><br/>
+        		<input type="submit" id="submitEdit"><br/>
+        		<input type="submit" value="cancel" id="cancel-edit"><br/><br/>
+      	  {{else}}
+            <br/><center><h1>You must be signed in to view your saved games</h1></center>
+            <center>{{> atNavButton}}</center>
+          {{/if}}
+        </form>
       </div>
     </div>
   </div>

@@ -29,7 +29,6 @@ Template.profile.rendered = function() {
 
 if(Profiles.findOne() == undefined){
 	Profiles.insert({id: Meteor.userId()});
-	console.log('got in')
 }
 
 }
