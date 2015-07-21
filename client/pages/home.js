@@ -19,7 +19,7 @@ Template.home.events({
 
     'click #savebtn': function(event){
         console.log('pressed savebtn');
-        Profiles.insert({id: Meteor.userId(), save: gameRecord, timestamp: new Date()});
+        Saves.insert({id: Meteor.userId(), save: gameRecord, timestamp: new Date()});
         makeLog('Game record saved.', 'sys');
         if(!muted){
             var msg = new SpeechSynthesisUtterance('Game record saved');

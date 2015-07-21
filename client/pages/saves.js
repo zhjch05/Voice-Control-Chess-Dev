@@ -2,11 +2,13 @@ Template.saves.helpers({
     
     saveFunction: function(){
         {
-            return Profiles.find({},{sort:{timestamp:-1}})
+            return Saves.find({id: Meteor.userId()},{sort:{timestamp:-1}})
         } 
     }
 })
 
 Template.saves.events({
-	"click .delete-save-icon": function(){Profiles.remove(this._id);}
+	"click .delete-save-icon": function(){
+		Saves.remove(this._id);}
+
 })
