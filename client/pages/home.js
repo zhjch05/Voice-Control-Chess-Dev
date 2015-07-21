@@ -257,7 +257,7 @@ Template.home.rendered = function() {
 
 
     //start log
-    makeTurnLog();
+    //makeTurnLog();
 
     nlp = new NLP();
     initReturn = nlp.init();
@@ -265,8 +265,9 @@ Template.home.rendered = function() {
     Tracker.autorun(function(){
         var fenObj = Fen.findOne({userId: Meteor.userId()});
         if(fenObj){
-            myboard.position(fenObj.fen);
-            game.fen(fenObj.fen);
+            game = new Chess(fenObj.fen);
+            myboard.position(game.fen());
+            makeTurnLog();
         }
     });
 }
