@@ -1,34 +1,34 @@
 <template name="nav">
-  <nav class="navbar navbar-primary navbar-static-top" role="navigation">
-    <div class=container>
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="navbar-brand">
-            Voice Control Chess
-          </span>
-        </div>
+    <nav class="navbar navbar-primary navbar-static-top" role="navigation">
+        <div class=container>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="navbar-brand">
+                        Voice Control Chess
+                    </span>
+                </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8">
-          <ul class="nav navbar-nav">
-            <li class="{{isActiveRoute regex='home'}}"><a href="{{pathFor 'home'}}">Home</a></li>
-            <li class="{{isActiveRoute regex='useraccounts'}}"><a href="{{pathFor 'useraccounts'}}">User Accounts</a></li>
-            <li class="{{isActiveRoute regex='saves'}}"><a href="{{pathFor 'saves'}}">Saved Games</a></li>
-            <li class="{{isActiveRoute regex='profile'}}"><a href="{{pathFor 'profile'}}">Profile</a></li>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8">
+                    <ul class="nav navbar-nav">
+                        <li class="{{isActiveRoute regex='home'}}"><a href="{{pathFor 'home'}}">Home</a></li>
+                        <li class="{{isActiveRoute regex='useraccounts'}}"><a href="{{pathFor 'useraccounts'}}">User Accounts</a></li>
+                        <li class="{{isActiveRoute regex='saves'}}"><a href="{{pathFor 'saves'}}">Saved Games</a></li>
+                        <li class="{{isActiveRoute regex='profile'}}"><a href="{{pathFor 'profile'}}">Profile</a></li>
+                        <li class="{{isActiveRoute regex='matching'}}"><a href="{{pathFor 'matching'}}">PVP matching</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
 
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            
-            {{> atNavButton}}
-            
-          </ul>
+                        {{> atNavButton}}
+
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 </template>
