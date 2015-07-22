@@ -33,6 +33,14 @@ Template.matching.rendered = function() {
             $('#infotag').html('Create a desk or join someone');
         }
     });
+    Tracker.autorun(function() {
+        var mygame = Games.findOne({player1: Meteor.userId()});
+        if(mygame){
+            Router.go('pvp.show', {
+                _id: mygame._id
+            });
+        }
+    });
 }
 
 Template.mcard.helpers({
@@ -64,7 +72,9 @@ Template.mcard.events({
                 return alert(error.reason);
             }
             //console.log(result._id);
-            Router.go('pvp.show',{_id: result._id});
+            Router.go('pvp.show', {
+                _id: result._id
+            });
         });
     }
 });
