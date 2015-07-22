@@ -64,6 +64,7 @@ Template.mcard.events({
         var post = {
             player1: info.userId,
             player2: Meteor.userId(),
+            turn:'w',
             fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
         };
         //console.log(post);
