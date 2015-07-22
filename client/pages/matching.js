@@ -58,13 +58,13 @@ Template.mcard.events({
             player2: Meteor.userId(),
             fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
         };
-        console.log(post);
+        //console.log(post);
         Meteor.call('createGame', post, function(error, result) {
             if (error) {
                 return alert(error.reason);
             }
-            console.log(result._id);
-            Router.go('/pvp',{_id: result._id});
+            //console.log(result._id);
+            Router.go('pvp.show',{_id: result._id});
         });
     }
 });

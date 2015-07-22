@@ -1,3 +1,3 @@
 Template.pvp.rendered = function(){
-    console.log(Router.current().params);
+    console.log(Router.current().params._id);
 }
