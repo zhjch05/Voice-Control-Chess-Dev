@@ -267,7 +267,7 @@ Template.home.rendered = function() {
     //jQuery layout
     $('#leftpanel').height($('#midpanel').height());
     $('#rightpanel').height($('#midpanel').height());
-    $('#logspace').height($('#rightpanel').height() - 137);
+    $('#logspace').height($('#rightpanel').height() - 161);
     $('#inst').height($('#leftpanel').height()-105);
 
 
