@@ -68,9 +68,39 @@ errorCorrect = function(str) {
             [/\bbe/g, "b"],
             //Replace the word "for" with the number "4", i.e. "C5 takes D for" -> "C5 takes D 4"
             [/\bfor|\bfour/g, "4"],
-
             //Replace the word "bah" with "B8".  "bah to a 7" -> "B8 to a 7".
             [/bah/g, "b8"],
+
+        //Extras
+            //Replace 'punk' with 'pawn' -- punk D 6. 
+            [/\bpunk/g, "pawn"],
+
+            //Replace 'defy','decide', 'defies' and 'define' with 'D5' -- defy.
+            [/\bdefy/g, "d5"],
+            [/\bdecide/g, "d5"],
+            [/\bdefies/g, "d5"],
+            [/\bdefine/g, "d5"],
+
+            //Replace 'Ponte de' with 'Pawn to D' -- Ponte de 4.
+            [/\bpont\sde/g, "pawn to d"],
+
+            //Replace a starting 'on' with 'pawn' -- on TD 4
+            [/\bon/g, "pawn"],
+            
+            //Replace the word 'context' with 'pawn takes' -- context d4.
+            [/\bcontext/g, "pawn takes"],
+        
+            //Replace the word 'Nate' with 'Knight' -- Nate to s3. 
+            [/\bnate/g, "knight"],
+
+            //Replace the word 'pontoo' and 'pontoon' with 'Pawn to' -- pontoo III.   -- pontoon d4. 
+            [/\bpontoon/g, "pawn to"],
+            [/\bpontoo/g, "pawn to"],
+        
+            //Replace the word 'pontic' with 'Pawn takes' -- pontic 64.
+            [/\bpontic/g, "pawn takes"],
+
+
         ];
         _.each(DwordProc, function(item) {
             str = str.replace(item[0], item[1]);
