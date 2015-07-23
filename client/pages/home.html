@@ -1,6 +1,5 @@
 <template name="home">
-    
-    <div class="col-xs-3" ><div id="timer"><h2 id="aaaaa">white:{{minWhite}}: {{secondWhite}}{{anotherWhite}}</h2></div></div>
+    <div class="col-xs-3" ><div id="timer">{{> fliptimerw}}</div></div>
     <div class="col-xs-5 buttonBoard">                   
                 <ul class="nav navbar-nav bu">       
                         <li>
@@ -31,7 +30,7 @@
                         
                     </ul>
     </div>
-        <div class="col-xs-3"><h2 id="bbb">Black:{{minBlack}}: {{secondBlack}}{{anotherBlack}}</h2></div>
+        <div class="col-xs-3">{{> fliptimerb}}</div>
     <div class="col-xs-3">
         <div class="panel panel-default" id="leftpanel">
             <div class="panel-body">
@@ -246,4 +245,16 @@
             </tbody>
         </table>
     </div>
+</template>
+<template name="fliptimerw">
+      <div class='center-blockw' style='width:300px;'>
+        <div class='countdown-clockw'></div>
+      </div>
+
+</template>
+<template name="fliptimerb">
+      <div class='center-blockb' style='width:300px;'>
+        <div class='countdown-clockb'></div>
+      </div>
+
 </template>

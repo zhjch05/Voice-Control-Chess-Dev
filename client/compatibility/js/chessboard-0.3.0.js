@@ -442,6 +442,7 @@ function expandConfig() {
   if (cfg.sparePieces === true) {
     cfg.draggable = true;
   }
+var address = function(){return Chat.find().address;}
 
   // default piece theme is wikipedia
   if (cfg.hasOwnProperty('pieceTheme') !== true ||

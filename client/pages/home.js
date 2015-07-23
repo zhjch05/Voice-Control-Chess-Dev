@@ -4,6 +4,23 @@ muted = false;
 gameRecord = [];
 gameRecordIndex = 0;
 started=true;
+address= function(){
+    console.log(Pieces.findOne({pieceName:"e"}).address);
+    return Pieces.findOne({pieceName:"e"}).address;
+}
+function updateClockw(){
+        clockw = $('.countdown-clockw').FlipClock(300, {
+		clockFace: 'MinuteCounter',
+        countdown: 'true',
+        wrapper: 'flip-clock-small-wrapper'
+	});
+}
+function updateClockb(){
+        clockb = $('.countdown-clockb').FlipClock(300, {
+		clockFace: 'MinuteCounter',
+        countdown: 'true',
+	});
+}
 Template.home.events({
     'submit #formcmd': function(event) {
         event.preventDefault();
@@ -39,20 +56,12 @@ Template.home.events({
 
     'click #restartbtn': function(event){
             game.game_over = true;
-            Session.set('minWhite', 5);
-            Session.set('decimalSecondWhite', 0);
-            Session.set('unitSecondWhite', 0);
-            Session.set('minBlack', 5);
-            Session.set('decimalSecondBlack', 0);
-            Session.set('unitSecondBlack', 0);
-            minWhite =5;
-            decimalSecondWhite =0;
-            unitSecondWhite =0;
-            minBlack =5;
-            decimalSecondBlack =0;
-            unitSecondBlack =0;
-            unitCache=9;
-            decimalCache=5;
+ 
+        updateClockw();
+        updateClockb();
+        clockb.stop();
+        clockw.stop(); 
+
         console.log('pressed restartbtn');
         nlp.input("restart");
         makeLog('Restarted the game.', 'sys');
@@ -70,6 +79,8 @@ Template.home.events({
     'click #surrenderbtn': function(event){
         console.log('pressed surrenderbtn');
         game.game_over = true;
+        clockb.stop();
+        clockw.stop();  
            
         if(game.turn()== 'w'){
             var msg = new SpeechSynthesisUtterance('White surrenders');
@@ -91,84 +102,32 @@ Template.home.events({
 
 });
 Template.home.helpers({
-    minWhite:function(){ return Session.get('minWhite');},
-    secondWhite:function(){ return Session.get('decimalSecondWhite');},
-    anotherWhite:function(){ return Session.get('unitSecondWhite');},
-    minBlack:function(){ return Session.get('minBlack');},
-    secondBlack:function(){ return Session.get('decimalSecondBlack');},
-    anotherBlack:function(){ return Session.get('unitSecondBlack');}
+
 })
-Session.setDefault('minWhite', 5);
-Session.setDefault('decimalSecondWhite', 0);
-Session.setDefault('unitSecondWhite', 0);
-Session.setDefault('minBlack', 5);
-Session.setDefault('decimalSecondBlack', 0);
-Session.setDefault('unitSecondBlack', 0);
-var minWhite =5;
-var decimalSecondWhite =0;
-var unitSecondWhite =0;
-var minBlack =5;
-var decimalSecondBlack =0;
-var unitSecondBlack =0;
-var unitCache=9;
-var decimalCache=5;
+
 function timeCountW()
  {  
-     if(game.game_over() === false){
-    if(game.turn() === 'w')
-        if (minWhite==0 && decimalSecondWhite==0 && unitSecondWhite==0){
-                alert("good game");
-        }else{
-                if (unitSecondWhite == 0){
-                            unitSecondWhite = unitCache;
-                            Session.set('unitSecondWhite',unitSecondWhite);
-                        if(decimalSecondWhite == 0){
-                            decimalSecondWhite= decimalCache;
-                            Session.set('decimalSecondWhite',decimalSecondWhite);
-                            minWhite = minWhite-1;
-                            Session.set('minWhite',minWhite);
-                        }else{
-                            decimalSecondWhite=decimalSecondWhite-1;
-                            Session.set('decimalSecondWhite',decimalSecondWhite);
-                        }
-                }else{
-                        unitSecondWhite= unitSecondWhite-1;
-                        Session.set('unitSecondWhite',unitSecondWhite);
-                }
+        if(game.turn() === 'w'){
+            clockw.start();
+            clockb.stop();                
         }
-        setTimeout(function(){timeCountW()},1000) ;
-     }
 }
 function timeCountB()
  {
-    if(game.game_over() === false){
-    if(game.turn() === 'b'&& started===true)
-        if (minBlack==0 && decimalSecondBlack==0 && unitSecondBlack==0){
-                alert("good game");
-        }else{
-                if (unitSecondBlack == 0){
-                            unitSecondBlack = unitCache;
-                            Session.set('unitSecondBlack',unitSecondBlack);
-                        if(decimalSecondBlack == 0){
-                            decimalSecondBlack= decimalCache;
-                            Session.set('decimalSecondBlack',decimalSecondBlack);
-                            minBlack = minBlack-1;
-                            Session.set('minBlack',minBlack);
-                        }else{
-                            decimalSecondBlack=decimalSecondBlack-1;
-                            Session.set('decimalSecondBlack',decimalSecondBlack);
-                        }
-                }else{
-                        unitSecondBlack= unitSecondBlack-1;
-                        Session.set('unitSecondBlack',unitSecondBlack);
-                }
+        if(game.turn() === 'b'){
+            clockb.start();
+            clockw.stop();                
         }
-        setTimeout(function(){timeCountB()},1000) ;
-    }
 }
 
 Template.home.rendered = function() {
-
+    Tracker.autorun(function () {
+        updateClockb();
+        updateClockw();
+        clockb.stop();
+        clockw.stop();  
+        
+    });
     //create dict
     alpha = ['a','b','c','d','e','f','g','h']
     num = ['1', '2' , '3' , '4', '5' , '6' , '7' , '8'];
@@ -186,9 +145,12 @@ Template.home.rendered = function() {
     steps = 0;
     sidebar = new Sidebar();
     gameStarted= function(){
-        if(steps== 0&&started===true){
-            timeCountW();
-            timeCountB(); 
+         if(game.game_over() === false){
+                timeCountW();
+                timeCountB(); 
+         }else{
+                clockw.stop();
+                clockb.stop(); 
         }
 
     }
@@ -323,6 +285,14 @@ Template.home.rendered = function() {
     var onMouseoutSquare = function(square, piece) {
         removeGreySquares();
     };
+    if(themeOfPiece.find().fetch().length==0){
+        pieceTheme="a";
+        themeOfPiece.insert({pieceTheme:pieceTheme});
+        console.log(themeOfPiece.findOne());
+    }else{
+    
+    };
+    var theme=themeOfPiece.findOne().pieceTheme
     var cfg = {
         draggable: true,
         position: 'start',
@@ -332,7 +302,7 @@ Template.home.rendered = function() {
         onMouseoutSquare: onMouseoutSquare,
         onMouseoverSquare: onMouseoverSquare,
         showCoordinate: true,
-        themeStyle: "b"
+        themeStyle:theme
     };
     //rendering board with cfg
     myboard = new ChessBoard('board', cfg);
