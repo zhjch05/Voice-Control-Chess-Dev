@@ -162,6 +162,17 @@ Template.pvp.rendered = function() {
         if (gameObj) {
             game = new Chess(gameObj.fen);
             myboard.position(game.fen());
+        } else {
+            Router.go('home');
         }
     });
 }
+Template.pvp.events({
+    'click #quitbtn': function() {
+        Meteor.call('deleteGame', gameId, function(error, result) {
+            if (error) {
+                return alert(error.reason);
+            }
+        });
+    }
+});
