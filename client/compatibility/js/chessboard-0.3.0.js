@@ -443,12 +443,29 @@ function expandConfig() {
     cfg.draggable = true;
   }
 
-  // default piece theme is wikipedia
+// default piece theme is wikipedia
   if (cfg.hasOwnProperty('pieceTheme') !== true ||
       (typeof cfg.pieceTheme !== 'string' &&
        typeof cfg.pieceTheme !== 'function')) {
-    cfg.pieceTheme = 'img/chesspieces/wikipedia/{piece}.png';
+        var abc = cfg.themeStyle;
+        if(abc == "b"){
+            cfg.pieceTheme = 'img/chesspieces/wikipedia/model1/{piece}.png';
+        }else if (abc == "a"){
+            cfg.pieceTheme = 'img/chesspieces/wikipedia/{piece}.png';
+        }else if (abc == "c"){
+            cfg.pieceTheme = 'img/chesspieces/wikipedia/model2/{piece}.png';
+        }
+  }else if(cfg.hasOwnProperty('pieceTheme')== true){
+        var abc = cfg.themeStyle;
+        if(abc == "a"){
+            cfg.pieceTheme = 'img/chesspieces/wikipedia/model1/{piece}.png';
+        }else if (abc == "b"){
+            cfg.pieceTheme = 'img/chesspieces/wikipedia/{piece}.png';
+        }else if (abc == "c"){
+            cfg.pieceTheme = 'img/chesspieces/wikipedia/model2/{piece}.png';
+        }
   }
+
 
   // animation speeds
   if (cfg.hasOwnProperty('appearSpeed') !== true ||

@@ -311,7 +311,8 @@ Template.home.rendered = function() {
         onSnapEnd: onSnapEnd,
         onMouseoutSquare: onMouseoutSquare,
         onMouseoverSquare: onMouseoverSquare,
-        showCoordinate: true
+        showCoordinate: true,
+        themeStyle: theme
     };
     //rendering board with cfg
     myboard = new ChessBoard('board', cfg);

@@ -5,8 +5,8 @@ Template.setting.rendered= function() {
         console.log(themeOfPiece.findOne());
     }
 }
-Template.setting.events({
 
+Template.setting.events({
 
     'click #theme1': function(event){
         pieceTheme="a";
