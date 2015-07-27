@@ -8,54 +8,574 @@
 
 <div class="collapse" id="collapseExample">
   <div class="well">
-    <li>
-        <button type="button" class="btn btn-md" style="width:100%;" id="upload"> upload
-        </button>
-    </li>
-    <div class="row">
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="img/theme2.png" id="picture2" alt="..." width="200px" height = "200px">
-            <div class="caption">
-                <h3>Classic Theme</h3>
-                <p>
-                </p>
-                <p><a  class="btn btn-primary" id= "theme1" role="button">Select Theme</a></p>
-            </div>
-            </div>
-  </div>
 
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="img/theme1.png" id="picture3" alt="..." width="200px" height = "200px">
-                <div class="caption">
-                    <h3>Alternate Theme</h3>
-                    <p>
-                    </p>
-                    <p>
-                        <a  class="btn btn-primary" id= "theme2" role="button">Select Theme</a>
-                    </p>
+      <p>
+          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#classicPiece" aria-expanded="false" aria-controls="classicPiecee">
+        classic pieces
+          </a>
+      </p>
+            <div class="collapse" id="classicPiece">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="img/theme2.png" id="picture2" alt="..." width="200px" height = "200px">
+                            <div class="caption">
+                                <h3>Classical </h3>
+                                <p>classical theme, everyone loves it
+                                </p>
+                                <p><a  class="btn btn-primary" id= "theme1" role="button">Button</a></p>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="img/theme1.png" id="picture3" alt="..." width="200px" height = "200px">
+                                <div class="caption">
+                                    <h3>another classical</h3>
+                                    <p>
+                                        Try this
+                                    </p>
+                                    <p>
+                                        <a  class="btn btn-primary" id= "theme2" role="button">Button</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="img/theme3.png" id="picture4" alt="..." width="200px" height = "200px">
+                                <div class="caption">
+                                    <h3>Obama</h3>
+                                    <p>
+                                        enjoy and guess which piece you are moving.
+                                    </p>
+                                    <p><a  class="btn btn-primary" id= "theme3" role="button">Button</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+      <p>
+          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#personalized" aria-expanded="false" aria-controls="personalized">
+        personalized pieces
+          </a>
+        
 
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="img/theme3.png" id="picture4" alt="..." width="200px" height = "200px">
-                <div class="caption">
-                    <h3>Presidential theme.</h3>
-                    <p>     
-                    </p>
-                    <p><a  class="btn btn-primary" id= "theme3" role="button">Select Theme</a>
-                    </p>
-                </div>
-            </div>
-        </div>
+      </p>
+
+      
+            <div class="collapse" id="personalized">
+                <div class="well">
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="img/theme2.png" id="picture2" alt="..." width="200px" height = "200px">
+                            <div class="caption">
+                                <h3>Personal Piece</h3>
+                                <p>These pieces can be what you like
+                                </p>
+                                <p><a  class="btn btn-primary" id= "theme1" role="button"><i class="glyphicon glyphicon-ok"></i></a></p>  
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-sm-8">
+                            <select id="selectPieceName">
+                                <option id="piece1" value="WP" selected="a">WP</option>
+                                <option id="piece2" value="WR">WR</option>
+                                <option id="piece3" value="WN">WN</option>
+                                <option id="piece4" value="WB">WB</option>
+                                <option id="piece5" value="WQ">WQ</option>
+                                <option id="piece6" value="WK">WK</option>
+                                <option id="piece7" value="BP">BP</option>
+                                <option id="piece8" value="BR">BR</option>
+                                <option id="piece9" value="BN">BN</option>
+                                <option id="piece10" value="BB">BB</option>
+                                <option id="piece11" value="BQ">BQ</option>
+                                <option id="piece12" value="BK">BK</option>
+                            </select>
+                            <button type="button" class="btn btn-primary"  id="upload"> upload
+                            </button><a class="btn btn-primary" role="button" data-toggle="collapse" href="#personalpiece" aria-expanded="false" aria-controls="personalpiece">
+                                    Choose Pieces
+                            </a>
+                            <div class="collapse" id="personalpiece">
+                                 <div class="col-sm-2 col-sm-2">
+                                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/wP.png" id="WP" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>WhitePawn</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "wpPicker" role="button" width="50px" data-toggle="modal" data-target="#wPModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="wPModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">White Pawn</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each WP}}
+			                                                     {{> iWP}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                </div>
+                                <div class="col-sm-2 col-sm-2">
+                                        <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/wR.png" id="WR" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>WhiteRook</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "wRPicker" role="button" width="50px" data-toggle="modal" data-target="#wRModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="wRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">White Rook</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each WR}}
+			                                                     {{> iWR}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                </div>
+                                                <div class="col-sm-2 col-sm-2">
+                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/wN.png" id="WN" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>WhiteKnight</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "wNPicker" role="button" width="50px" data-toggle="modal" data-target="#wNModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="wNModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">White Knight</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each WN}}
+			                                                     {{> iWN}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                </div>
+                                                <div class="col-sm-2 col-sm-2">
+                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/wB.png" id="WB" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>WhiteBishop</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "wBPicker" role="button" width="50px" data-toggle="modal" data-target="#wBModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="wBModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">White Bishop</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each WB}}
+			                                                     {{> iWB}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                </div>
+                                <div class="col-sm-2 col-sm-2">
+                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/wQ.png" id="WQ" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>WhiteQueen</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "wQPicker" role="button" width="50px" data-toggle="modal" data-target="#wQModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="wQModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">White Queen</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each WQ}}
+			                                                     {{> iWQ}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                </div>
+                                </div>
+                                <div class="col-sm-2 col-sm-2">
+                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/wK.png" id="WK" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>WhiteKing</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "wKPicker" role="button" width="50px" data-toggle="modal" data-target="#wKModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="wKModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">White King</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each WK}}
+			                                                     {{> iWK}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                </div>
+                                </div>
+                <!--        black-->
+                                 <div class="col-sm-2 col-sm-2">
+                                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/bP.png" id="BP" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>BlackPawn</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "bpPicker" role="button" width="50px" data-toggle="modal" data-target="#bPModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="bPModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">Black Pawn</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each BP}}
+			                                                     {{> iBP}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                </div>
+                                <div class="col-sm-2 col-sm-2">
+                                        <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/bR.png" id="BR" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>BlackRook</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "bRPicker" role="button" width="50px" data-toggle="modal" data-target="#bRModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="bRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">Black Rook</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each BR}}
+			                                                     {{> iBR}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                </div>
+                                                <div class="col-sm-2 col-sm-2">
+                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/bN.png" id="BN" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>BlackKnight</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "bNPicker" role="button" width="50px" data-toggle="modal" data-target="#bNModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="bNModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">Black Knight</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each BN}}
+			                                                     {{> iBN}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                </div>
+                                                <div class="col-sm-2 col-sm-2">
+                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/bB.png" id="BB" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>BlackBishop</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "bBPicker" role="button" width="50px" data-toggle="modal" data-target="#bBModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="bBModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">Black Bishop</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                            {{#each BB}}
+			                                                     {{> iBB}}
+		                                                    {{/each}}
+                                                        </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                </div>
+                                <div class="col-sm-2 col-sm-2">
+                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/bQ.png" id="BQ" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>BlackQueen</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "bQPicker" role="button" width="50px" data-toggle="modal" data-target="#bQModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="bQModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                          <h4 class="modal-title">Black Queen </h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                            {{#each BQ}}
+			                                                     {{> iBQ}}
+		                                                    {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                </div>
+                                </div>
+                                <div class="col-sm-2 col-sm-2">
+                                <div class="thumbnail">
+                                                    <img src="img/chesspieces/wikipedia/model1/bK.png" id="BK" alt="..." width="200px" height = "200px">
+                                                </div>
+                                                <div class="caption">
+                                                        <h6>BlackKing</h6>
+                                                </div>
+                                                <a  class="btn btn-md btn-primary" id= "wKPicker" role="button" width="50px" data-toggle="modal" data-target="#bKModal"><i class="glyphicon glyphicon-th"></i></a>
+                                                <div class="modal fade" id="bKModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                  <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">Black King</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          {{#each BK}}
+			                                                     {{> iBK}}
+		                                                  {{/each}}
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" id="bkChoose" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                </div>
+                                </div>  
+                            </div>
+                        </div>
+
+
+        
+      
     </div>
+        </div>
+      </div>
+
   </div>
 </div>
 
 
 
 
+</template>
+<template name="iWP">
+    
+	<img src={{address}} id="abcd" class= "pictures" alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="wpclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+    <script type="text/javascript">
+function wpclick(clicked_id)
+{
+    wpId = clicked_id;
+}
+</script>
+</template>
+<template name="iWR">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="wrclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+        <script type="text/javascript">
+function wrclick(clicked_id)
+{
+    wrId = clicked_id;
+}
+</script>
+</template>
+<template name="iWN">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="wnclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+        <script type="text/javascript">
+function wnclick(clicked_id)
+{
+    wnId = clicked_id;
+}
+</script>
+</template>
+<template name="iWB">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="wbclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+        <script type="text/javascript">
+function wbclick(clicked_id)
+{
+    wbId = clicked_id;
+}
+</script>
+</template>
+<template name="iWQ">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="wqclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+        <script type="text/javascript">
+function wqclick(clicked_id)
+{
+    wqId = clicked_id;
+}
+</script>
+</template>
+<template name="iWK">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="wkclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+        <script type="text/javascript">
+function wkclick(clicked_id)
+{
+    wkId = clicked_id;
+}
+</script>
+</template>
+<template name="iBP">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="bpclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+        <script type="text/javascript">
+function bpclick(clicked_id)
+{
+    bpId = clicked_id;
+}
+</script>
+</template>
+<template name="iBR">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="brclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+    <script type="text/javascript">
+function brclick(clicked_id)
+{
+    brId = clicked_id;
+}
+</script>
+</template>
+<template name="iBN">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="bnclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+    <script type="text/javascript">
+function bnclick(clicked_id)
+{
+    bnId = clicked_id;
+}
+</script>
+</template>
+<template name="iBB">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="bbclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+    <script type="text/javascript">
+function bbclick(clicked_id)
+{
+    bbId = clicked_id;
+}
+</script>
+</template>
+<template name="iBQ">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="bqclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+    <script type="text/javascript">
+function bqclick(clicked_id)
+{
+    bqId = clicked_id;
+}
+</script>
+</template>
+    
+<template name="iBK">
+    
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
+    <button type="button"  id={{address}} onClick="bkclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
+    <script type="text/javascript">
+function bkclick(clicked_id)
+{
+    bkId = clicked_id;
+}
+</script>
 </template>

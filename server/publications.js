@@ -2,6 +2,8 @@ Meteor.publish("fen",function(){return Fen.find();});
 Meteor.publish("theProfiles",function(){return Profiles.find();});
 Meteor.publish("theSaves",function(){return Saves.find();});
 Meteor.publish("theThemeOfPiece", function(){return themeOfPiece.find();});
+Meteor.publish("thePersonalTheme",function(){return personalTheme.find();});
+Meteor.publish("thePieces",function(){return Pieces.find();});
 
 Meteor.publish("fen", function() {
     return Fen.find();
