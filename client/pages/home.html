@@ -1,7 +1,7 @@
 <template name="home">
 <div class="col-xs-3" ><div id="timer">{{> fliptimerw}}</div></div>
-    <div class="col-xs-5 buttonBoard">                   
-                <ul class="nav navbar-nav bu">       
+    <div class="col-xs-5 buttonBoard" id="btnBoard">
+                <ul class="nav navbar-nav bu" id="btnul" style="width: 100%;">
                         <li>
                             <button type="button" class="btn btn-md" style="width:100%;" id="mutebtn"><i class="glyphicon glyphicon-volume-up i-w"></i>
                             </button>
@@ -21,13 +21,13 @@
                             <button type="button" class="btn btn-md" style="width:100%;" id="flipbtn"><i class="glyphicon glyphicon-refresh i-w"></i>
                             </button>
                         </li>
-                        
+
                         <li>
                             <button type="button" class="btn btn-md" style="width:100%;" id="surrenderbtn"><i class="glyphicon glyphicon-flag i-w"></i>
                             </button>
                         </li>
-                         
-                        
+
+
                     </ul>
     </div>
         <div class="col-xs-3">{{> fliptimerb}}</div>
@@ -40,7 +40,7 @@
                             <a href="#statistics" class="btn btn-fab btn-success" data-toggle="tab"><i class="fa fa-bar-chart"></i></a>
                             <a href="#instruction" class="btn btn-fab btn-info" data-toggle="tab"><i class="fa fa-info"></i></a> &nbsp;
                             <div id="turnindicator">
-                                
+
                                 <p><i class="fa fa-circle-o"></i>&nbsp;White's turn</p>
                             </div>
                         </div>
@@ -76,9 +76,9 @@
             <nav class="navbar navbar-xs nvabar-primary">
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        
+
                         <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-list-alt"></i>&nbsp;Console</a></li>
-                        
+
                     </ul>
                 </div>
             </nav>
@@ -93,9 +93,9 @@
                         <form id="formcmd" class="form-horizontal">
                             <fieldset>
                                 <div class="form-group">
-                                    
+
                                     <!-- Speech Recognition Results -->
-                                    <div id="results" class="bg-info"> 
+                                    <div id="results" class="bg-info">
                                         <span id="final_span" class="final"></span>
                                         <span id="interim_span" class="interim"></span>
                                     </div>
@@ -238,14 +238,14 @@
 </template>
 
 <template name="fliptimerw">
-      <div class='center-blockw' style='width:300px;'>
-        <div class='countdown-clockw'></div>
+      <div class='center-blockw'>
+        <div class='countdown-clockw' style="zoom: 0.65;"></div>
       </div>
 
 </template>
 <template name="fliptimerb">
-      <div class='center-blockb' style='width:300px;'>
-        <div class='countdown-clockb'></div>
+      <div class='center-blockb'>
+        <div class='countdown-clockb' style="zoom: 0.65;"></div>
       </div>
 
 </template>
