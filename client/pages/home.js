@@ -1,6 +1,6 @@
 moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
 winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
-muted = false;
+
 started=true;
 
 
@@ -151,7 +151,7 @@ Template.home.rendered = function() {
         
     });
 
-
+    muted = false;
     gameRecord = [];
     gameRecordIndex = 0;
 
