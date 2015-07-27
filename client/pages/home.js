@@ -3,6 +3,7 @@ winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www
 muted = false;
 started=true;
 
+
 address= function(){
     console.log(Pieces.findOne({pieceName:"e"}).address);
     return Pieces.findOne({pieceName:"e"}).address;
@@ -12,13 +13,29 @@ function updateClockw(){
         clockFace: 'MinuteCounter',
         countdown: 'true',
         wrapper: 'flip-clock-small-wrapper'
-    });
+        });
+        // if(timeW.time == 0){
+        //     var msg = new SpeechSynthesisUtterance('Black wins');
+        //     makeLog('White ran out of time. Black wins', 'sys');
+        //     if(!muted){
+        //         winSound.play();
+        //         window.speechSynthesis.speak(msg);
+        //     }
+        // }
 }
 function updateClockb(){
         clockb = $('.countdown-clockb').FlipClock(300, {
         clockFace: 'MinuteCounter',
         countdown: 'true',
     });
+        // if(timeb.time == 0){
+        //     var msg = new SpeechSynthesisUtterance('White wins');
+        //     makeLog('Black ran out of time. White wins', 'sys');
+        //     if(!muted){
+        //         winSound.play();
+        //         window.speechSynthesis.speak(msg);
+        //     }
+        // }
 }
 
 
@@ -133,6 +150,7 @@ Template.home.rendered = function() {
         clockw.stop();  
         
     });
+
 
     gameRecord = [];
     gameRecordIndex = 0;
@@ -474,6 +492,8 @@ function makeIndicator(move) {
                   var msg = new SpeechSynthesisUtterance(mycmd);
                   window.speechSynthesis.speak(msg);
               }
+
+              recognition.stop();
 
             } else {
               interim_transcript += 
