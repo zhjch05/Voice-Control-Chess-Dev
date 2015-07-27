@@ -478,7 +478,9 @@ function makeIndicator(move) {
             }
 
             if (event.results[i].isFinal) {
-
+                if(final_transcript.length > 20){
+                    final_transcript = "";
+                }
               final_transcript += 
 
               event.results[i][0].transcript.trim() +".\n";
@@ -496,10 +498,14 @@ function makeIndicator(move) {
               recognition.stop();
 
             } else {
+                if(interim_transcript.length > 20){
+                    interim_transcript = "";
+                }
               interim_transcript += 
      
               event.results[i][0].transcript;
               console.log('interim events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
+
 
             }
           }
