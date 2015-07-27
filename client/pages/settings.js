@@ -1,6 +1,6 @@
 Template.setting.rendered= function() {
-    if(themeOfPiece.find() == undefined){
-        pieceTheme="a";
+    if(themeOfPiece.find().fetch().length == 0){
+        var pieceTheme="a";
         themeOfPiece.insert({pieceTheme:pieceTheme});
         console.log(themeOfPiece.findOne());
     }
