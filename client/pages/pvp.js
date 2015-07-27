@@ -149,7 +149,8 @@ Template.pvp.rendered = function() {
         onMouseoutSquare: onMouseoutSquare,
         onMouseoverSquare: onMouseoverSquare,
         showCoordinate: true,
-        orientation: orientation
+        orientation: orientation,
+        themeStyle: theme
     };
     //rendering board with cfg
     myboard = new ChessBoard('pvpboard', cfg);

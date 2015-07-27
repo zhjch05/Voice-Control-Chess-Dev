@@ -320,7 +320,7 @@ Template.home.rendered = function() {
         console.log(themeOfPiece.findOne());
     }
 
-    var theme=themeOfPiece.findOne().pieceTheme
+    theme=themeOfPiece.findOne().pieceTheme
     var cfg = {
         draggable: true,
         position: 'start',
