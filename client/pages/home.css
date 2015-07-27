@@ -1,0 +1,32 @@
+
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+	background-color: #D8F781;
+}
+.buttonBoard{
+    background-color: #424242;
+    text-align: center;
+
+}
+
+
+
+.bu a:hover,
+.bu a:focus {
+    color: yellow !important;
+}
+
+
+
+
+#aaaaa{
+text-align: center;
+}
+#bbb{
+text-align: center;
+}
+.countdown-clockw{
+    height:60px;
+
+}

@@ -1,7 +1,25 @@
 moveSound = new buzz.sound('/sounds/moveSound.wav');        // From: https://www.freesound.org/people/KorgMS2000B/sounds/54414/
 winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www.freesound.org/people/FoolBoyMedia/sounds/234526/
 muted = false;
+started=true;
 
+address= function(){
+    console.log(Pieces.findOne({pieceName:"e"}).address);
+    return Pieces.findOne({pieceName:"e"}).address;
+}
+function updateClockw(){
+        clockw = $('.countdown-clockw').FlipClock(300, {
+        clockFace: 'MinuteCounter',
+        countdown: 'true',
+        wrapper: 'flip-clock-small-wrapper'
+    });
+}
+function updateClockb(){
+        clockb = $('.countdown-clockb').FlipClock(300, {
+        clockFace: 'MinuteCounter',
+        countdown: 'true',
+    });
+}
 
 
 Template.home.events({
@@ -41,10 +59,18 @@ Template.home.events({
     },
 
     'click #undobtn': function(event){
-        nlp.input('undo')   
+        nlp.input('undo')
+        if(steps==0){
+        stop=false;
+        }  
     },
 
     'click #restartbtn': function(event){
+        updateClockw();
+        updateClockb();
+        clockb.stop();
+        clockw.stop(); 
+
         console.log('pressed restartbtn');
         nlp.input("restart");
         makeLog('Restarted the game.', 'sys');
@@ -61,7 +87,9 @@ Template.home.events({
     'click #surrenderbtn': function(event){
         console.log('pressed surrenderbtn');
         game.game_over = true;
-           
+        clockb.stop();
+        clockw.stop(); 
+
         if(game.turn()== 'w'){
             var msg = new SpeechSynthesisUtterance('White surrenders');
             makeLog('White surrendered. Black wins', 'sys');
@@ -82,7 +110,30 @@ Template.home.events({
 
 });
 
+function timeCountW()
+ {  
+        if(game.turn() === 'w'){
+            clockw.start();
+            clockb.stop();                
+        }
+}
+function timeCountB()
+ {
+        if(game.turn() === 'b'){
+            clockb.start();
+            clockw.stop();                
+        }
+}
+
 Template.home.rendered = function() {
+    Tracker.autorun(function () {
+        updateClockb();
+        updateClockw();
+        clockb.stop();
+        clockw.stop();  
+        
+    });
+
     gameRecord = [];
     gameRecordIndex = 0;
 
@@ -102,6 +153,18 @@ Template.home.rendered = function() {
     game = new Chess();
     steps = 0;
     sidebar = new Sidebar();
+
+    gameStarted= function(){
+         if(game.game_over() === false){
+                timeCountW();
+                timeCountB(); 
+         }else{
+                clockw.stop();
+                clockb.stop(); 
+        }
+
+    }
+
     makeTurnLog = function() {
         if (game.game_over() === true) {
             $('#turnindicator').html("<p>Game is over</p>");
@@ -233,6 +296,13 @@ Template.home.rendered = function() {
     var onMouseoutSquare = function(square, piece) {
         removeGreySquares();
     };
+    if(themeOfPiece.find().fetch().length==0){
+        pieceTheme="a";
+        themeOfPiece.insert({pieceTheme:pieceTheme});
+        console.log(themeOfPiece.findOne());
+    }
+
+    var theme=themeOfPiece.findOne().pieceTheme
     var cfg = {
         draggable: true,
         position: 'start',
@@ -261,6 +331,16 @@ Template.home.rendered = function() {
     nlp = new NLP();
     initReturn= nlp.init();
     makeLog(initReturn.content, initReturn.owner);
+        cfg.themeStyle = $('#selectTheme option:selected').val();
+    $('#selectTheme').change(function () {
+        cfg.themeStyle = $('#selectTheme option:selected').val();
+        console.log(cfg);
+        myboard = new ChessBoard('board', cfg);
+        updateStatus();
+        game = new Chess();
+        myboard.position(game.fen());
+
+        }); 
 }
 
 //@param: content, put the content into the log space.
@@ -315,6 +395,9 @@ function updatestatisticsPawn(source, target, sourcepiece, targetpiece) {
 }
 
 function makeIndicator(move) {
+
+    gameStarted();
+    
     steps += 1;
     switch (steps % 2) {
         case 1:

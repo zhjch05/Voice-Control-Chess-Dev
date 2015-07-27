@@ -54,6 +54,7 @@ meteoric:ionicons-sass@0.1.6
 minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3
+modweb:flipclock@0.0.1
 mongo@1.1.0
 npm-bcrypt@0.7.8_2
 oauth@1.1.4
