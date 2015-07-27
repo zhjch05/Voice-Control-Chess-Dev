@@ -1,0 +1,38 @@
+<template name="matching">
+    <div class="container">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="col-xs-3">
+                            <button class="btn btn-success" id="createbtn">Create</button>
+                        </div>
+                        <div class="col-xs-9">
+                            <h4 id="infotag">Create a desk or join someone</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{#each desk}} {{> mcard}} {{/each}}
+    </div>
+</template>
+
+<template name="mcard">
+    <div class="col-sm-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="container">
+                    <h3>Host:</h3>
+                    <p>{{host}}</p>
+                    {{#if ismycard}}
+                    <button class="btn btn-info join-btn disabled">Join</button>
+                    <button class="btn btn-warning delbtn">delete</button>
+                    {{else}}
+                    <button class="btn btn-info joinbtn">Join</button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
