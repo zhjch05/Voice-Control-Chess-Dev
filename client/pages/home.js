@@ -54,12 +54,22 @@ Template.home.events({
 
     'click #savebtn': function(event){
         console.log('pressed savebtn');
-        Saves.insert({id: Meteor.userId(), save: gameRecord, timestamp: new Date()});
-        makeLog('Game record saved.', 'sys');
-        if(!muted){
-            var msg = new SpeechSynthesisUtterance('Game record saved');
-            window.speechSynthesis.speak(msg);
-        }   
+        if(Meteor.userId() != null){
+
+            Saves.insert({id2: Meteor.userId(), save: gameRecord, timestamp: new Date()});
+            makeLog('Game record saved.', 'sys');
+            if(!muted){
+                var msg = new SpeechSynthesisUtterance('Game record saved');
+                window.speechSynthesis.speak(msg);
+            }   
+        }else{
+            makeLog('Sign in to save your game.', 'sys');
+            if(!muted){
+                var msg = new SpeechSynthesisUtterance('You need to be signed in to save your game.');
+                window.speechSynthesis.speak(msg);
+            }
+
+        }
     },
 
     'click #mutebtn': function(event){

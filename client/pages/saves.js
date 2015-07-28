@@ -2,7 +2,7 @@ Template.saves.helpers({
     
     saveFunction: function(){
         {
-            return Saves.find({id: Meteor.userId()},{sort:{timestamp:-1}})
+            return Saves.find({id2: Meteor.userId()},{sort:{timestamp:-1}})
         } 
     }
 })
