@@ -454,7 +454,10 @@ function expandConfig() {
             cfg.pieceTheme = 'img/chesspieces/wikipedia/{piece}.png';
         }else if (abc == "c"){
             cfg.pieceTheme = 'img/chesspieces/wikipedia/model2/{piece}.png';
+        }else if(abc=="d"){
+            cfg.pieceTheme = "m";
         }
+      
   }else if(cfg.hasOwnProperty('pieceTheme')== true){
         var abc = cfg.themeStyle;
         if(abc == "a"){
@@ -463,6 +466,8 @@ function expandConfig() {
             cfg.pieceTheme = 'img/chesspieces/wikipedia/{piece}.png';
         }else if (abc == "c"){
             cfg.pieceTheme = 'img/chesspieces/wikipedia/model2/{piece}.png';
+        }else if(abc=="d"){
+            cfg.pieceTheme = "m";
         }
   }
 
@@ -668,6 +673,11 @@ function buildBoard(orientation) {
 
   return html;
 }
+function giveAddress(piece){
+    
+    return personalTheme({pieceName:piece}).address;
+
+}
 
 function buildPieceImgSrc(piece) {
   if (typeof cfg.pieceTheme === 'function') {
@@ -675,7 +685,11 @@ function buildPieceImgSrc(piece) {
   }
 
   if (typeof cfg.pieceTheme === 'string') {
-    return cfg.pieceTheme.replace(/{piece}/g, piece);
+      if(cfg.pieceTheme=="m"){
+        return personalTheme.findOne({pieceName:piece}).address;
+      }else{
+        return cfg.pieceTheme.replace(/{piece}/g, piece);
+      }
   }
 
   // NOTE: this should never happen

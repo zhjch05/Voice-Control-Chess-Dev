@@ -316,6 +316,7 @@ Template.home.rendered = function() {
     };
     if(themeOfPiece.find().fetch().length==0){
         pieceTheme="a";
+        themeOfPiece.remove(themeOfPiece.findOne()._id);
         themeOfPiece.insert({pieceTheme:pieceTheme});
         console.log(themeOfPiece.findOne());
     }

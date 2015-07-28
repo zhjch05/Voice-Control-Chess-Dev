@@ -10,7 +10,21 @@ Template.setting.helpers({
     BN: function(){return Pieces.find({pieceName:"BN"});},
     BB: function(){return Pieces.find({pieceName:"BB"});},
     BQ: function(){return Pieces.find({pieceName:"BQ"});},
-	BK: function(){return Pieces.find({pieceName:"BK"});}
+	BK: function(){return Pieces.find({pieceName:"BK"});},
+    wP: function(){return personalTheme.find({pieceName:"wP"});},
+    wR: function(){return personalTheme.find({pieceName:"wR"});},
+    wN: function(){return personalTheme.find({pieceName:"wN"});},
+    wB: function(){return personalTheme.find({pieceName:"wB"});},
+    wQ: function(){return personalTheme.find({pieceName:"wQ"});},
+    wK: function(){return personalTheme.find({pieceName:"wK"});},
+    bP: function(){return personalTheme.find({pieceName:"bP"});},
+    bR: function(){return personalTheme.find({pieceName:"bR"});},
+    bN: function(){return personalTheme.find({pieceName:"bN"});},
+    bB: function(){return personalTheme.find({pieceName:"bB"});},
+    bQ: function(){return personalTheme.find({pieceName:"bQ"});},
+    bK: function(){return personalTheme.find({pieceName:"bK"});},
+    
+    
 });
 
 
@@ -45,82 +59,102 @@ Template.setting.events({
         themeOfPiece.insert({pieceTheme:pieceTheme});
         console.log(themeOfPiece.findOne());
     },
+    'click #theme4': function(event){
+        pieceTheme="d";
+        themeOfPiece.remove(themeOfPiece.findOne()._id);
+        themeOfPiece.insert({pieceTheme:pieceTheme});
+        console.log(themeOfPiece.findOne());
+    },
     'click #wpChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"wP"})._id);
-        personalTheme.insert({pieceName:"wP", address:wpId});
+        getPicture(wpId,"WP");
     },
     'click #wrChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"wR"})._id);
-        personalTheme.insert({pieceName:"wR", address:wrId});
+        getPicture(wpId,"WR");
     },
     'click #wbChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"wB"})._id);
-        personalTheme.insert({pieceName:"wB", address:wbId});
+        getPicture(wpId,"WB");
     },
     'click #wnChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"wN"})._id);
-        personalTheme.insert({pieceName:"wN", address:wnId});
+        getPicture(wpId,"WN");
     },
     'click #wqChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"wK"})._id);
-        personalTheme.insert({pieceName:"wQ", address:wqId});
+        getPicture(wpId,"WQ");
     },
     'click #wkChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"wK"})._id);
-        personalTheme.insert({pieceName:"wK", address:wkId});
+        getPicture(wpId,"WK");
     },
     'click #bpChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"bP"})._id);
-        personalTheme.insert({pieceName:"bP", address:bpId});
+        getPicture(wpId,"BP");
     },
     'click #brChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"bR"})._id);
-        personalTheme.insert({pieceName:"bR", address:brId});
+        getPicture(wpId,"BR");
     },
     'click #bnChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"bN"})._id);
-        personalTheme.insert({pieceName:"bN", address:bnId});
+        getPicture(wpId,"BN");
     },
     'click #bbChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"bB"})._id);
-        personalTheme.insert({pieceName:"bB", address:bbId});
+        getPicture(wpId,"BB");
     },
     'click #bqChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"bQ"})._id);
-        personalTheme.insert({pieceName:"bQ", address:bqId});
+        getPicture(wpId,"BQ");
     },
     'click #bkChoose': function(event){
-        personalTheme.remove(personalTheme.findOne({pieceName:"bK"})._id);
-        personalTheme.insert({pieceName:"bK", address:bkId});
+        getPicture(wpId,"BQ");
     },
 });
+
+
 
 function getPicture(cdnUrl,pieceName){
     var piecewb =pieceName;
     if(piecewb=="WP") {
-        $('#WP').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"wP"})._id);
+        personalTheme.insert({pieceName:"wP", address:cdnUrl});
+        $('#kWP').attr('src',cdnUrl);
     }else if(piecewb=="WR"){
-        $('#WR').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"wR"})._id);
+        personalTheme.insert({pieceName:"wR", address:cdnUrl});
+        $('#kWR').attr('src',cdnUrl);
     }else if(piecewb=="WB"){
-        $('#WB').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"wB"})._id);
+        personalTheme.insert({pieceName:"wB", address:cdnUrl});
+        $('#kWB').attr('src',cdnUrl);
     }else if(piecewb=="WN"){
-        $('#WN').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"wN"})._id);
+        personalTheme.insert({pieceName:"wN", address:cdnUrl});
+        $('#kWN').attr('src',cdnUrl);
     }else if(piecewb=="WQ"){
-        $('#WQ').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"wQ"})._id);
+        personalTheme.insert({pieceName:"wQ", address:cdnUrl});
+        $('#kWQ').attr('src',cdnUrl);
     }else if(piecewb=="WK"){
-        $('#WK').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"wK"})._id);
+        personalTheme.insert({pieceName:"wK", address:cdnUrl});
+        $('#kWK').attr('src',cdnUrl);
     }else if(piecewb=="BP"){
-        $('#BP').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"bP"})._id);
+        personalTheme.insert({pieceName:"bP", address:cdnUrl});
+        $('#kBP').attr('src',cdnUrl);
     }else if(piecewb=="BR"){
-        $('#BR').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"bR"})._id);
+        personalTheme.insert({pieceName:"bR", address:cdnUrl});
+        $('#kBR').attr('src',cdnUrl);
     }else if(piecewb=="BN"){
-        $('#BN').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"bN"})._id);
+        personalTheme.insert({pieceName:"bN", address:cdnUrl});
+        $('#kBN').attr('src',cdnUrl);
     }else if(piecewb=="BB"){
-        $('#BB').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"bB"})._id);
+        personalTheme.insert({pieceName:"bB", address:cdnUrl});
+        $('#kBB').attr('src',cdnUrl);
     }else if(piecewb=="BQ"){
-        $('#BQ').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"bQ"})._id);
+        personalTheme.insert({pieceName:"bQ", address:cdnUrl});
+        $('#kBQ').attr('src',cdnUrl);
     }else if(piecewb=="BK"){
-        $('#BK').attr('src',cdnUrl);
+        personalTheme.remove(personalTheme.findOne({pieceName:"bK"})._id);
+        personalTheme.insert({pieceName:"bK", address:cdnUrl});
+        $('#kBK').attr('src',cdnUrl);
     }
 
         

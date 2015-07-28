@@ -80,7 +80,7 @@
                                 <h3>Personal Piece</h3>
                                 <p>These pieces can be what you like
                                 </p>
-                                <p><a  class="btn btn-primary" id= "theme1" role="button"><i class="glyphicon glyphicon-ok"></i></a></p>  
+                                <p><a  class="btn btn-primary" id= "theme4" role="button"><i class="glyphicon glyphicon-ok"></i></a></p>  
                             </div>
                             </div>
                         </div>
@@ -106,7 +106,9 @@
                             <div class="collapse" id="personalpiece">
                                  <div class="col-sm-2 col-sm-2">
                                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/wP.png" id="WP" alt="..." width="200px" height = "200px">
+                                                    {{#each wP}}
+			                                              {{> hWP}}
+		                                              {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>WhitePawn</h6>
@@ -125,7 +127,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="wpChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -133,7 +135,9 @@
                                 </div>
                                 <div class="col-sm-2 col-sm-2">
                                         <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/wR.png" id="WR" alt="..." width="200px" height = "200px">
+                                                    {{#each wR}}
+			                                                     {{> hWR}}
+		                                              {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>WhiteRook</h6>
@@ -152,7 +156,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="wrChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -160,7 +164,9 @@
                                 </div>
                                                 <div class="col-sm-2 col-sm-2">
                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/wN.png" id="WN" alt="..." width="200px" height = "200px">
+                                                    {{#each wN}}
+			                                             {{> hWN}}
+		                                          {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>WhiteKnight</h6>
@@ -179,7 +185,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="wnChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -187,7 +193,9 @@
                                 </div>
                                                 <div class="col-sm-2 col-sm-2">
                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/wB.png" id="WB" alt="..." width="200px" height = "200px">
+                                                    {{#each wB}}
+			                                             {{> hWB}}
+		                                          {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>WhiteBishop</h6>
@@ -206,7 +214,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="wbChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -214,7 +222,9 @@
                                 </div>
                                 <div class="col-sm-2 col-sm-2">
                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/wQ.png" id="WQ" alt="..." width="200px" height = "200px">
+                                                    {{#each wQ}}
+			                                             {{> hWQ}}
+		                                          {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>WhiteQueen</h6>
@@ -233,7 +243,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default"  id="wqChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -241,7 +251,9 @@
                                 </div>
                                 <div class="col-sm-2 col-sm-2">
                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/wK.png" id="WK" alt="..." width="200px" height = "200px">
+                                                    {{#each wK}}
+			                                                     {{> hWK}}
+		                                          {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>WhiteKing</h6>
@@ -260,7 +272,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="wkChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -269,7 +281,9 @@
                 <!--        black-->
                                  <div class="col-sm-2 col-sm-2">
                                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/bP.png" id="BP" alt="..." width="200px" height = "200px">
+                                                    {{#each bP}}
+			                                             {{> hBP}}
+		                                              {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>BlackPawn</h6>
@@ -288,7 +302,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="bpChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -296,7 +310,9 @@
                                 </div>
                                 <div class="col-sm-2 col-sm-2">
                                         <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/bR.png" id="BR" alt="..." width="200px" height = "200px">
+                                                    {{#each bR}}
+			                                                     {{> hBR}}
+		                                              {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>BlackRook</h6>
@@ -315,7 +331,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="brChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -323,7 +339,9 @@
                                 </div>
                                                 <div class="col-sm-2 col-sm-2">
                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/bN.png" id="BN" alt="..." width="200px" height = "200px">
+                                                    {{#each bN}}
+			                                                     {{> hBN}}
+		                                          {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>BlackKnight</h6>
@@ -342,7 +360,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default"  id="bnChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -350,7 +368,9 @@
                                 </div>
                                                 <div class="col-sm-2 col-sm-2">
                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/bB.png" id="BB" alt="..." width="200px" height = "200px">
+                                                    {{#each bB}}
+			                                                     {{> hBB}}
+		                                              {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>BlackBishop</h6>
@@ -369,7 +389,7 @@
 		                                                    {{/each}}
                                                         </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="bbChoose"  data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -377,7 +397,9 @@
                                 </div>
                                 <div class="col-sm-2 col-sm-2">
                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/bQ.png" id="BQ" alt="..." width="200px" height = "200px">
+                                                    {{#each bQ}}
+			                                                     {{> hBQ}}
+		                                          {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>BlackQueen</h6>
@@ -396,7 +418,7 @@
 		                                                    {{/each}}
                                                       </div>
                                                       <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" id="bqChoose" data-dismiss="modal">Close</button>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -404,7 +426,9 @@
                                 </div>
                                 <div class="col-sm-2 col-sm-2">
                                 <div class="thumbnail">
-                                                    <img src="img/chesspieces/wikipedia/model1/bK.png" id="BK" alt="..." width="200px" height = "200px">
+                                                    {{#each bK}}
+			                                                     {{> hBK}}
+		                                              {{/each}}
                                                 </div>
                                                 <div class="caption">
                                                         <h6>BlackKing</h6>
@@ -446,17 +470,78 @@
 
 
 </template>
+<template name="hWP">
+    
+	<img src={{address}} id="kWP" class= "pictures" alt="img/chesspieces/wikipedia/model1/wP.png" width="80px" height = "80px">
+    
+</template>
+
+<template name="hWR">
+    
+	<img src={{address}} id="kWR" alt="img/chesspieces/wikipedia/model1/wR.png" width="80px" height = "80px">
+
+</template>
+<template name="hWN">
+    
+	<img src={{address}} id="kWN" alt="img/chesspieces/wikipedia/model1/wN.png" width="80px" height = "80px">
+</template>
+<template name="hWB">
+    
+	<img src={{address}} id="kWB" alt="img/chesspieces/wikipedia/model1/wB.png" width="80px" height = "80px">
+    
+</template>
+<template name="hWQ">
+    
+	<img src={{address}} id="kWQ" alt="img/chesspieces/wikipedia/model1/wQ.png" width="80px" height = "80px">
+</template>
+<template name="hWK">
+    
+	<img src={{address}} id="kWK" alt="img/chesspieces/wikipedia/model1/wK.png" width="80px" height = "80px">
+    
+</template>
+<template name="hBP">
+    
+	<img src={{address}} id="kBP" alt="img/chesspieces/wikipedia/model1/bP.png" width="80px" height = "80px">
+    
+</template>
+<template name="hBR">
+    
+	<img src={{address}} id="kBR" alt="img/chesspieces/wikipedia/model1/bR.png" width="80px" height = "80px">
+</template>
+<template name="hBN">
+    
+	<img src={{address}} id="kBN" alt="img/chesspieces/wikipedia/model1/bN.png" width="80px" height = "80px">
+</template>
+<template name="hBB">
+    
+	<img src={{address}} id="kBB" alt="img/chesspieces/wikipedia/model1/bB.png" width="80px" height = "80px">
+    
+</template>
+<template name="hBQ">
+    
+	<img src={{address}} id="kBQ" alt="img/chesspieces/wikipedia/model1/bQ.png" width="80px" height = "80px">
+    
+</template>
+    
+<template name="hBK">
+    
+	<img src={{address}} id="kBK" alt="img/chesspieces/wikipedia/model1/bK.png" width="80px" height = "80px">
+</template>
+
+
+
 <template name="iWP">
     
-	<img src={{address}} id="abcd" class= "pictures" alt="..." width="80px" height = "80px">
+	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
     <button type="button"  id={{address}} onClick="wpclick(this.id)"><i class="glyphicon glyphicon-ok"></i></button>
-    <script type="text/javascript">
+        <script type="text/javascript">
 function wpclick(clicked_id)
 {
     wpId = clicked_id;
 }
 </script>
 </template>
+
 <template name="iWR">
     
 	<img src={{address}} id={{address}} alt="..." width="80px" height = "80px">
