@@ -5,11 +5,11 @@ Template.profile.helpers({
 	},
 
 	myName: function(){
-		return Profiles.findOne({id: Meteor.userId()}).name;
+		return Profiles.findOne({id2: Meteor.userId()}).name;
 	},
 
 	myBio: function(){
-		return Profiles.findOne({id: Meteor.userId()}).bio;
+		return Profiles.findOne({id2: Meteor.userId()}).bio;
 	},
 
 	photo:function(){ 
@@ -27,9 +27,9 @@ Template.profile.helpers({
 
 Template.profile.rendered = function() {
 
-if(Profiles.findOne() == undefined){
-	Profiles.insert({id: Meteor.userId()});
-}
+	if(Profiles.findOne({id2: Meteor.userId()}) == undefined){
+		Profiles.insert({id2: Meteor.userId()});
+	}
 
 }
 

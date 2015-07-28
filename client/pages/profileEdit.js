@@ -13,10 +13,10 @@ Template.profileEdit.events({
 		var namevar = event.target.name.value;
 		console.log(name);
 		if(biovar != ""){
-			Profiles.update(Profiles.findOne()._id, { $set: {bio: biovar}});
+			Profiles.update(Profiles.findOne({id2: Meteor.userId()})._id, { $set: {bio: biovar}});
 		}
 		if(namevar != ""){
-			Profiles.update(Profiles.findOne()._id, { $set: { name: namevar}});
+			Profiles.update(Profiles.findOne({id2: Meteor.userId()})._id, { $set: {name: namevar}});
 		}
 		Router.go("profile")
 	},
@@ -28,8 +28,9 @@ Template.profileEdit.events({
 
 Template.profileEdit.rendered = function() {
 
-if(Profiles.findOne() == undefined){
-	Profiles.insert({id: Meteor.userId()});
-}
+	if(Profiles.findOne({id2: Meteor.userId()}) == undefined){
+		Profiles.insert({id2: Meteor.userId()});
+	}
 
 }
+
