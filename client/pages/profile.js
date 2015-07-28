@@ -1,7 +1,7 @@
 Template.profile.helpers({
 
 	myEmail: function(){
-		return Meteor.users.findOne().emails[0].address;
+		return Meteor.user().emails[0].address;
 	},
 
 	myName: function(){
@@ -13,7 +13,7 @@ Template.profile.helpers({
 	},
 
 	photo:function(){ 
-		return Gravatar.imageUrl(Gravatar.hash(Meteor.users.findOne().emails[0].address,{secure:true}));
+		return Gravatar.imageUrl(Gravatar.hash(Meteor.user().emails[0].address,{secure:true}));
 	},
 
 	profileFunction: function(){
