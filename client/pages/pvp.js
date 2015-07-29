@@ -167,6 +167,107 @@ Template.pvp.rendered = function() {
             Router.go('home');
         }
     });
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // VOICE RECOGNITION
+
+    final_transcript = '';
+    var recognizing = false;
+
+
+    if ('webkitSpeechRecognition' in window) {
+        console.log("webkit is available!");
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+ 
+        recognition.onstart = function() {
+          recognizing = true;
+        };
+ 
+        recognition.onerror = function(event) {
+          console.log(event.error);
+        };
+ 
+        recognition.onend = function() {
+          recognizing = false;
+        };
+ 
+        recognition.onresult = function(event) {
+            myevent = event;
+          var interim_transcript = '';
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+              console.log("i="+i);
+
+            //Stops the dictation if it sees the phrase "stop dictation"
+            if(event.results[i][0].transcript.includes("stop dictation")){
+                recognition.stop();
+            }
+
+            if (event.results[i].isFinal) {
+                if(final_transcript.length > 20){
+                    final_transcript = "";
+                }
+              final_transcript += 
+
+              event.results[i][0].transcript.trim() +".\n";
+              console.log('final events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
+              var mycmd = final_transcript;
+              makeLog(mycmd,'usr');
+              makeLog(nlp.input(mycmd), 'sys');
+              $('#inputCommand').val('');
+              final_transcript = '';
+              if(!muted){
+                  var msg = new SpeechSynthesisUtterance(mycmd);
+                  window.speechSynthesis.speak(msg);
+              }
+
+              recognition.stop();
+
+            } else {
+                if(interim_transcript.length > 20){
+                    interim_transcript = "";
+                }
+              interim_transcript += 
+     
+              event.results[i][0].transcript;
+              console.log('interim events.results[i][0].transcript = '+ JSON.stringify(event.results[i][0].transcript));
+
+
+            }
+          }
+          //final_transcript = capitalize(final_transcript);
+          final_span.innerHTML = linebreak(final_transcript);
+          interim_span.innerHTML = linebreak(interim_transcript);
+          
+        };
+    }
+    
+    var two_line = /\n\n/g;
+    var one_line = /\n/g;
+    function linebreak(s) {
+      return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+    }
+ 
+    function capitalize(s) {
+      return s.replace(s.substr(0,1), function(m) { return m.toUpperCase(); });
+    }
+ 
+    startDictation = function(event) {
+      if (recognizing) {
+        recognition.stop();
+        return;
+      }
+      final_transcript = '';
+      recognition.lang = 'en-US';
+      recognition.start();
+      final_span.innerHTML = '';
+      interim_span.innerHTML = '';
+    }
+
+
+
 }
 Template.pvp.events({
     'click #quitbtn': function() {
@@ -175,5 +276,17 @@ Template.pvp.events({
                 return alert(error.reason);
             }
         });
-    }
+    },
+
+    // 'submit #formcmd': function(event) {
+    //     event.preventDefault();
+    //     var cmd = event.target.inputCommand.value;
+    //     makeLog(cmd,'usr');
+    //     makeLog(nlp.input(cmd),'sys');
+    //     $('#inputCommand').val('');
+    // },
+
+    // 'click #spbutton': function(event){
+    //     startDictation(event);
+    // }
 });

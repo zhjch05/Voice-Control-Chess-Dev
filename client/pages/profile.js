@@ -20,10 +20,27 @@ Template.profile.helpers({
         {
             return Profiles.find();
         } 
+    },
+
+    saveFunction: function(){
+        {
+            return Saves.find({id2: Meteor.userId()},{sort:{timestamp:-1}})
+        } 
+    },
+
+    hasSaves: function(){
+    	{
+    		return Saves.find({id2: Meteor.userId()}).fetch().length != 0;
+    	}
     }
 
 })
 
+Template.profile.events({
+	"click .delete-save-icon": function(){
+		Saves.remove(this._id);}
+
+})
 
 Template.profile.rendered = function() {
 
@@ -32,4 +49,5 @@ Template.profile.rendered = function() {
 	}
 
 }
+
 
