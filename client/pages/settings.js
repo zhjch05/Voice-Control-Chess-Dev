@@ -77,6 +77,8 @@ Template.setting.events({
         console.log(themeOfPiece.findOne());
     },
     'click #theme4': function(event){
+        var elem1 = document.getElementById("theme4");
+        elem1.innerHTML = "<i class=\"glyphicon glyphicon-ok\"></i>";
         pieceTheme="d";
         themeOfPiece.remove(themeOfPiece.findOne()._id);
         themeOfPiece.insert({pieceTheme:pieceTheme});
