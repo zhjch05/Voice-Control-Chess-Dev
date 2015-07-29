@@ -23,8 +23,6 @@ Template.setting.helpers({
     bB: function(){return personalTheme.find({pieceName:"bB"});},
     bQ: function(){return personalTheme.find({pieceName:"bQ"});},
     bK: function(){return personalTheme.find({pieceName:"bK"});},
-    
-    
 });
 
 
@@ -42,6 +40,14 @@ Template.setting.rendered= function() {
 
 
 Template.setting.events({
+
+    'click #upload': function(event){
+        upLoad();  
+    },
+
+    'click #reset': function(event){
+        resetPieces();
+    },
 
 
     'click #theme1': function(event){
@@ -190,19 +196,30 @@ function upLoad(){
 
 }
 
-Template.setting.events({
 
-    'click #upload': function(event){
-        upLoad();  
-    },
-
-
-
-});
 
 function addPieces(cdnUrl,pieceName){
         var address = cdnUrl;
         Pieces.insert({pieceName:pieceName, address:address});
         console.log(Pieces.findOne({pieceName:pieceName}).address);
 
+}
+
+function resetPieces(){
+        for(var i = 0; i <12 ;i++){
+            personalTheme.remove(personalTheme.findOne()._id);
+        }
+            
+        personalTheme.insert({pieceName:"wP", address:"img/chesspieces/wikipedia/wP.png"});
+        personalTheme.insert({pieceName:"wR", address:"img/chesspieces/wikipedia/wR.png"});
+        personalTheme.insert({pieceName:"wN", address:"img/chesspieces/wikipedia/wN.png"});
+        personalTheme.insert({pieceName:"wB", address:"img/chesspieces/wikipedia/wB.png"});
+        personalTheme.insert({pieceName:"wQ", address:"img/chesspieces/wikipedia/wQ.png"});
+        personalTheme.insert({pieceName:"wK", address:"img/chesspieces/wikipedia/wK.png"});
+        personalTheme.insert({pieceName:"bP", address:"img/chesspieces/wikipedia/bP.png"});
+        personalTheme.insert({pieceName:"bR", address:"img/chesspieces/wikipedia/bR.png"});
+        personalTheme.insert({pieceName:"bB", address:"img/chesspieces/wikipedia/bB.png"});
+        personalTheme.insert({pieceName:"bN", address:"img/chesspieces/wikipedia/bN.png"});
+        personalTheme.insert({pieceName:"bQ", address:"img/chesspieces/wikipedia/bQ.png"});
+        personalTheme.insert({pieceName:"bK", address:"img/chesspieces/wikipedia/bK.png"});
 }
