@@ -61,8 +61,9 @@ errorCorrect = function(str) {
             //Replace "Bee" with "B" and "Tree" with "3". "822 Bee Tree" to "822 B 3"
             [/\bbee/g, "b"],
             [/\btree/g, "3"],
-            //Replace "see" with "C" and "one" with "1", for example "D2 to see one" becomes "D2 to C 1"
+            //Replace "see" and "sea" with "C" and "one" with "1", for example "D2 to see one" becomes "D2 to C 1"
             [/\bsee/g, "c"],
+            [/\bsea/g, "c"],
             [/\bone/g, "1"],
             //Replace the word "be" with B, such as "d8 to be 8" to "d8 to B 8"
             [/\bbe/g, "b"],
@@ -99,6 +100,11 @@ errorCorrect = function(str) {
         
             //Replace the word 'pontic' with 'Pawn takes' -- pontic 64.
             [/\bpontic/g, "pawn takes"],
+
+            //Replace the word 'effor' and 'efore' with 'E4'
+            [/\beffor/g, "E4"],
+            [/\before/g, "E4"],
+        
 
 
         ];

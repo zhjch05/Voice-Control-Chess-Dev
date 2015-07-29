@@ -207,9 +207,9 @@ NLP = function() {
         var generateOptions = function(pieces) {
             var output = '';
             _.each(pieces, function(piece) {
-                output += piece.loc + ' / ';
+                output += piece.loc + ' or ';
             });
-            output = output.replace(/\/\s+$/g, '');
+            output = output.replace(/or\s+$/g, '');
             output = output.replace(/\s+$/g, '');
             output += '?';
             return output;
@@ -239,7 +239,11 @@ NLP = function() {
                 return sysLog('Moved ' + dictR[availablePieces[0].piece.type] + ' at ' + availablePieces[0].loc + ' to ' + target + '.');
             } else if (availablePieces.length > 1) {
                 currentState = 'moreValidMoves';
-                return sysLog('More than one valid move, ' + dictR[availablePieces[0].piece.type] + ' at ' + generateOptions(availablePieces));
+                if(!muted){
+                    var msg = new SpeechSynthesisUtterance('More than one valid move. Move the ' + dictR[availablePieces[0].piece.type] + ' at ' + generateOptions(availablePieces));
+                    window.speechSynthesis.speak(msg);
+                }  
+                return sysLog('More than one valid move. Move the ' + dictR[availablePieces[0].piece.type] + ' at ' + generateOptions(availablePieces));
             }
         }
     };
@@ -312,7 +316,8 @@ NLP = function() {
                 if (sentence.pieces !== null && sentence.pieces !== undefined) {
                     var onlypiece = sentence.pieces[0];
                     if (onlypiece !== null && onlypiece !== undefined) {
-                        var target = env.getLastUsrSentence(2).pieces[1];
+                        var targetarray = env.getLastUsrSentence(2).pieces;
+                        var target = targetarray[targetarray.length - 1];1
                         currentState = 'new';
                         return move(onlypiece, target);
                     };

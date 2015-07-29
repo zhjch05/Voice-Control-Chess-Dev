@@ -2,7 +2,7 @@
 
 .table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th {
-	background-color: #F3FCF3;
+	/*background-color: #F3FCF3;*/
 }
 .buttonBoard{
     background-color: #424242;
