@@ -38,22 +38,33 @@ Template.setting.rendered= function() {
     });
     
 }
+
+
+
 Template.setting.events({
 
 
     'click #theme1': function(event){
+        var elem1 = document.getElementById("theme1");
+
+        elem1.innerHTML = "<i class=\"glyphicon glyphicon-ok\"></i>";
+        elem2.innerHTML = "<i class=\"glyphicon glyphicon-remove i-w\"></i>";
+        elem3.innerHTML = "<i class=\"glyphicon glyphicon-remove i-w\"></i>";
+        elem4.innerHTML = "<i class=\"glyphicon glyphicon-remove i-w\"></i>";
         pieceTheme="a";
         themeOfPiece.remove(themeOfPiece.findOne()._id);
         themeOfPiece.insert({pieceTheme:pieceTheme});
         console.log(themeOfPiece.findOne());
     },    
     'click #theme2': function(event){
+
         pieceTheme="b";
         themeOfPiece.remove(themeOfPiece.findOne()._id);
         themeOfPiece.insert({pieceTheme:pieceTheme});
         console.log(themeOfPiece.findOne());
     },
     'click #theme3': function(event){
+
         pieceTheme="c";
         themeOfPiece.remove(themeOfPiece.findOne()._id);
         themeOfPiece.insert({pieceTheme:pieceTheme});

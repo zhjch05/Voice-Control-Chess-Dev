@@ -3,6 +3,8 @@ winSound = new buzz.sound('/sounds/victory.wav');           // From: https://www
 
 started=true;
 
+Meteor.call("addTheme");
+
 
 address= function(){
     console.log(Pieces.findOne({pieceName:"e"}).address);
@@ -331,11 +333,6 @@ Template.home.rendered = function() {
     var onMouseoutSquare = function(square, piece) {
         removeGreySquares();
     };
-    if(themeOfPiece.find().fetch().length==0){
-        pieceTheme="a";
-        themeOfPiece.insert({pieceTheme:pieceTheme});
-        console.log(themeOfPiece.findOne());
-    }
 
     theme=themeOfPiece.findOne().pieceTheme
     var cfg = {
