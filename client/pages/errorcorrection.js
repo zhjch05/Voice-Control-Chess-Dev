@@ -105,6 +105,14 @@ errorCorrect = function(str) {
             [/\beffor/g, "E4"],
             [/\before/g, "E4"],
         
+            //Replace 'esox' with 'e6'
+            [/\esox/g, "E6"],
+
+            //Replace 'street' with '3'
+            [/\street/g, "3"],
+
+            //Replace 'each' with 'h'
+            [/\each/g, "h"],
 
 
         ];
