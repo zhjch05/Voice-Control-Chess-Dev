@@ -53,8 +53,8 @@ Template.setting.events({
     'click #theme1': function(event){
         var elem1 = document.getElementById("theme1");
         var elem2 = document.getElementById("theme2");
-        var elem2 = document.getElementById("theme3");
-        var elem2 = document.getElementById("theme4");
+        var elem3 = document.getElementById("theme3");
+        var elem4 = document.getElementById("theme4");
 
         elem1.innerHTML = "<i class=\"glyphicon glyphicon-ok\"></i>";
 
