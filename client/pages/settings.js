@@ -52,17 +52,32 @@ Template.setting.events({
 
     'click #theme1': function(event){
         var elem1 = document.getElementById("theme1");
+        var elem2 = document.getElementById("theme2");
+        var elem2 = document.getElementById("theme3");
+        var elem2 = document.getElementById("theme4");
 
         elem1.innerHTML = "<i class=\"glyphicon glyphicon-ok\"></i>";
-        elem2.innerHTML = "<i class=\"glyphicon glyphicon-remove i-w\"></i>";
-        elem3.innerHTML = "<i class=\"glyphicon glyphicon-remove i-w\"></i>";
-        elem4.innerHTML = "<i class=\"glyphicon glyphicon-remove i-w\"></i>";
+
+        elem2.innerHTML = "Select Theme";
+        elem3.innerHTML = "Select Theme";
+        elem4.innerHTML = "Select Theme";
+
         pieceTheme="a";
         themeOfPiece.remove(themeOfPiece.findOne()._id);
         themeOfPiece.insert({pieceTheme:pieceTheme});
         console.log(themeOfPiece.findOne());
     },    
     'click #theme2': function(event){
+
+        var elem1 = document.getElementById("theme1");
+        var elem2 = document.getElementById("theme2");
+        var elem3 = document.getElementById("theme3");
+        var elem4 = document.getElementById("theme4");
+
+        elem1.innerHTML = "Select Theme";
+        elem2.innerHTML = "<i class=\"glyphicon glyphicon-ok\"></i>";
+        elem3.innerHTML = "Select Theme";
+        elem4.innerHTML = "Select Theme";
 
         pieceTheme="b";
         themeOfPiece.remove(themeOfPiece.findOne()._id);
@@ -71,12 +86,33 @@ Template.setting.events({
     },
     'click #theme3': function(event){
 
+        var elem1 = document.getElementById("theme1");
+        var elem2 = document.getElementById("theme2");
+        var elem3 = document.getElementById("theme3");
+        var elem4 = document.getElementById("theme4");
+
+        elem1.innerHTML = "Select Theme";
+        elem2.innerHTML = "Select Theme";
+        elem3.innerHTML = "<i class=\"glyphicon glyphicon-ok\"></i>";
+        elem4.innerHTML = "Select Theme";
+
         pieceTheme="c";
         themeOfPiece.remove(themeOfPiece.findOne()._id);
         themeOfPiece.insert({pieceTheme:pieceTheme});
         console.log(themeOfPiece.findOne());
     },
     'click #theme4': function(event){
+
+        var elem1 = document.getElementById("theme1");
+        var elem2 = document.getElementById("theme2");
+        var elem3 = document.getElementById("theme3");
+        var elem4 = document.getElementById("theme4");
+
+        elem1.innerHTML = "Select Theme";
+        elem2.innerHTML = "Select Theme";
+        elem3.innerHTML = "Select Theme";
+        elem4.innerHTML = "<i class=\"glyphicon glyphicon-ok\"></i>";
+
         pieceTheme="d";
         themeOfPiece.remove(themeOfPiece.findOne()._id);
         themeOfPiece.insert({pieceTheme:pieceTheme});
