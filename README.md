@@ -1,7 +1,7 @@
 # Voice-Control-Chess-Dev
 A brand-new version of VCChess in dev mode (unstable)
 
-Now served at http://vcc-dev.meteor.com/
+Now served at https://voicecontrolchess.meteor.com/
 V0.2 note:
 
 In DEV:
